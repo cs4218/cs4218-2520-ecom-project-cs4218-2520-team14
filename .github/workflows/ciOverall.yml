@@ -23,5 +23,8 @@ jobs:
       - name: Run Full Backend Suite
         run: npm run test:backend -- --passWithNoTests
 
+      - name: Install Client Dependencies
+        run: npm install --prefix client
+
       - name: Run Full Frontend Suite
         run: npm run test:frontend -- --passWithNoTests

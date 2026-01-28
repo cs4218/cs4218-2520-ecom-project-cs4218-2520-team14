@@ -27,6 +27,9 @@ jobs:
 
       - name: Run Backend Tests
         run: npm run test:backend -- --changedSince=origin/main --passWithNoTests
+      
+      - name: Install Client Dependencies
+        run: npm install --prefix client
 
       - name: Run Frontend Tests
         run: npm run test:frontend -- --changedSince=origin/main --passWithNoTests
