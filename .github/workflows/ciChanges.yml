@@ -1,4 +1,4 @@
-name: CI
+name: CI Test (Changes Detected)
 
 on:
   push:
@@ -25,8 +25,8 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Run Backend Tests (Changes Only)
-        run: npm run test:backend -- --changedSince=origin/main
+      - name: Run Backend Tests
+        run: npm run test:backend
 
-      - name: Run Frontend Tests (Changes Only)
-        run: npm run test:frontend -- --changedSince=origin/main
+      - name: Run Frontend Tests
+        run: npm run test:frontend
