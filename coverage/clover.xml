@@ -1,23 +1,74 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1770399248713" clover="3.2.0">
-  <project timestamp="1770399248713" name="All files">
-    <metrics statements="79" coveredstatements="9" conditionals="21" coveredconditionals="2" methods="24" coveredmethods="3" elements="124" coveredelements="14" complexity="0" loc="79" ncloc="79" packages="2" files="2" classes="2"/>
+<coverage generated="1770407734830" clover="3.2.0">
+  <project timestamp="1770407734830" name="All files">
+    <metrics statements="127" coveredstatements="52" conditionals="43" coveredconditionals="22" methods="38" coveredmethods="14" elements="208" coveredelements="88" complexity="0" loc="127" ncloc="127" packages="2" files="3" classes="3"/>
     <package name="context">
-      <metrics statements="8" coveredstatements="8" conditionals="2" coveredconditionals="2" methods="3" coveredmethods="3"/>
+      <metrics statements="8" coveredstatements="3" conditionals="2" coveredconditionals="0" methods="3" coveredmethods="0"/>
       <file name="cart.js" path="C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\client\src\context\cart.js">
-        <metrics statements="8" coveredstatements="8" conditionals="2" coveredconditionals="2" methods="3" coveredmethods="3"/>
+        <metrics statements="8" coveredstatements="3" conditionals="2" coveredconditionals="0" methods="3" coveredmethods="0"/>
         <line num="4" count="1" type="stmt"/>
         <line num="5" count="1" type="stmt"/>
-        <line num="6" count="5" type="stmt"/>
-        <line num="8" count="5" type="stmt"/>
-        <line num="9" count="3" type="stmt"/>
-        <line num="10" count="3" type="cond" truecount="2" falsecount="0"/>
-        <line num="13" count="5" type="stmt"/>
-        <line num="21" count="5" type="stmt"/>
+        <line num="6" count="0" type="stmt"/>
+        <line num="8" count="0" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
+        <line num="10" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="13" count="0" type="stmt"/>
+        <line num="21" count="1" type="stmt"/>
       </file>
     </package>
     <package name="pages">
-      <metrics statements="71" coveredstatements="1" conditionals="19" coveredconditionals="0" methods="21" coveredmethods="0"/>
+      <metrics statements="119" coveredstatements="49" conditionals="41" coveredconditionals="22" methods="35" coveredmethods="14"/>
+      <file name="CartPage.js" path="C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\client\src\pages\CartPage.js">
+        <metrics statements="48" coveredstatements="48" conditionals="22" coveredconditionals="22" methods="14" coveredmethods="14"/>
+        <line num="12" count="1" type="stmt"/>
+        <line num="13" count="28" type="stmt"/>
+        <line num="14" count="28" type="stmt"/>
+        <line num="15" count="28" type="stmt"/>
+        <line num="16" count="27" type="stmt"/>
+        <line num="17" count="27" type="stmt"/>
+        <line num="18" count="27" type="stmt"/>
+        <line num="21" count="27" type="stmt"/>
+        <line num="22" count="27" type="stmt"/>
+        <line num="23" count="27" type="stmt"/>
+        <line num="24" count="27" type="stmt"/>
+        <line num="25" count="25" type="stmt"/>
+        <line num="27" count="27" type="stmt"/>
+        <line num="32" count="1" type="stmt"/>
+        <line num="36" count="27" type="stmt"/>
+        <line num="37" count="2" type="stmt"/>
+        <line num="38" count="2" type="stmt"/>
+        <line num="39" count="2" type="stmt"/>
+        <line num="40" count="2" type="stmt"/>
+        <line num="41" count="2" type="stmt"/>
+        <line num="42" count="2" type="stmt"/>
+        <line num="44" count="1" type="stmt"/>
+        <line num="49" count="27" type="stmt"/>
+        <line num="50" count="14" type="stmt"/>
+        <line num="51" count="14" type="stmt"/>
+        <line num="52" count="13" type="stmt"/>
+        <line num="54" count="1" type="stmt"/>
+        <line num="57" count="27" type="stmt"/>
+        <line num="58" count="14" type="stmt"/>
+        <line num="62" count="27" type="stmt"/>
+        <line num="63" count="2" type="stmt"/>
+        <line num="64" count="2" type="stmt"/>
+        <line num="65" count="2" type="stmt"/>
+        <line num="66" count="2" type="stmt"/>
+        <line num="70" count="1" type="stmt"/>
+        <line num="71" count="1" type="stmt"/>
+        <line num="72" count="1" type="stmt"/>
+        <line num="73" count="1" type="stmt"/>
+        <line num="74" count="1" type="stmt"/>
+        <line num="76" count="1" type="stmt"/>
+        <line num="77" count="1" type="stmt"/>
+        <line num="80" count="27" type="stmt"/>
+        <line num="103" count="25" type="stmt"/>
+        <line num="121" count="2" type="stmt"/>
+        <line num="141" count="1" type="stmt"/>
+        <line num="152" count="1" type="stmt"/>
+        <line num="160" count="1" type="stmt"/>
+        <line num="182" count="8" type="stmt"/>
+      </file>
       <file name="HomePage.js" path="C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\client\src\pages\HomePage.js">
         <metrics statements="71" coveredstatements="1" conditionals="19" coveredconditionals="0" methods="21" coveredmethods="0"/>
         <line num="12" count="1" type="stmt"/>

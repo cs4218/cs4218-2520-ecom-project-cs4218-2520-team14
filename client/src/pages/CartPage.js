@@ -85,12 +85,12 @@ const CartPage = () => {
             <h1 className="text-center bg-light p-2 mb-1">
               {!auth?.user
                 ? "Hello Guest"
-                : `Hello  ${auth?.token && auth?.user?.name}`}
+                // Removed extra space after Hello
+                : `Hello ${auth?.token && auth?.user?.name}`}
               <p className="text-center">
                 {cart?.length
-                  ? `You Have ${cart.length} items in your cart ${
-                      auth?.token ? "" : "please login to checkout !"
-                    }`
+                  ? `You Have ${cart.length} items in your cart ${auth?.token ? "" : "please login to checkout !"
+                  }`
                   : " Your Cart Is Empty"}
               </p>
             </h1>
@@ -162,8 +162,8 @@ const CartPage = () => {
                         })
                       }
                     >
-                      Plase Login to checkout
-                    </button>
+                      Please Login to checkout
+                    </button> // Spelling corrected: "Plase" to "Please"
                   )}
                 </div>
               )}
