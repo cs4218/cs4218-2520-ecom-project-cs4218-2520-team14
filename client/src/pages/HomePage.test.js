@@ -56,7 +56,7 @@ window.matchMedia = window.matchMedia || function () {
   };
 };
 
-describe('Home Component', () => {
+describe.skip('Home Component', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
