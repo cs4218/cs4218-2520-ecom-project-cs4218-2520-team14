@@ -4,6 +4,8 @@
 
 Virtual Vault is a full-stack MERN (MongoDB, Express.js, React.js, Node.js) e-commerce website, offering seamless connectivity and user-friendly features. The platform provides a robust framework for online shopping. The website is designed to adapt to evolving business needs and can be efficiently extended.
 
+**MS1 Requirement (CI)**: https://github.com/cs4218/cs4218-2520-ecom-project-cs4218-2520-team14/actions/runs/21447427166/job/61766918403
+
 ## 2. Website Features
 
 - **User Authentication**: Secure user authentication system implemented to manage user accounts and sessions.
