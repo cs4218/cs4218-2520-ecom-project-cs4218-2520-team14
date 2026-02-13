@@ -26,9 +26,11 @@ describe("Category Controller", () => {
       await createCategoryController(req, res);
 
       expect(res.status).toHaveBeenCalledWith(401);
+      expect(res.status).toHaveBeenCalledTimes(1);
       expect(res.send).toHaveBeenCalledWith(
         expect.objectContaining({ message: "Name is required" }),
       );
+      expect(res.send).toHaveBeenCalledTimes(1);
     });
 
     it("should error when creating a category that already exists", async () => {
@@ -38,12 +40,14 @@ describe("Category Controller", () => {
       await createCategoryController(req, res);
 
       expect(res.status).toHaveBeenCalledWith(409);
+      expect(res.status).toHaveBeenCalledTimes(1);
       expect(res.send).toHaveBeenCalledWith(
         expect.objectContaining({
           success: false,
           message: "Category Already Exists",
         }),
       );
+      expect(res.send).toHaveBeenCalledTimes(1);
     });
 
     it("should create a new category successfully", async () => {
@@ -56,6 +60,7 @@ describe("Category Controller", () => {
       await createCategoryController(req, res);
 
       expect(res.status).toHaveBeenCalledWith(201);
+      expect(res.status).toHaveBeenCalledTimes(1);
       expect(res.send).toHaveBeenCalledWith(
         expect.objectContaining({
           success: true,
@@ -63,6 +68,7 @@ describe("Category Controller", () => {
           category: expect.objectContaining(category),
         }),
       );
+      expect(res.send).toHaveBeenCalledTimes(1);
     });
 
     it("should error when database error occurs during category creation", async () => {
@@ -74,6 +80,7 @@ describe("Category Controller", () => {
       await createCategoryController(req, res);
 
       expect(res.status).toHaveBeenCalledWith(500);
+      expect(res.status).toHaveBeenCalledTimes(1);
       expect(res.send).toHaveBeenCalledWith(
         expect.objectContaining({
           success: false,
@@ -81,6 +88,7 @@ describe("Category Controller", () => {
           message: "Error in Category",
         }),
       );
+      expect(res.send).toHaveBeenCalledTimes(1);
     });
   });
 
@@ -95,12 +103,14 @@ describe("Category Controller", () => {
       await updateCategoryController(req, res);
 
       expect(res.status).toHaveBeenCalledWith(404);
+      expect(res.status).toHaveBeenCalledTimes(1);
       expect(res.send).toHaveBeenCalledWith(
         expect.objectContaining({
           success: false,
           message: "Category not found",
         }),
       );
+      expect(res.send).toHaveBeenCalledTimes(1);
     });
 
     it("should update a category successfully", async () => {
@@ -119,13 +129,15 @@ describe("Category Controller", () => {
       await updateCategoryController(req, res);
 
       expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.status).toHaveBeenCalledTimes(1);
       expect(res.send).toHaveBeenCalledWith(
         expect.objectContaining({
           success: true,
-          messsage: "Category Updated Successfully",
+          message: "Category Updated Successfully",
           category: expect.objectContaining(updatedCategory),
         }),
       );
+      expect(res.send).toHaveBeenCalledTimes(1);
     });
 
     it("should error when database error occurs during category update", async () => {
@@ -139,6 +151,7 @@ describe("Category Controller", () => {
       await updateCategoryController(req, res);
 
       expect(res.status).toHaveBeenCalledWith(500);
+      expect(res.status).toHaveBeenCalledTimes(1);
       expect(res.send).toHaveBeenCalledWith(
         expect.objectContaining({
           success: false,
@@ -146,6 +159,7 @@ describe("Category Controller", () => {
           message: "Error while updating category",
         }),
       );
+      expect(res.send).toHaveBeenCalledTimes(1);
     });
   });
 
@@ -157,12 +171,14 @@ describe("Category Controller", () => {
       await deleteCategoryController(req, res);
 
       expect(res.status).toHaveBeenCalledWith(404);
+      expect(res.status).toHaveBeenCalledTimes(1);
       expect(res.send).toHaveBeenCalledWith(
         expect.objectContaining({
           success: false,
           message: "Category not found",
         }),
       );
+      expect(res.send).toHaveBeenCalledTimes(1);
     });
 
     it("should delete a category successfully", async () => {
@@ -178,12 +194,14 @@ describe("Category Controller", () => {
       await deleteCategoryController(req, res);
 
       expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.status).toHaveBeenCalledTimes(1);
       expect(res.send).toHaveBeenCalledWith(
         expect.objectContaining({
           success: true,
           message: "Category Deleted Successfully",
         }),
       );
+      expect(res.send).toHaveBeenCalledTimes(1);
     });
 
     it("should error when database error occurs during category deletion", async () => {
@@ -194,6 +212,7 @@ describe("Category Controller", () => {
       await deleteCategoryController(req, res);
 
       expect(res.status).toHaveBeenCalledWith(500);
+      expect(res.status).toHaveBeenCalledTimes(1);
       expect(res.send).toHaveBeenCalledWith(
         expect.objectContaining({
           success: false,
@@ -201,6 +220,7 @@ describe("Category Controller", () => {
           error,
         }),
       );
+      expect(res.send).toHaveBeenCalledTimes(1);
     });
   });
 });
