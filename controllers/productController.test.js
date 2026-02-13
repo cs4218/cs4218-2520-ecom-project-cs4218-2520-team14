@@ -1,4 +1,4 @@
-import { getProductController, getSingleProductController } from "../controllers/productController";
+import { getProductController, getSingleProductController, productPhotoController } from "../controllers/productController";
 import productModel from "../models/productModel";
 
 // Mock productModel 
@@ -7,16 +7,30 @@ jest.mock("../models/productModel", () => ({
     default: {
         find: jest.fn(),
         findOne: jest.fn(),
+        findById: jest.fn()
     },
 }));
 
 // Helper to create an Express-like res object
 function makeRes() {
   const res = {};
-  res.status = jest.fn().mockReturnValue(res); // chainable
+  res.status = jest.fn().mockReturnValue(res);
   res.send = jest.fn().mockReturnValue(res);
+  res.set = jest.fn().mockReturnValue(res); 
   return res;
 }
+
+// Silence console logs
+let consoleSpy;
+
+beforeEach(() => {
+  consoleSpy = jest.spyOn(console, "log").mockImplementation(() => {});
+});
+
+afterEach(() => {
+  consoleSpy.mockRestore();
+  jest.clearAllMocks();
+});
 
 describe("getProductController", () => {
   afterEach(() => {
@@ -149,4 +163,89 @@ describe("getSingleProductController", () => {
     });
 
   });
+});
+
+describe("productPhotoController", () => {
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  // Test 1 - Success case
+  test("should return 200 and products photo data on success", async () => {
+    // Arrange
+    const pid = "67a21772a6d9e00ef2ac022a";
+    const req = { params: { pid } }; 
+    const res = makeRes();
+
+    const fakePhoto = { 
+        photo: { 
+            data: Buffer.from("fake-image-bytes"), 
+            contentType: "image/jpeg" 
+        } 
+    };
+
+    // findById().select() -> resolves to fakePhoto
+    const selectMock = jest.fn().mockResolvedValue(fakePhoto);
+    productModel.findById.mockReturnValue({ select: selectMock });
+
+    // Act
+    await productPhotoController(req, res);
+
+    // Assert - query
+    expect(productModel.findById).toHaveBeenCalledWith(pid);
+    expect(selectMock).toHaveBeenCalledWith("photo");
+
+    // Assert - response
+    expect(res.set).toHaveBeenCalledWith("Content-type", "image/jpeg")
+    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.send).toHaveBeenCalledWith(fakePhoto.photo.data);
+
+  });
+
+  // Test 2 - error path on model issue
+  test("should return 500 and error message when model throws", async () => {
+    // Arrange
+    const pid = "67a21772a6d9e00ef2ac022a";
+    const req = { params: { pid } };
+    const res = makeRes();
+
+    const err = new Error("db blew up");
+    productModel.findById.mockImplementation(() => {
+      throw err;
+    });
+    
+    // Act
+    await productPhotoController(req, res);
+
+    // Assert
+    expect(res.status).toHaveBeenCalledWith(500);
+    expect(res.send).toHaveBeenCalledWith({
+      success: false,
+      message: "Error while getting photo",
+      error: "db blew up",
+    });
+
+  });
+
+  // Test 3 - error path when product null or no photo
+  test("should return 404 when product is null", async () => {
+  // Arrange
+  const pid = "67a21772a6d9e00ef2ac022a";
+  const req = { params: { pid } };
+  const res = makeRes();
+
+  // Simulate product not found
+  const selectMock = jest.fn().mockResolvedValue(null);
+  productModel.findById.mockReturnValue({ select: selectMock });
+
+  // Act
+  await productPhotoController(req, res);
+
+  // Assert
+  expect(res.status).toHaveBeenCalledWith(404);
+  expect(res.send).toHaveBeenCalledWith({
+    success: false,
+    message: "Photo not found",
+  });
+});
 });
