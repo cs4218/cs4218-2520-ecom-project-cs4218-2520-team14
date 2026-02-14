@@ -3,6 +3,8 @@ import orderModel from "../models/orderModel.js";
 import { comparePassword, hashPassword } from "./../helpers/authHelper.js";
 import JWT from "jsonwebtoken";
 
+
+
 /* ---------------- REGISTER ---------------- */
 export const registerController = async (req, res) => {
   try {

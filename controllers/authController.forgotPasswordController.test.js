@@ -6,6 +6,8 @@ jest.mock("../helpers/authHelper.js", () => ({
   hashPassword: jest.fn(),
 }));
 
+
+
 jest.mock("../models/userModel.js", () => {
   const mockUserModel = jest.fn();
   mockUserModel.findOne = jest.fn();
