@@ -9,48 +9,84 @@ import { useAuth } from "../../context/auth";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
   const [auth, setAuth] = useAuth();
-  
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const navigate = useNavigate();
   const location = useLocation();
-  
 
-  // form function
+  
+  // Many apps set location.state = { from: "/somewhere" } or { from: { pathname: "/..." } }
+  const getRedirectPath = () => {
+    const state = location?.state;
+
+    if (!state) return "/";
+
+    // If someone passed a string directly
+    if (typeof state === "string") return state;
+
+    // Common patterns: { from: "/path" } or { from: { pathname: "/path" } }
+    const from = state?.from;
+
+    if (typeof from === "string") return from;
+    if (typeof from?.pathname === "string") return from.pathname;
+
+    return "/";
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // ✅ prevent double submit
+    if (isSubmitting) return;
+
+    setIsSubmitting(true);
     try {
-      const res = await axios.post("/api/v1/auth/login", {
-        email,
-        password,
-      });
-      if (res && res.data.success) {
-        toast.success(res.data && res.data.message, {
-            duration: 5000,
-            icon: "🙏",
-            style: {
-              background: "green",
-              color: "white",
-            },
-          });
-        setAuth({
-            ...auth,
-            user: res.data.user,
-            token: res.data.token,
+      const res = await axios.post("/api/v1/auth/login", { email, password });
+
+      if (res?.data?.success) {
+        const message = res?.data?.message || "Login successful";
+
+        toast.success(message, {
+          duration: 5000,
+          icon: "🙏",
+          style: {
+            background: "green",
+            color: "white",
+          },
         });
-        localStorage.setItem("auth", JSON.stringify(res.data));
-        navigate(location.state || "/");
+
+        const nextAuth = {
+          ...auth,
+          user: res.data.user,
+          token: res.data.token,
+        };
+
+        setAuth(nextAuth);
+
+        // ✅ store only what you need (stable + smaller)
+        localStorage.setItem(
+          "auth",
+          JSON.stringify({ user: res.data.user, token: res.data.token })
+        );
+
+        navigate(getRedirectPath());
       } else {
-        toast.error(res.data.message);
+        toast.error(res?.data?.message || "Login failed");
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
       toast.error("Something went wrong");
+    } finally {
+      setIsSubmitting(false);
     }
   };
+
   return (
     <Layout title="Login - Ecommerce App">
-      <div className="form-container " style={{ minHeight: "90vh" }}>
+      <div className="form-container" style={{ minHeight: "90vh" }}>
         <form onSubmit={handleSubmit}>
           <h4 className="title">LOGIN FORM</h4>
 
@@ -62,10 +98,12 @@ const Login = () => {
               onChange={(e) => setEmail(e.target.value)}
               className="form-control"
               id="exampleInputEmail1"
-              placeholder="Enter Your Email "
+              placeholder="Enter Your Email"
               required
+              disabled={isSubmitting}
             />
           </div>
+
           <div className="mb-3">
             <input
               type="password"
@@ -75,22 +113,23 @@ const Login = () => {
               id="exampleInputPassword1"
               placeholder="Enter Your Password"
               required
+              disabled={isSubmitting}
             />
           </div>
+
           <div className="mb-3">
             <button
               type="button"
               className="btn forgot-btn"
-              onClick={() => {
-                navigate("/forgot-password");
-              }}
+              onClick={() => navigate("/forgot-password")}
+              disabled={isSubmitting}
             >
               Forgot Password
             </button>
           </div>
 
-          <button type="submit" className="btn btn-primary">
-            LOGIN
+          <button type="submit" className="btn btn-primary" disabled={isSubmitting}>
+            {isSubmitting ? "LOGGING IN..." : "LOGIN"}
           </button>
         </form>
       </div>
