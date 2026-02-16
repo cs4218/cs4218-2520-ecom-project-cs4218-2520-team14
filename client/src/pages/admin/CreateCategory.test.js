@@ -17,16 +17,6 @@ import React from "react";
 jest.mock("axios");
 jest.mock("react-hot-toast");
 
-jest.mock("../../context/auth", () => ({
-  useAuth: jest.fn(() => [null, jest.fn()]),
-}));
-jest.mock("../../context/cart", () => ({
-  useCart: jest.fn(() => [null, jest.fn()]),
-}));
-jest.mock("../../context/search", () => ({
-  useSearch: jest.fn(() => [{ keyword: "" }, jest.fn()]),
-}));
-
 jest.mock("./../../components/Layout", () => ({ children }) => (
   <main>{children}</main>
 ));
@@ -55,6 +45,21 @@ describe("CreateCategory Page", () => {
       renderCreateCategory();
 
       await screen.findByText("Manage Category");
+      await screen.findByPlaceholderText("Enter new category");
+      await screen.findByText("Submit");
+      await screen.findByText("Name");
+      await screen.findByText("Actions");
+    });
+
+    it("should be initially empty", async () => {
+      axios.get.mockResolvedValue({ data: { category: [] } });
+      renderCreateCategory();
+
+      expect(
+        await screen.findByPlaceholderText("Enter new category"),
+      ).toHaveValue("");
+      expect(screen.queryByText("Edit")).not.toBeInTheDocument();
+      expect(screen.queryByText("Delete")).not.toBeInTheDocument();
     });
 
     it("should render categories correctly if categories exist", async () => {
@@ -74,7 +79,6 @@ describe("CreateCategory Page", () => {
       expect(await screen.findAllByText("Delete")).toHaveLength(2);
       await screen.findByText("TestCategory");
       await screen.findByText("TestCategory2");
-      await screen.findByText("Submit");
     });
 
     it("should show error toast if fetching categories fails", async () => {
