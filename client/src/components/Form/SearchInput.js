@@ -9,15 +9,15 @@ const SearchInput = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     const keyword = (values?.keyword || "").trim();
-    if (!keyword) {
-      return;
-    }
+    if (!keyword) return;
+
     try {
       const { data } = await axios.get(
-        `/api/v1/product/search/${values.keyword}`,
+        `/api/v1/product/search/${encodeURIComponent(keyword)}`,
       );
-      setValues({ ...values, results: data });
+      setValues({ ...values, results: data, keyword });
       navigate("/search");
     } catch (error) {
       console.log(error);
