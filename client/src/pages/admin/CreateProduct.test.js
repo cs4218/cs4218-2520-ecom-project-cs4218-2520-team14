@@ -87,6 +87,34 @@ describe("CreateProduct Component", () => {
     ).toHaveDisplayValue("");
   });
 
+  it("should render categories correctly if categories exist", async () => {
+    axios.get.mockResolvedValue({
+      data: {
+        success: true,
+        category: [
+          { _id: 0, name: "TestCategory" },
+          { _id: 1, name: "TestCategory2" },
+        ],
+      },
+    });
+
+    renderCreateProduct();
+
+    await screen.findByText("TestCategory");
+    await screen.findByText("TestCategory2");
+  });
+
+  it("should show error toast if fetching categories fails", async () => {
+    axios.get.mockRejectedValue(new Error("Network Error"));
+
+    renderCreateProduct();
+    await waitFor(() => expect(axios.get).toHaveBeenCalled());
+
+    expect(toast.error).toHaveBeenCalledWith(
+      "Something went wrong in getting category",
+    );
+  });
+
   it("should submit form correctly", async () => {
     const category = { _id: "0", name: "Test Category" };
     const file = new File(["test"], "test.png", { type: "image/png" });
