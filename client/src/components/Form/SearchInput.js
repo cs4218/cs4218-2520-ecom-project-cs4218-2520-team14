@@ -9,10 +9,8 @@ const SearchInput = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    const keyword = (values?.keyword || "").trim();
+    const keyword = values.keyword.trim();
     if (!keyword) return;
-
     try {
       const { data } = await axios.get(
         `/api/v1/product/search/${encodeURIComponent(keyword)}`,
