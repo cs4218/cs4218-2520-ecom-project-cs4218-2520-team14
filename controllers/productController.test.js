@@ -1,4 +1,4 @@
-import { getProductController, getSingleProductController, productPhotoController } from "../controllers/productController";
+import { getProductController, getSingleProductController, productPhotoController, productFiltersController, productCountController, productListController } from "../controllers/productController";
 import productModel from "../models/productModel";
 
 // Mock productModel 
@@ -352,3 +352,64 @@ describe("productFiltersController", () => {
     logSpy.mockRestore();
   });
 });
+
+describe("productCountController", () => {
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  // Test 1 - Success case
+  test("should return 200 and product count on success", async () => {
+    // Arrange
+    const res = makeRes();
+    const req = {};
+
+    const fakeCount = 100;
+
+    // Build the chained query mock:
+    // find().estimatedDocumentCount -> resolves to fakeCount
+    const estimatedDocumentCountMock = jest.fn().mockResolvedValue(fakeCount);
+    productModel.find.mockReturnValue({ estimatedDocumentCount: estimatedDocumentCountMock });
+
+    // Act
+    await productCountController(req, res);
+
+    // Assert - response
+    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.send).toHaveBeenCalledWith({
+      success: true,
+      total: fakeCount,
+    });
+
+    // Assert - query chain was called as expected 
+    expect(productModel.find).toHaveBeenCalledWith({});
+    expect(estimatedDocumentCountMock).toHaveBeenCalledWith();
+
+  });
+
+  // Test 2 - error path on model issue
+  test("should return 400 and error payload when model throws", async () => {
+    // Arrange
+    const res = makeRes();
+    const req = {};
+
+    const err = new Error("db blew up");
+    // Make find throw immediately 
+    productModel.find.mockImplementation(() => {
+      throw err;
+    });
+    
+    // Act
+    await productCountController(req, res);
+
+    // Assert
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.send).toHaveBeenCalledWith({
+      success: false,
+      message: "Error in product count",
+      error: "db blew up",
+    });
+
+  });
+});
+

@@ -134,7 +134,7 @@ export const productPhotoController = async (req, res) => {
   }
 };
 
-//delete controller
+// delete controller
 export const deleteProductController = async (req, res) => {
   try {
     await productModel.findByIdAndDelete(req.params.pid).select("-photo");
@@ -152,7 +152,7 @@ export const deleteProductController = async (req, res) => {
   }
 };
 
-//upate producta
+// update product
 export const updateProductController = async (req, res) => {
   try {
     const { name, description, price, category, quantity, shipping } =
@@ -235,7 +235,7 @@ export const productCountController = async (req, res) => {
     console.log(error);
     res.status(400).send({
       message: "Error in product count",
-      error,
+      error: error.message,
       success: false,
     });
   }
