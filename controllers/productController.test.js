@@ -249,3 +249,106 @@ describe("productPhotoController", () => {
   });
 });
 });
+
+describe("productFiltersController", () => {
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  test("should filter by category when checked is non-empty and radio is empty", async () => {
+    // Arrange
+    const req = { body: { checked: ["cat1", "cat2"], radio: [] } };
+    const res = makeRes();
+
+    const fakeProducts = [{ _id: "p1" }];
+    productModel.find.mockResolvedValue(fakeProducts);
+
+    // Act
+    await productFiltersController(req, res);
+
+    // Assert
+    expect(productModel.find).toHaveBeenCalledWith({ category: ["cat1", "cat2"] });
+    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.send).toHaveBeenCalledWith({ success: true, products: fakeProducts });
+  });
+
+  test("should filter by price when radio has range and checked is empty", async () => {
+    // Arrange
+    const req = { body: { checked: [], radio: [10, 50] } };
+    const res = makeRes();
+
+    const fakeProducts = [{ _id: "p2" }];
+    productModel.find.mockResolvedValue(fakeProducts);
+
+    // Act
+    await productFiltersController(req, res);
+
+    // Assert
+    expect(productModel.find).toHaveBeenCalledWith({
+      price: { $gte: 10, $lte: 50 },
+    });
+    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.send).toHaveBeenCalledWith({ success: true, products: fakeProducts });
+  });
+
+  test("should filter by both category and price when both checked and radio are provided", async () => {
+    // Arrange
+    const req = { body: { checked: ["cat1"], radio: [100, 200] } };
+    const res = makeRes();
+
+    const fakeProducts = [{ _id: "p3" }];
+    productModel.find.mockResolvedValue(fakeProducts);
+
+    // Act
+    await productFiltersController(req, res);
+
+    // Assert
+    expect(productModel.find).toHaveBeenCalledWith({
+      category: ["cat1"],
+      price: { $gte: 100, $lte: 200 },
+    });
+    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.send).toHaveBeenCalledWith({ success: true, products: fakeProducts });
+  });
+
+  test("should pass empty args when checked and radio are both empty", async () => {
+    // Arrange
+    const req = { body: { checked: [], radio: [] } };
+    const res = makeRes();
+
+    const fakeProducts = [];
+    productModel.find.mockResolvedValue(fakeProducts);
+
+    // Act
+    await productFiltersController(req, res);
+
+    // Assert
+    expect(productModel.find).toHaveBeenCalledWith({});
+    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.send).toHaveBeenCalledWith({ success: true, products: fakeProducts });
+  });
+
+  test("should return 400 when model throws", async () => {
+    // Arrange
+    const req = { body: { checked: ["cat1"], radio: [1, 2] } };
+    const res = makeRes();
+
+    const err = new Error("db blew up");
+    productModel.find.mockRejectedValue(err);
+
+    const logSpy = jest.spyOn(console, "log").mockImplementation(() => {});
+
+    // Act
+    await productFiltersController(req, res);
+
+    // Assert
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.send).toHaveBeenCalledWith({
+      success: false,
+      message: "Error while filtering products",
+      error: "db blew up", 
+    });
+
+    logSpy.mockRestore();
+  });
+});
