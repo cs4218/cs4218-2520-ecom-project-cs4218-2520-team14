@@ -59,8 +59,8 @@ const Search = () => {
                     </div>
 
                     <p className="card-text text-muted small mb-3">
-                      {(p.description || "").substring(0, 60)}
-                      {(p.description || "").length > 60 ? "..." : ""}
+                      {p.description.substring(0, 60)}
+                      {p.description.length > 60 ? "..." : ""}
                     </p>
 
                     <div className="mt-auto d-flex gap-2">
