@@ -4,7 +4,6 @@ import {
   waitFor,
   fireEvent,
   within,
-  act,
   waitForElementToBeRemoved,
 } from "@testing-library/react";
 

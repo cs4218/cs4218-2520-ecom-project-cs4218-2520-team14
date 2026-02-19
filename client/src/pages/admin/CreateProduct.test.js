@@ -1,4 +1,5 @@
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import CreateProduct from "./CreateProduct";
 import { MemoryRouter, Routes, Route, useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -15,6 +16,25 @@ jest.mock("react-router-dom", () => ({
 jest.mock("./../../components/Layout", () => ({ children }) => (
   <main>{children}</main>
 ));
+jest.mock("antd", () => {
+  const Select = ({ children, onChange, placeholder }) => (
+    <select
+      data-testid="test-select"
+      placeholder={placeholder}
+      onChange={(e) => onChange(e.target.value)}
+    >
+      {children}
+    </select>
+  );
+
+  Select.Option = ({ children, value }) => (
+    <option value={value} data-testid="test-selection">
+      {children}
+    </option>
+  );
+
+  return { ...jest.requireActual("antd"), Select };
+});
 
 const renderCreateProduct = () =>
   render(
@@ -39,13 +59,13 @@ describe("CreateProduct Component", () => {
     renderCreateProduct();
 
     await screen.findByRole("heading", { name: "Create Product" });
-    await screen.findByText("Select a category");
+    await screen.findByPlaceholderText("Select a category");
     await screen.findByLabelText("Upload Photo");
     await screen.findByPlaceholderText("write a name");
     await screen.findByPlaceholderText("write a description");
     await screen.findByPlaceholderText("write a price");
     await screen.findByPlaceholderText("write a quantity");
-    await screen.findByText("Select Shipping");
+    await screen.findByPlaceholderText("Select Shipping");
     await screen.findByRole("button", { name: "CREATE PRODUCT" });
   });
 
@@ -68,19 +88,34 @@ describe("CreateProduct Component", () => {
   });
 
   it("should submit form correctly", async () => {
-    axios.get.mockResolvedValue({ data: { category: [] } });
+    const category = { _id: "0", name: "Test Category" };
+    const file = new File(["test"], "test.png", { type: "image/png" });
+    axios.get.mockResolvedValue({
+      data: { success: true, category: [category] },
+    });
     const data = {
+      category: category._id,
+      photo: file,
       name: "Test Product",
       description: "This is a test product",
       price: "9.99",
       quantity: "10",
+      shipping: "1",
     };
     axios.post.mockResolvedValue({ data: { success: true } });
     const mockNavigate = jest.fn();
     useNavigate.mockReturnValue(mockNavigate);
+    global.URL.createObjectURL = jest.fn(() => "blob:http://localhost/test");
 
     renderCreateProduct();
 
+    await screen.findByText(category.name);
+    fireEvent.change((await screen.findAllByTestId("test-select"))[0], {
+      target: { value: data.category },
+    });
+    fireEvent.change(await screen.findByLabelText("Upload Photo"), {
+      target: { files: [data.photo] },
+    });
     fireEvent.change(await screen.findByPlaceholderText("write a name"), {
       target: { value: data.name },
     });
@@ -94,6 +129,9 @@ describe("CreateProduct Component", () => {
     fireEvent.change(await screen.findByPlaceholderText("write a quantity"), {
       target: { value: data.quantity },
     });
+    fireEvent.change((await screen.findAllByTestId("test-select"))[1], {
+      target: { value: data.shipping },
+    });
     fireEvent.click(
       await screen.findByRole("button", { name: "CREATE PRODUCT" }),
     );
@@ -104,13 +142,15 @@ describe("CreateProduct Component", () => {
         expect.any(FormData),
       );
     });
+    expect(axios.post.mock.calls[0][1].get("category")).toBe(category._id);
+    expect(axios.post.mock.calls[0][1].get("photo")).toBe(file);
     expect(axios.post.mock.calls[0][1].get("name")).toBe(data.name);
     expect(axios.post.mock.calls[0][1].get("description")).toBe(
       data.description,
     );
     expect(axios.post.mock.calls[0][1].get("price")).toBe(data.price);
     expect(axios.post.mock.calls[0][1].get("quantity")).toBe(data.quantity);
-    expect(mockNavigate).toHaveBeenCalledWith("/dashboard/admin/products");
+    expect(axios.post.mock.calls[0][1].get("shipping")).toBe(data.shipping);
     expect(toast.success).toHaveBeenCalledWith("Product Created Successfully");
   });
 
