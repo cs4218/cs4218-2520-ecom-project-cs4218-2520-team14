@@ -255,3 +255,22 @@ export const orderStatusController = async (req, res) => {
     });
   }
 };
+
+// get all users (admin)
+export const getAllUsersController = async (req, res) => {
+  try {
+    const users = await userModel
+      .find({})
+      .select("-password")
+      .sort({ createdAt: -1 });
+
+    return res.status(200).send(users);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send({
+      success: false,
+      message: "Error while getting users",
+      error,
+    });
+  }
+};
