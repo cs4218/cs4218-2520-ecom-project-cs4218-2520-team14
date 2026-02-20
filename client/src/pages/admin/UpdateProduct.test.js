@@ -6,7 +6,6 @@ import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import UpdateProduct from "./UpdateProduct";
 import { MemoryRouter, Routes, Route, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
-import { describe } from "node:test";
 
 jest.mock("axios");
 jest.mock("react-hot-toast");
