@@ -1,4 +1,5 @@
-// controllers/auth.testController.test.js
+//Name: Shauryan Agrawal
+//Student ID: A0265846N
 
 import { testController } from "./authController.js";
 
