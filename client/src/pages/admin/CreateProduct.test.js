@@ -1,5 +1,6 @@
+// Jonas Ong, A0252052U
+
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
 import CreateProduct from "./CreateProduct";
 import { MemoryRouter, Routes, Route, useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -113,6 +114,20 @@ describe("CreateProduct Component", () => {
     expect(toast.error).toHaveBeenCalledWith(
       "Something went wrong in getting category",
     );
+  });
+
+  it("should show photo when uploaded", async () => {
+    const file = new File(["test"], "test.png", { type: "image/png" });
+    global.URL.createObjectURL = jest.fn(() => "blob:http://localhost/test");
+    axios.get.mockResolvedValue({ data: { category: [] } });
+
+    renderCreateProduct();
+
+    const input = await screen.findByLabelText("Upload Photo");
+    fireEvent.change(input, { target: { files: [file] } });
+
+    const img = await screen.findByAltText("product_photo");
+    expect(img).toHaveAttribute("src", "blob:http://localhost/test");
   });
 
   it("should submit form correctly", async () => {

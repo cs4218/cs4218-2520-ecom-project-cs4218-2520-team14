@@ -19,7 +19,7 @@ describe("Category Controller", () => {
     jest.clearAllMocks();
   });
 
-  describe("(New)", () => {
+  describe("(Create)", () => {
     it("should error when creating a category without a name", async () => {
       const req = { body: {} };
 
