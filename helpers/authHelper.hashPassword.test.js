@@ -1,3 +1,6 @@
+//Name: Shauryan Agrawal
+//Student ID: A0265846N
+
 import bcrypt from "bcrypt";
 import { hashPassword } from "./authHelper.js";
 
