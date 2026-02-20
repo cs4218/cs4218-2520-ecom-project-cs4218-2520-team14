@@ -2,6 +2,7 @@ import bcrypt from "bcrypt";
 
 const SALT_ROUNDS = 10;
 
+
 export const hashPassword = async (password) => {
   if (typeof password !== "string" || password.length === 0) {
     throw new Error("Password must be a non-empty string");
