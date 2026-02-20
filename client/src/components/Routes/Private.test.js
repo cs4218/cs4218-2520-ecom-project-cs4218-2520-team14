@@ -1,9 +1,9 @@
-import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import Private from "./Private";
 import { MemoryRouter, Routes, Route } from "react-router-dom";
 import { useAuth } from "../../context/auth";
-import React from "react";
 import axios from "axios";
+import React from "react";
 
 jest.mock("axios");
 jest.mock("../../context/auth");
