@@ -1,5 +1,6 @@
+// Jonas Ong, A0252052U
+
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
 import CreateProduct from "./CreateProduct";
 import { MemoryRouter, Routes, Route, useNavigate } from "react-router-dom";
 import axios from "axios";
