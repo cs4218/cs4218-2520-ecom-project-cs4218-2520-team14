@@ -1,5 +1,9 @@
+// Author: Tan Qin Yong A0253468W
+// Includes test files for most Product Controller (under Product feature in scope)
+
 import { getProductController, getSingleProductController, productPhotoController, 
-  productFiltersController, productCountController, productListController } from "../controllers/productController";
+  productFiltersController, productCountController, productListController,
+  searchProductController } from "../controllers/productController";
 import productModel from "../models/productModel";
 
 // Mock productModel 
@@ -18,6 +22,7 @@ function makeRes() {
   res.status = jest.fn().mockReturnValue(res);
   res.send = jest.fn().mockReturnValue(res);
   res.set = jest.fn().mockReturnValue(res); 
+  res.json = jest.fn().mockReturnValue(res);
   return res;
 }
 
@@ -498,6 +503,65 @@ describe("productListController", () => {
     expect(res.send).toHaveBeenCalledWith({
       success: false,
       message: "error in per page ctrl",
+      error: "db blew up", 
+    });
+
+    logSpy.mockRestore();
+  });
+});
+
+describe("searchProductController", () => {
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  test("should return json results when search succeeds", async () => {
+    // Arrange
+    const req = { params: { keyword: "shoe" } };
+    const res = makeRes();
+
+    const fakeResults = [{ _id: "p1", name: "Running Shoe" }];
+
+    // find().select() -> resolves fakeResults
+    const selectMock = jest.fn().mockResolvedValue(fakeResults);
+    productModel.find.mockReturnValue({ select: selectMock });
+
+    // Act
+    await searchProductController(req, res);
+
+    // Assert query object
+    expect(productModel.find).toHaveBeenCalledWith({
+      $or: [
+        { name: { $regex: "shoe", $options: "i" } },
+        { description: { $regex: "shoe", $options: "i" } },
+      ],
+    });
+    expect(selectMock).toHaveBeenCalledWith("-photo");
+
+    // Assert response
+    expect(res.json).toHaveBeenCalledWith(fakeResults);
+  });
+
+  test("should return 400 when model throws", async () => {
+    // Arrange
+    const req = { params: { keyword: "shoe" } };
+    const res = makeRes();
+
+    const err = new Error("db blew up");
+    productModel.find.mockImplementation(() => {
+      throw err;
+    });
+
+    const logSpy = jest.spyOn(console, "log").mockImplementation(() => {});
+
+    // Act
+    await searchProductController(req, res);
+
+    // Assert
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.send).toHaveBeenCalledWith({
+      success: false,
+      message: "Error In Search Product API",
       error: "db blew up", 
     });
 
