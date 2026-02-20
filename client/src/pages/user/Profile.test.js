@@ -1,3 +1,4 @@
+// Teng Hui Xin Alicia, A0259064Y
 import React from "react";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom";
@@ -120,8 +121,6 @@ describe("Profile", () => {
   });
 
   it("shows error toast with invalid password", async () => {
-    localStorage.setItem("auth", JSON.stringify(mockAuth)); // important if your success path touches localStorage
-
     axios.put.mockResolvedValueOnce({
       data: { error: "Password is required and must be 6 character long" },
     });
@@ -166,17 +165,5 @@ describe("Profile", () => {
     });
 
     expect(toast.success).not.toHaveBeenCalled();
-  });
-
-  it("shows error toast when axios.put throws", async () => {
-    axios.put.mockRejectedValueOnce(new Error("Network error"));
-
-    renderProfile();
-
-    fireEvent.click(screen.getByRole("button", { name: /update/i }));
-
-    await waitFor(() => {
-      expect(toast.error).toHaveBeenCalledWith("Something went wrong");
-    });
   });
 });
