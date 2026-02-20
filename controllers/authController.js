@@ -4,7 +4,8 @@ import { comparePassword, hashPassword } from "./../helpers/authHelper.js";
 import JWT from "jsonwebtoken";
 
 
-
+//Name: Shauryan Agrawal
+//Student ID: A0265846N
 /* ---------------- REGISTER ---------------- */
 export const registerController = async (req, res) => {
   try {
@@ -58,6 +59,8 @@ export const registerController = async (req, res) => {
   }
 };
 
+//Name: Shauryan Agrawal
+//Student ID: A0265846N
 /* ---------------- LOGIN ---------------- */
 export const loginController = async (req, res) => {
   try {
@@ -118,6 +121,8 @@ export const loginController = async (req, res) => {
   }
 };
 
+//Name: Shauryan Agrawal
+//Student ID: A0265846N
 /* ---------------- FORGOT PASSWORD ---------------- */
 export const forgotPasswordController = async (req, res) => {
   try {
@@ -154,6 +159,8 @@ export const forgotPasswordController = async (req, res) => {
   }
 };
 
+//Name: Shauryan Agrawal
+//Student ID: A0265846N
 /* ---------------- TEST CONTROLLER ---------------- */
 export const testController = (req, res) => {
   return res.send("Protected Routes");
