@@ -1,3 +1,6 @@
+//Name: Shauryan Agrawal
+//Student ID: A0265846N
+
 import JWT from "jsonwebtoken";
 import { requireSignIn } from "./authMiddleware.js";
 

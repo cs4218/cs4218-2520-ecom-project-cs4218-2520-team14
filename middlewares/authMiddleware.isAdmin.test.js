@@ -1,3 +1,6 @@
+//Name: Shauryan Agrawal
+//Student ID: A0265846N
+
 import userModel from "../models/userModel.js";
 import { isAdmin } from "./authMiddleware.js";
 
