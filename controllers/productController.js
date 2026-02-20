@@ -323,6 +323,12 @@ export const relatedProductController = async (req, res) => {
 export const productCategoryController = async (req, res) => {
   try {
     const category = await categoryModel.findOne({ slug: req.params.slug });
+    if (!category) {
+      return res.status(404).send({
+        success: false,
+        message: "Category not found",
+      });
+    }
     const products = await productModel.find({ category }).populate("category");
     res.status(200).send({
       success: true,
@@ -333,7 +339,7 @@ export const productCategoryController = async (req, res) => {
     console.log(error);
     res.status(400).send({
       success: false,
-      error,
+      error: error.message,
       message: "Error While Getting products",
     });
   }

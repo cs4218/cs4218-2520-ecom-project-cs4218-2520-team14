@@ -3,8 +3,9 @@
 
 import { getProductController, getSingleProductController, productPhotoController, 
   productFiltersController, productCountController, productListController,
-  searchProductController, relatedProductController } from "../controllers/productController";
+  searchProductController, relatedProductController, productCategoryController } from "../controllers/productController";
 import productModel from "../models/productModel";
+import categoryModel from "../models/categoryModel";
 
 // Mock productModel 
 jest.mock("../models/productModel", () => ({
@@ -14,6 +15,12 @@ jest.mock("../models/productModel", () => ({
         findOne: jest.fn(),
         findById: jest.fn()
     },
+}));
+
+// Mock categoryModel
+jest.mock("../models/categoryModel", () => ({
+  __esModule: true,
+  default: { findOne: jest.fn() },
 }));
 
 // Helper to create an Express-like res object
@@ -39,9 +46,6 @@ afterEach(() => {
 });
 
 describe("getProductController", () => {
-  afterEach(() => {
-    jest.clearAllMocks();
-  });
 
   // Test 1 - Success case
   test("should return 200 and products payload on success", async () => {
@@ -109,10 +113,6 @@ describe("getProductController", () => {
 });
 
 describe("getSingleProductController", () => {
-  afterEach(() => {
-    jest.clearAllMocks();
-  });
-
   // Test 1 - Success case
   test("should return 200 and single product payload on success", async () => {
     // Arrange
@@ -172,9 +172,6 @@ describe("getSingleProductController", () => {
 });
 
 describe("productPhotoController", () => {
-  afterEach(() => {
-    jest.clearAllMocks();
-  });
 
   // Test 1 - Success case
   test("should return 200 and products photo data on success", async () => {
@@ -257,9 +254,6 @@ describe("productPhotoController", () => {
 });
 
 describe("productFiltersController", () => {
-  afterEach(() => {
-    jest.clearAllMocks();
-  });
 
   test("should filter by category when checked is non-empty and radio is empty", async () => {
     // Arrange
@@ -360,9 +354,6 @@ describe("productFiltersController", () => {
 });
 
 describe("productCountController", () => {
-  afterEach(() => {
-    jest.clearAllMocks();
-  });
 
   // Test 1 - Success case
   test("should return 200 and product count on success", async () => {
@@ -420,9 +411,6 @@ describe("productCountController", () => {
 });
 
 describe("productListController", () => {
-  afterEach(() => {
-    jest.clearAllMocks();
-  });
 
   test("should return 200 and products for a given page", async () => {
     // Arrange
@@ -511,9 +499,6 @@ describe("productListController", () => {
 });
 
 describe("searchProductController", () => {
-  afterEach(() => {
-    jest.clearAllMocks();
-  });
 
   test("should return json results when search succeeds", async () => {
     // Arrange
@@ -570,9 +555,6 @@ describe("searchProductController", () => {
 });
 
 describe("relatedProductController", () => {
-  afterEach(() => {
-    jest.clearAllMocks();
-  });
 
   test("should return 200 and related products on success", async () => {
     // Arrange
@@ -646,6 +628,114 @@ describe("relatedProductController", () => {
       success: false,
       message: "error while getting related product",
       error: "db blew up", 
+    });
+
+    logSpy.mockRestore();
+  });
+});
+
+describe("productCategoryController", () => {
+
+  test("should return 200 with category and products on success", async () => {
+    // Arrange
+    const req = { params: { slug: "tshirts" } };
+    const res = makeRes();
+
+    const fakeCategory = { _id: "c1", name: "T-Shirts", slug: "tshirts" };
+    const fakeProducts = [{ _id: "p1" }, { _id: "p2" }];
+
+    categoryModel.findOne.mockResolvedValue(fakeCategory);
+
+    const populateMock = jest.fn().mockResolvedValue(fakeProducts);
+    productModel.find.mockReturnValue({ populate: populateMock });
+
+    // Act
+    await productCategoryController(req, res);
+
+    // Assert - model calls
+    expect(categoryModel.findOne).toHaveBeenCalledWith({ slug: "tshirts" });
+    expect(productModel.find).toHaveBeenCalledWith({ category: fakeCategory });
+    expect(populateMock).toHaveBeenCalledWith("category");
+
+    // Assert - response
+    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.send).toHaveBeenCalledWith({
+      success: true,
+      category: fakeCategory,
+      products: fakeProducts,
+    });
+  });
+
+  test("should return 404 when category is not found", async () => {
+    // Arrange
+    const req = { params: { slug: "does-not-exist" } };
+    const res = makeRes();
+
+    categoryModel.findOne.mockResolvedValue(null);
+
+    // Act
+    await productCategoryController(req, res);
+
+    // Assert
+    expect(categoryModel.findOne).toHaveBeenCalledWith({ slug: "does-not-exist" });
+
+    expect(res.status).toHaveBeenCalledWith(404);
+    expect(res.send).toHaveBeenCalledWith({
+      success: false,
+      message: "Category not found",
+    });
+
+    expect(productModel.find).not.toHaveBeenCalled();
+  });
+
+  test("should return 400 when categoryModel throws", async () => {
+    // Arrange
+    const req = { params: { slug: "tshirts" } };
+    const res = makeRes();
+
+    const err = new Error("db blew up");
+    categoryModel.findOne.mockRejectedValue(err);
+
+    const logSpy = jest.spyOn(console, "log").mockImplementation(() => {});
+
+    // Act
+    await productCategoryController(req, res);
+
+    // Assert
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.send).toHaveBeenCalledWith({
+      success: false,
+      error: "db blew up", 
+      message: "Error While Getting products",
+    });
+
+    logSpy.mockRestore();
+  });
+
+  test("should return 400 when productModel throws", async () => {
+    // Arrange
+    const req = { params: { slug: "tshirts" } };
+    const res = makeRes();
+
+    const fakeCategory = { _id: "c1", name: "T-Shirts", slug: "tshirts" };
+    categoryModel.findOne.mockResolvedValue(fakeCategory);
+
+    const err = new Error("db blew up");
+    productModel.find.mockImplementation(() => {
+      throw err;
+    });
+
+    const logSpy = jest.spyOn(console, "log").mockImplementation(() => {});
+
+    // Act
+    await productCategoryController(req, res);
+
+    // Assert
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.send).toHaveBeenCalledWith({
+      success: false,
+      error: "db blew up",
+      message: "Error While Getting products",
     });
 
     logSpy.mockRestore();
