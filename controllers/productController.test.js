@@ -3,7 +3,7 @@
 
 import { getProductController, getSingleProductController, productPhotoController, 
   productFiltersController, productCountController, productListController,
-  searchProductController } from "../controllers/productController";
+  searchProductController, relatedProductController } from "../controllers/productController";
 import productModel from "../models/productModel";
 
 // Mock productModel 
@@ -562,6 +562,89 @@ describe("searchProductController", () => {
     expect(res.send).toHaveBeenCalledWith({
       success: false,
       message: "Error In Search Product API",
+      error: "db blew up", 
+    });
+
+    logSpy.mockRestore();
+  });
+});
+
+describe("relatedProductController", () => {
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  test("should return 200 and related products on success", async () => {
+    // Arrange
+    const req = { params: { pid: "p1", cid: "c1" } };
+    const res = makeRes();
+
+    const fakeProducts = [{ _id: "p2" }, { _id: "p3" }];
+
+    // find().select().limit().populate() -> resolves fakeProducts
+    const populateMock = jest.fn().mockResolvedValue(fakeProducts);
+    const limitMock = jest.fn(() => ({ populate: populateMock }));
+    const selectMock = jest.fn(() => ({ limit: limitMock }));
+    productModel.find.mockReturnValue({ select: selectMock });
+
+    // Act
+    await relatedProductController(req, res);
+
+    // Assert - query chain
+    expect(productModel.find).toHaveBeenCalledWith({
+      category: "c1",
+      _id: { $ne: "p1" },
+    });
+    expect(selectMock).toHaveBeenCalledWith("-photo");
+    expect(limitMock).toHaveBeenCalledWith(3);
+    expect(populateMock).toHaveBeenCalledWith("category");
+
+    // Assert - response
+    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.send).toHaveBeenCalledWith({
+      success: true,
+      products: fakeProducts,
+    });
+  });
+
+  test("should return 400 when pid or cid is missing (validation)", async () => {
+    // Arrange: missing pid
+    const req = { params: { cid: "c1" } };
+    const res = makeRes();
+
+    // Act
+    await relatedProductController(req, res);
+
+    // Assert
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.send).toHaveBeenCalledWith({
+      success: false,
+      message: "pid and cid are required",
+    });
+
+    expect(productModel.find).not.toHaveBeenCalled();
+  });
+
+  test("should return 400 and error message when model throws", async () => {
+    // Arrange
+    const req = { params: { pid: "p1", cid: "c1" } };
+    const res = makeRes();
+
+    const err = new Error("db blew up");
+    productModel.find.mockImplementation(() => {
+      throw err;
+    });
+
+    const logSpy = jest.spyOn(console, "log").mockImplementation(() => {});
+
+    // Act
+    await relatedProductController(req, res);
+
+    // Assert
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.send).toHaveBeenCalledWith({
+      success: false,
+      message: "error while getting related product",
       error: "db blew up", 
     });
 

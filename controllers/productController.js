@@ -290,9 +290,13 @@ export const searchProductController = async (req, res) => {
 };
 
 // similar products
-export const realtedProductController = async (req, res) => {
+export const relatedProductController = async (req, res) => {
   try {
     const { pid, cid } = req.params;
+    if (!pid || !cid) return res.status(400).send({
+      success: false,
+      message: "pid and cid are required",
+    });
     const products = await productModel
       .find({
         category: cid,
@@ -309,8 +313,8 @@ export const realtedProductController = async (req, res) => {
     console.log(error);
     res.status(400).send({
       success: false,
-      message: "error while geting related product",
-      error,
+      message: "error while getting related product",
+      error: error.message,
     });
   }
 };
