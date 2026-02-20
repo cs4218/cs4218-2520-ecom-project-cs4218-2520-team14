@@ -17,17 +17,15 @@ const Login = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  
-  // Many apps set location.state = { from: "/somewhere" } or { from: { pathname: "/..." } }
+
   const getRedirectPath = () => {
     const state = location?.state;
 
     if (!state) return "/";
 
-    // If someone passed a string directly
+
     if (typeof state === "string") return state;
 
-    // Common patterns: { from: "/path" } or { from: { pathname: "/path" } }
     const from = state?.from;
 
     if (typeof from === "string") return from;
@@ -39,7 +37,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // ✅ prevent double submit
+    // prevent double submit
     if (isSubmitting) return;
 
     setIsSubmitting(true);
@@ -66,7 +64,7 @@ const Login = () => {
 
         setAuth(nextAuth);
 
-        // ✅ store only what you need (stable + smaller)
+        //store only what you need (stable + smaller)
         localStorage.setItem(
           "auth",
           JSON.stringify({ user: res.data.user, token: res.data.token })

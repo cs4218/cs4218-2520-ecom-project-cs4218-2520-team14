@@ -1,3 +1,6 @@
+//Name: Shauryan Agrawal
+//Student ID: A0265846N
+
 import React from "react";
 import { render, fireEvent, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
@@ -34,24 +37,28 @@ jest.mock("react-router-dom", () => {
   };
 });
 
-describe("Login.js (minimal coverage aligned with current implementation)", () => {
+describe("Login.js (minimal aligned with current Login.js)", () => {
   beforeEach(() => {
     jest.clearAllMocks();
     mockLocationState = null;
 
-    // Silence console.log from catch branch
-    jest.spyOn(console, "log").mockImplementation(() => {});
+    // silence console.error from catch branch
+    jest.spyOn(console, "error").mockImplementation(() => {});
 
     // localStorage spy
     jest.spyOn(Storage.prototype, "setItem").mockImplementation(() => {});
   });
 
   afterEach(() => {
-    console.log.mockRestore();
+    console.error.mockRestore();
     Storage.prototype.setItem.mockRestore();
   });
 
-  const fillFields = (container, email = "john@test.com", password = "pass123") => {
+  const fillFields = (
+    container,
+    email = "john@test.com",
+    password = "pass123"
+  ) => {
     fireEvent.change(container.querySelector("#exampleInputEmail1"), {
       target: { value: email },
     });
@@ -60,31 +67,29 @@ describe("Login.js (minimal coverage aligned with current implementation)", () =
     });
   };
 
-  it("renders inputs and buttons", () => {
+  it("renders inputs + buttons", () => {
     const { container, getByText } = render(<Login />);
-
     expect(container.querySelector("#exampleInputEmail1")).toBeInTheDocument();
     expect(container.querySelector("#exampleInputPassword1")).toBeInTheDocument();
-
     expect(getByText("Forgot Password")).toBeInTheDocument();
     expect(getByText("LOGIN")).toBeInTheDocument();
   });
 
-  it("Forgot Password button navigates to /forgot-password", () => {
+  it("Forgot Password navigates to /forgot-password", () => {
     const { getByText } = render(<Login />);
     fireEvent.click(getByText("Forgot Password"));
     expect(mockNavigate).toHaveBeenCalledWith("/forgot-password");
   });
 
-  it("success (no location.state): shows success toast, sets auth, stores full res.data, navigates to /", async () => {
-    const serverData = {
-      success: true,
-      message: "Welcome back",
-      user: { name: "John" },
-      token: "token123",
-    };
-
-    axios.post.mockResolvedValueOnce({ data: serverData });
+  it("success: uses server message, stores {user, token}, navigates to / (no state)", async () => {
+    axios.post.mockResolvedValueOnce({
+      data: {
+        success: true,
+        message: "Welcome back",
+        user: { name: "John" },
+        token: "token123",
+      },
+    });
 
     const { container } = render(<Login />);
     fillFields(container);
@@ -93,12 +98,6 @@ describe("Login.js (minimal coverage aligned with current implementation)", () =
 
     await waitFor(() => expect(axios.post).toHaveBeenCalledTimes(1));
 
-    expect(axios.post).toHaveBeenCalledWith("/api/v1/auth/login", {
-      email: "john@test.com",
-      password: "pass123",
-    });
-
-    // Exactly how your Login.js calls it: (message, optionsObject)
     expect(toast.success).toHaveBeenCalledWith(
       "Welcome back",
       expect.any(Object)
@@ -111,17 +110,39 @@ describe("Login.js (minimal coverage aligned with current implementation)", () =
       })
     );
 
-    // Your code stores JSON.stringify(res.data) (full payload)
+    // NEW behavior: store only { user, token }
     expect(Storage.prototype.setItem).toHaveBeenCalledWith(
       "auth",
-      JSON.stringify(serverData)
+      JSON.stringify({ user: { name: "John" }, token: "token123" })
     );
 
-    // Your code: navigate(location.state || "/")
+    // NEW behavior: getRedirectPath() -> "/" when no state
     expect(mockNavigate).toHaveBeenCalledWith("/");
   });
 
-  it("success (location.state is string): navigates to that state", async () => {
+  it('success: no message => uses fallback "Login successful"', async () => {
+    axios.post.mockResolvedValueOnce({
+      data: {
+        success: true,
+        user: { name: "John" },
+        token: "token123",
+      },
+    });
+
+    const { container } = render(<Login />);
+    fillFields(container);
+
+    fireEvent.submit(container.querySelector("form"));
+
+    await waitFor(() => expect(axios.post).toHaveBeenCalledTimes(1));
+
+    expect(toast.success).toHaveBeenCalledWith(
+      "Login successful",
+      expect.any(Object)
+    );
+  });
+
+  it("redirect: location.state is string", async () => {
     mockLocationState = "/cart";
 
     axios.post.mockResolvedValueOnce({
@@ -137,9 +158,11 @@ describe("Login.js (minimal coverage aligned with current implementation)", () =
     expect(mockNavigate).toHaveBeenCalledWith("/cart");
   });
 
-  it("failed login: shows server error message", async () => {
+  it("redirect: location.state.from is string", async () => {
+    mockLocationState = { from: "/profile" };
+
     axios.post.mockResolvedValueOnce({
-      data: { success: false, message: "Invalid credentials" },
+      data: { success: true, message: "ok", user: {}, token: "t" },
     });
 
     const { container } = render(<Login />);
@@ -148,11 +171,53 @@ describe("Login.js (minimal coverage aligned with current implementation)", () =
     fireEvent.submit(container.querySelector("form"));
 
     await waitFor(() => expect(axios.post).toHaveBeenCalledTimes(1));
+    expect(mockNavigate).toHaveBeenCalledWith("/profile");
+  });
 
-    // Your code: toast.error(res.data.message)
-    expect(toast.error).toHaveBeenCalledWith("Invalid credentials");
+  it("redirect: location.state.from.pathname is string", async () => {
+    mockLocationState = { from: { pathname: "/admin" } };
 
-    // Should not navigate in this branch
+    axios.post.mockResolvedValueOnce({
+      data: { success: true, message: "ok", user: {}, token: "t" },
+    });
+
+    const { container } = render(<Login />);
+    fillFields(container);
+
+    fireEvent.submit(container.querySelector("form"));
+
+    await waitFor(() => expect(axios.post).toHaveBeenCalledTimes(1));
+    expect(mockNavigate).toHaveBeenCalledWith("/admin");
+  });
+
+  it("redirect: weird state object => fallback to /", async () => {
+    mockLocationState = { from: { notPathname: "/nope" } };
+
+    axios.post.mockResolvedValueOnce({
+      data: { success: true, message: "ok", user: {}, token: "t" },
+    });
+
+    const { container } = render(<Login />);
+    fillFields(container);
+
+    fireEvent.submit(container.querySelector("form"));
+
+    await waitFor(() => expect(axios.post).toHaveBeenCalledTimes(1));
+    expect(mockNavigate).toHaveBeenCalledWith("/");
+  });
+
+  it("failed login: shows fallback error when no message", async () => {
+    axios.post.mockResolvedValueOnce({
+      data: { success: false }, // no message
+    });
+
+    const { container } = render(<Login />);
+    fillFields(container);
+
+    fireEvent.submit(container.querySelector("form"));
+
+    await waitFor(() => expect(axios.post).toHaveBeenCalledTimes(1));
+    expect(toast.error).toHaveBeenCalledWith("Login failed");
     expect(mockNavigate).not.toHaveBeenCalled();
   });
 
@@ -165,8 +230,18 @@ describe("Login.js (minimal coverage aligned with current implementation)", () =
     fireEvent.submit(container.querySelector("form"));
 
     await waitFor(() => expect(axios.post).toHaveBeenCalledTimes(1));
-
-    // Your code: toast.error("Something went wrong")
     expect(toast.error).toHaveBeenCalledWith("Something went wrong");
+  });
+
+  it("double-submit guard: second submit does not call axios twice", () => {
+    axios.post.mockImplementationOnce(() => new Promise(() => {})); // pending
+
+    const { container } = render(<Login />);
+    fillFields(container);
+
+    fireEvent.submit(container.querySelector("form"));
+    fireEvent.submit(container.querySelector("form"));
+
+    expect(axios.post).toHaveBeenCalledTimes(1);
   });
 });
