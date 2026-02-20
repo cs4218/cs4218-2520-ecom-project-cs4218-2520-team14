@@ -1,4 +1,5 @@
-import { getProductController, getSingleProductController, productPhotoController, productFiltersController, productCountController, productListController } from "../controllers/productController";
+import { getProductController, getSingleProductController, productPhotoController, 
+  productFiltersController, productCountController, productListController } from "../controllers/productController";
 import productModel from "../models/productModel";
 
 // Mock productModel 
@@ -413,3 +414,93 @@ describe("productCountController", () => {
   });
 });
 
+describe("productListController", () => {
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  test("should return 200 and products for a given page", async () => {
+    // Arrange
+    const req = { params: { page: 3 } }; 
+    const res = makeRes();
+
+    const fakeProducts = [{ _id: "p1" }, { _id: "p2" }];
+
+    // find().select().skip().limit().sort() -> resolves fakeProducts
+    const sortMock = jest.fn().mockResolvedValue(fakeProducts);
+    const limitMock = jest.fn(() => ({ sort: sortMock }));
+    const skipMock = jest.fn(() => ({ limit: limitMock }));
+    const selectMock = jest.fn(() => ({ skip: skipMock }));
+    productModel.find.mockReturnValue({ select: selectMock });
+
+    // Act
+    await productListController(req, res);
+
+    // Assert - query chain 
+    expect(productModel.find).toHaveBeenCalledWith({});
+    expect(selectMock).toHaveBeenCalledWith("-photo");
+    expect(skipMock).toHaveBeenCalledWith((3 - 1) * 6); // 12
+    expect(limitMock).toHaveBeenCalledWith(6);
+    expect(sortMock).toHaveBeenCalledWith({ createdAt: -1 });
+
+    // Assert - response
+    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.send).toHaveBeenCalledWith({
+      success: true,
+      products: fakeProducts,
+    });
+  });
+
+  test("should default page to 1 when req.params.page is missing", async () => {
+    // Arrange
+    const req = { params: {} };
+    const res = makeRes();
+
+    const fakeProducts = [];
+    const sortMock = jest.fn().mockResolvedValue(fakeProducts);
+    const limitMock = jest.fn(() => ({ sort: sortMock }));
+    const skipMock = jest.fn(() => ({ limit: limitMock }));
+    const selectMock = jest.fn(() => ({ skip: skipMock }));
+    productModel.find.mockReturnValue({ select: selectMock });
+
+    // Act
+    await productListController(req, res);
+
+    // Assert 
+    expect(skipMock).toHaveBeenCalledWith(0);
+    expect(limitMock).toHaveBeenCalledWith(6);
+
+    // Assert - response
+    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.send).toHaveBeenCalledWith({
+      success: true,
+      products: fakeProducts,
+    });
+  });
+
+  test("should return 400 when model throws", async () => {
+    // Arrange
+    const req = { params: { page: 2 } };
+    const res = makeRes();
+
+    const err = new Error("db blew up");
+    productModel.find.mockImplementation(() => {
+      throw err;
+    });
+
+    const logSpy = jest.spyOn(console, "log").mockImplementation(() => {});
+
+    // Act
+    await productListController(req, res);
+
+    // Assert
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.send).toHaveBeenCalledWith({
+      success: false,
+      message: "error in per page ctrl",
+      error: "db blew up", 
+    });
+
+    logSpy.mockRestore();
+  });
+});
