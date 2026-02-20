@@ -1,5 +1,3 @@
-// Jonas Ong, A0252052U
-
 import {
   render,
   screen,

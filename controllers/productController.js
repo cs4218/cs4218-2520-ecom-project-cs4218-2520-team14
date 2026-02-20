@@ -25,19 +25,19 @@ export const createProductController = async (req, res) => {
     //alidation
     switch (true) {
       case !name:
-        return res.status(400).send({ message: "Name is Required" });
+        return res.status(500).send({ error: "Name is Required" });
       case !description:
-        return res.status(400).send({ message: "Description is Required" });
+        return res.status(500).send({ error: "Description is Required" });
       case !price:
-        return res.status(400).send({ message: "Price is Required" });
+        return res.status(500).send({ error: "Price is Required" });
       case !category:
-        return res.status(400).send({ message: "Category is Required" });
+        return res.status(500).send({ error: "Category is Required" });
       case !quantity:
-        return res.status(400).send({ message: "Quantity is Required" });
+        return res.status(500).send({ error: "Quantity is Required" });
       case photo && photo.size > 1000000:
         return res
           .status(500)
-          .send({ error: "Photo is Required and should be less then 1MB" });
+          .send({ error: "photo is Required and should be less then 1mb" });
     }
 
     const products = new productModel({ ...req.fields, slug: slugify(name) });
@@ -56,7 +56,7 @@ export const createProductController = async (req, res) => {
     res.status(500).send({
       success: false,
       error,
-      message: "Error in creating product",
+      message: "Error in crearing product",
     });
   }
 };
@@ -128,15 +128,7 @@ export const productPhotoController = async (req, res) => {
 //delete controller
 export const deleteProductController = async (req, res) => {
   try {
-    const product = await productModel
-      .findByIdAndDelete(req.params.pid)
-      .select("-photo");
-    if (!product) {
-      return res.status(404).send({
-        success: false,
-        message: "Product not found",
-      });
-    }
+    await productModel.findByIdAndDelete(req.params.pid).select("-photo");
     res.status(200).send({
       success: true,
       message: "Product Deleted successfully",
@@ -160,32 +152,26 @@ export const updateProductController = async (req, res) => {
     //alidation
     switch (true) {
       case !name:
-        return res.status(400).send({ message: "Name is Required" });
+        return res.status(500).send({ error: "Name is Required" });
       case !description:
-        return res.status(400).send({ message: "Description is Required" });
+        return res.status(500).send({ error: "Description is Required" });
       case !price:
-        return res.status(400).send({ message: "Price is Required" });
+        return res.status(500).send({ error: "Price is Required" });
       case !category:
-        return res.status(400).send({ message: "Category is Required" });
+        return res.status(500).send({ error: "Category is Required" });
       case !quantity:
-        return res.status(400).send({ message: "Quantity is Required" });
+        return res.status(500).send({ error: "Quantity is Required" });
       case photo && photo.size > 1000000:
         return res
           .status(500)
-          .send({ error: "Photo is Required and should be less then 1MB" });
+          .send({ error: "photo is Required and should be less then 1mb" });
     }
 
     const products = await productModel.findByIdAndUpdate(
       req.params.pid,
       { ...req.fields, slug: slugify(name) },
-      { new: true },
+      { new: true }
     );
-    if (!products) {
-      return res.status(404).send({
-        success: false,
-        message: "Product not found",
-      });
-    }
     if (photo) {
       products.photo.data = fs.readFileSync(photo.path);
       products.photo.contentType = photo.type;
@@ -201,7 +187,7 @@ export const updateProductController = async (req, res) => {
     res.status(500).send({
       success: false,
       error,
-      message: "Error in updating product",
+      message: "Error in Updte product",
     });
   }
 };
@@ -383,7 +369,7 @@ export const brainTreePaymentController = async (req, res) => {
         } else {
           res.status(500).send(error);
         }
-      },
+      }
     );
   } catch (error) {
     console.log(error);
