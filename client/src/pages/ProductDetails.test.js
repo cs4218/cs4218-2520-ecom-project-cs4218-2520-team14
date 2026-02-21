@@ -1,8 +1,13 @@
+// Author: Tan Qin Yong A0253468W
+
 import React from "react";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import axios from "axios";
 import ProductDetails from "./ProductDetails";
+import toast from "react-hot-toast";
+import { useCart } from "../context/cart";
+import { useParams, useNavigate } from "react-router-dom";
 
 jest.mock("axios");
 
@@ -20,12 +25,25 @@ jest.mock("react-router-dom", () => ({
   useNavigate: jest.fn(),
 }));
 
-import { useParams, useNavigate } from "react-router-dom";
+jest.mock("react-hot-toast", () => ({
+  __esModule: true,
+  default: {
+    success: jest.fn(),
+    error: jest.fn(),
+  },
+}));
+
+const mockSetCart = jest.fn();
+jest.mock("../context/cart", () => ({
+  useCart: jest.fn(),
+}));
 
 describe("ProductDetails", () => {
   beforeEach(() => {
     jest.clearAllMocks();
     useNavigate.mockReturnValue(mockNavigate);
+    useCart.mockReturnValue([[], mockSetCart]);
+    localStorage.clear();
   });
 
   test("renders page skeleton initially (no slug → no fetch)", () => {
@@ -228,6 +246,39 @@ describe("ProductDetails", () => {
 
     logSpy.mockRestore();
   });
+
+  test("clicking ADD TO CART updates cart, localStorage and shows toast", async () => {
+  useParams.mockReturnValue({ slug: "basic-tee" });
+
+  const fakeProduct = {
+    _id: "p1",
+    name: "Basic Tee",
+    description: "Comfy tee",
+    price: 12,
+    category: { _id: "c1", name: "T-Shirts" },
+  };
+
+  axios.get
+    .mockResolvedValueOnce({ data: { product: fakeProduct } })
+    .mockResolvedValueOnce({ data: { products: [] } });
+
+  // start with existing item to verify append
+  const existingCart = [{ _id: "old" }];
+  useCart.mockReturnValue([existingCart, mockSetCart]);
+
+  render(<ProductDetails />);
+
+  // Wait until product is rendered (so button click adds real product)
+  expect(await screen.findByText(/Name\s*:\s*Basic Tee/i)).toBeInTheDocument();
+
+  fireEvent.click(screen.getByRole("button", { name: /add to cart/i }));
+
+  expect(mockSetCart).toHaveBeenCalledWith([...existingCart, fakeProduct]);
+  expect(localStorage.getItem("cart")).toBe(
+    JSON.stringify([...existingCart, fakeProduct])
+  );
+  expect(toast.success).toHaveBeenCalledWith("Item Added to cart");
+});
 
 
 });
