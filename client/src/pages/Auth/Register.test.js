@@ -8,11 +8,10 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import Register from "./Register";
 
-// axios + toast mocks
 jest.mock("axios");
 jest.mock("react-hot-toast");
 
-// Mock Layout to prevent Header/useCategory side effects
+// Mock Layout to avoid side effects (Header/useCategory etc.)
 jest.mock("./../../components/Layout", () => {
   return function MockLayout({ children }) {
     return <div data-testid="layout">{children}</div>;
@@ -26,66 +25,32 @@ jest.mock("react-router-dom", () => {
   return { ...actual, useNavigate: () => mockNavigate };
 });
 
-describe("Register.js", () => {
+describe("Register.js (detailed 100% coverage aligned with current Register.js)", () => {
+  let errorSpy;
+
   beforeEach(() => {
     jest.clearAllMocks();
+    errorSpy = jest.spyOn(console, "error").mockImplementation(() => {});
   });
 
-  const fillAllFields = (container) => {
-    fireEvent.change(container.querySelector("#exampleInputName1"), {
-      target: { value: "John Doe" },
-    });
+  afterEach(() => {
+    errorSpy.mockRestore();
+  });
 
-    fireEvent.change(container.querySelector("#exampleInputEmail1"), {
-      target: { value: "john@test.com" },
-    });
+  const getForm = (container) => container.querySelector("form");
 
-    fireEvent.change(container.querySelector("#exampleInputPassword1"), {
-      target: { value: "pass123" },
-    });
-
-    fireEvent.change(container.querySelector("#exampleInputPhone1"), {
-      target: { value: "1234567890" },
-    });
-
-    fireEvent.change(container.querySelector("#exampleInputaddress1"), {
-      target: { value: "SG" },
-    });
-
-    fireEvent.change(container.querySelector("#exampleInputDOB1"), {
-      target: { value: "2000-01-01" },
-    });
-
-    fireEvent.change(container.querySelector("#exampleInputanswer1"), {
-      target: { value: "Football" },
-    });
+  const sel = {
+    name: "#exampleInputName1",
+    email: "#exampleInputEmail1",
+    password: "#exampleInputPassword1",
+    phone: "#exampleInputPhone1",
+    address: "#exampleInputaddress1",
+    dob: "#exampleInputDOB1",
+    answer: "#exampleInputanswer1",
   };
 
-  it("renders all required input fields + register button", () => {
-    const { container, getByText } = render(<Register />);
-
-    expect(container.querySelector("#exampleInputName1")).toBeInTheDocument();
-    expect(container.querySelector("#exampleInputEmail1")).toBeInTheDocument();
-    expect(container.querySelector("#exampleInputPassword1")).toBeInTheDocument();
-    expect(container.querySelector("#exampleInputPhone1")).toBeInTheDocument();
-    expect(container.querySelector("#exampleInputaddress1")).toBeInTheDocument();
-    expect(container.querySelector("#exampleInputDOB1")).toBeInTheDocument();
-    expect(container.querySelector("#exampleInputanswer1")).toBeInTheDocument();
-
-    expect(getByText("REGISTER")).toBeInTheDocument();
-  });
-
-  it("submitting form sends POST with correct payload", async () => {
-    axios.post.mockResolvedValueOnce({ data: { success: true } });
-
-    const { container } = render(<Register />);
-    fillAllFields(container);
-
-    fireEvent.submit(container.querySelector("form"));
-
-    await waitFor(() => expect(axios.post).toHaveBeenCalledTimes(1));
-
-    expect(axios.post).toHaveBeenCalledWith("/api/v1/auth/register", {
+  const fillAllFields = (container, overrides = {}) => {
+    const data = {
       name: "John Doe",
       email: "john@test.com",
       password: "pass123",
@@ -93,6 +58,107 @@ describe("Register.js", () => {
       address: "SG",
       DOB: "2000-01-01",
       answer: "Football",
+      ...overrides,
+    };
+
+    fireEvent.change(container.querySelector(sel.name), {
+      target: { value: data.name },
+    });
+    fireEvent.change(container.querySelector(sel.email), {
+      target: { value: data.email },
+    });
+    fireEvent.change(container.querySelector(sel.password), {
+      target: { value: data.password },
+    });
+    fireEvent.change(container.querySelector(sel.phone), {
+      target: { value: data.phone },
+    });
+    fireEvent.change(container.querySelector(sel.address), {
+      target: { value: data.address },
+    });
+    fireEvent.change(container.querySelector(sel.dob), {
+      target: { value: data.DOB },
+    });
+    fireEvent.change(container.querySelector(sel.answer), {
+      target: { value: data.answer },
+    });
+
+    return data;
+  };
+
+  it("renders Layout wrapper, all required inputs, and REGISTER button", () => {
+    const { container, getByText, getByTestId } = render(<Register />);
+
+    expect(getByTestId("layout")).toBeInTheDocument();
+
+    expect(container.querySelector(sel.name)).toBeInTheDocument();
+    expect(container.querySelector(sel.email)).toBeInTheDocument();
+    expect(container.querySelector(sel.password)).toBeInTheDocument();
+    expect(container.querySelector(sel.phone)).toBeInTheDocument();
+    expect(container.querySelector(sel.address)).toBeInTheDocument();
+    expect(container.querySelector(sel.dob)).toBeInTheDocument();
+    expect(container.querySelector(sel.answer)).toBeInTheDocument();
+
+    expect(getByText("REGISTER")).toBeInTheDocument();
+  });
+
+  it("inputs are controlled: typing updates each input's value", () => {
+    const { container } = render(<Register />);
+
+    fireEvent.change(container.querySelector(sel.name), {
+      target: { value: "A" },
+    });
+    expect(container.querySelector(sel.name)).toHaveValue("A");
+
+    fireEvent.change(container.querySelector(sel.email), {
+      target: { value: "a@test.com" },
+    });
+    expect(container.querySelector(sel.email)).toHaveValue("a@test.com");
+
+    fireEvent.change(container.querySelector(sel.password), {
+      target: { value: "pw" },
+    });
+    expect(container.querySelector(sel.password)).toHaveValue("pw");
+
+    fireEvent.change(container.querySelector(sel.phone), {
+      target: { value: "999" },
+    });
+    expect(container.querySelector(sel.phone)).toHaveValue("999");
+
+    fireEvent.change(container.querySelector(sel.address), {
+      target: { value: "SG" },
+    });
+    expect(container.querySelector(sel.address)).toHaveValue("SG");
+
+    fireEvent.change(container.querySelector(sel.dob), {
+      target: { value: "2001-02-03" },
+    });
+    expect(container.querySelector(sel.dob)).toHaveValue("2001-02-03");
+
+    fireEvent.change(container.querySelector(sel.answer), {
+      target: { value: "Cricket" },
+    });
+    expect(container.querySelector(sel.answer)).toHaveValue("Cricket");
+  });
+
+  it("submitting form sends POST with correct payload (including DOB)", async () => {
+    axios.post.mockResolvedValueOnce({ data: { success: true } });
+
+    const { container } = render(<Register />);
+    const payload = fillAllFields(container);
+
+    fireEvent.submit(getForm(container));
+
+    await waitFor(() => expect(axios.post).toHaveBeenCalledTimes(1));
+
+    expect(axios.post).toHaveBeenCalledWith("/api/v1/auth/register", {
+      name: payload.name,
+      email: payload.email,
+      password: payload.password,
+      phone: payload.phone,
+      address: payload.address,
+      DOB: payload.DOB,
+      answer: payload.answer,
     });
   });
 
@@ -102,18 +168,19 @@ describe("Register.js", () => {
     const { container } = render(<Register />);
     fillAllFields(container);
 
-    fireEvent.submit(container.querySelector("form"));
+    fireEvent.submit(getForm(container));
 
-    await waitFor(() => expect(axios.post).toHaveBeenCalled());
+    await waitFor(() => expect(axios.post).toHaveBeenCalledTimes(1));
 
     expect(toast.success).toHaveBeenCalledWith(
       "Register Successfully, please login"
     );
     expect(mockNavigate).toHaveBeenCalledWith("/login");
+
     expect(toast.error).not.toHaveBeenCalled();
   });
 
-  it("failed response: shows error toast with server message", async () => {
+  it("failed response: shows error toast with server message; does not navigate", async () => {
     axios.post.mockResolvedValueOnce({
       data: { success: false, message: "Already Register please login" },
     });
@@ -121,41 +188,46 @@ describe("Register.js", () => {
     const { container } = render(<Register />);
     fillAllFields(container);
 
-    fireEvent.submit(container.querySelector("form"));
+    fireEvent.submit(getForm(container));
 
-    await waitFor(() => expect(axios.post).toHaveBeenCalled());
+    await waitFor(() => expect(axios.post).toHaveBeenCalledTimes(1));
 
     expect(toast.error).toHaveBeenCalledWith("Already Register please login");
     expect(mockNavigate).not.toHaveBeenCalled();
+    expect(toast.success).not.toHaveBeenCalled();
   });
 
-  it('failed response without message: shows fallback "Registration failed"', async () => {
+  it('failed response without message: uses fallback "Registration failed"', async () => {
     axios.post.mockResolvedValueOnce({
-      data: { success: false }, // no message -> triggers fallback branch
+      data: { success: false }, // no message -> fallback
     });
 
     const { container } = render(<Register />);
     fillAllFields(container);
 
-    fireEvent.submit(container.querySelector("form"));
+    fireEvent.submit(getForm(container));
 
-    await waitFor(() => expect(axios.post).toHaveBeenCalled());
+    await waitFor(() => expect(axios.post).toHaveBeenCalledTimes(1));
 
     expect(toast.error).toHaveBeenCalledWith("Registration failed");
     expect(mockNavigate).not.toHaveBeenCalled();
+    expect(toast.success).not.toHaveBeenCalled();
   });
 
-  it('unexpected error: shows generic "Something went wrong"', async () => {
-    axios.post.mockRejectedValueOnce(new Error("Network down"));
+  it('exception: logs error and shows generic "Something went wrong"; does not navigate', async () => {
+    const err = new Error("Network down");
+    axios.post.mockRejectedValueOnce(err);
 
     const { container } = render(<Register />);
     fillAllFields(container);
 
-    fireEvent.submit(container.querySelector("form"));
+    fireEvent.submit(getForm(container));
 
-    await waitFor(() => expect(axios.post).toHaveBeenCalled());
+    await waitFor(() => expect(axios.post).toHaveBeenCalledTimes(1));
 
+    expect(console.error).toHaveBeenCalledWith(err);
     expect(toast.error).toHaveBeenCalledWith("Something went wrong");
     expect(mockNavigate).not.toHaveBeenCalled();
+    expect(toast.success).not.toHaveBeenCalled();
   });
 });

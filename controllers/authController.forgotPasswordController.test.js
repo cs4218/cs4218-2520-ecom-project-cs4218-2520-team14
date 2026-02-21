@@ -9,8 +9,6 @@ jest.mock("../helpers/authHelper.js", () => ({
   hashPassword: jest.fn(),
 }));
 
-
-
 jest.mock("../models/userModel.js", () => {
   const mockUserModel = jest.fn();
   mockUserModel.findOne = jest.fn();
@@ -25,79 +23,114 @@ const makeRes = () => {
   return res;
 };
 
-const makeReq = (overrides = {}) => ({ body: {}, ...overrides });
+const makeReq = (bodyOverrides = {}) => ({
+  body: {
+    email: "x@test.com",
+    answer: "Football",
+    newPassword: "newpass",
+    ...bodyOverrides,
+  },
+});
 
-describe("forgotPasswordController", () => {
+describe("forgotPasswordController (detailed 100% coverage)", () => {
+  let logSpy;
+
   beforeEach(() => {
     jest.clearAllMocks();
-    jest.spyOn(console, "log").mockImplementation(() => {});
+    logSpy = jest.spyOn(console, "log").mockImplementation(() => {});
   });
 
   afterEach(() => {
-    console.log.mockRestore();
+    logSpy.mockRestore();
   });
 
-  it("400 if email missing", async () => {
-    const req = makeReq({ body: { email: "", answer: "Football", newPassword: "x" } });
+  it("400 if email missing (early return, no model/helper calls)", async () => {
+    const req = makeReq({ email: "" });
     const res = makeRes();
 
     await forgotPasswordController(req, res);
 
     expect(res.status).toHaveBeenCalledWith(400);
     expect(res.send).toHaveBeenCalledWith({ message: "Email is required" });
+
     expect(userModel.findOne).not.toHaveBeenCalled();
+    expect(hashPassword).not.toHaveBeenCalled();
+    expect(userModel.findByIdAndUpdate).not.toHaveBeenCalled();
   });
 
-  it("400 if answer missing", async () => {
-    const req = makeReq({ body: { email: "x@test.com", answer: "", newPassword: "x" } });
+  it("400 if answer missing (early return, no model/helper calls)", async () => {
+    const req = makeReq({ answer: "" });
     const res = makeRes();
 
     await forgotPasswordController(req, res);
 
     expect(res.status).toHaveBeenCalledWith(400);
     expect(res.send).toHaveBeenCalledWith({ message: "answer is required" });
+
     expect(userModel.findOne).not.toHaveBeenCalled();
+    expect(hashPassword).not.toHaveBeenCalled();
+    expect(userModel.findByIdAndUpdate).not.toHaveBeenCalled();
   });
 
-  it("400 if newPassword missing", async () => {
-    const req = makeReq({ body: { email: "x@test.com", answer: "Football", newPassword: "" } });
+  it("400 if newPassword missing (early return, no model/helper calls)", async () => {
+    const req = makeReq({ newPassword: "" });
     const res = makeRes();
 
     await forgotPasswordController(req, res);
 
     expect(res.status).toHaveBeenCalledWith(400);
     expect(res.send).toHaveBeenCalledWith({ message: "New Password is required" });
+
     expect(userModel.findOne).not.toHaveBeenCalled();
+    expect(hashPassword).not.toHaveBeenCalled();
+    expect(userModel.findByIdAndUpdate).not.toHaveBeenCalled();
   });
 
-  it("404 if user not found", async () => {
-    const req = makeReq({ body: { email: "x@test.com", answer: "bad", newPassword: "newpass" } });
+  it("404 if user not found (calls findOne with correct query, no update/hash)", async () => {
+    const req = makeReq({ email: "x@test.com", answer: "bad", newPassword: "newpass" });
     const res = makeRes();
 
     userModel.findOne.mockResolvedValue(null);
 
     await forgotPasswordController(req, res);
 
+    expect(userModel.findOne).toHaveBeenCalledTimes(1);
+    expect(userModel.findOne).toHaveBeenCalledWith({
+      email: "x@test.com",
+      answer: "bad",
+    });
+
     expect(res.status).toHaveBeenCalledWith(404);
     expect(res.send).toHaveBeenCalledWith({
       success: false,
       message: "Wrong Email Or Answer",
     });
+
+    expect(hashPassword).not.toHaveBeenCalled();
+    expect(userModel.findByIdAndUpdate).not.toHaveBeenCalled();
   });
 
-  it("200 resets password when user exists", async () => {
-    const req = makeReq({ body: { email: "x@test.com", answer: "Football", newPassword: "newpass" } });
+  it("200 resets password when user exists (exact calls + response)", async () => {
+    const req = makeReq({ email: "x@test.com", answer: "Football", newPassword: "newpass" });
     const res = makeRes();
 
     userModel.findOne.mockResolvedValue({ _id: "u123" });
-    hashPassword.mockResolvedValue("hashed_new");
+    hashPassword.mockResolvedValue("hashed_newpass");
     userModel.findByIdAndUpdate.mockResolvedValue({ _id: "u123" });
 
     await forgotPasswordController(req, res);
 
+    expect(userModel.findOne).toHaveBeenCalledWith({
+      email: "x@test.com",
+      answer: "Football",
+    });
+
+    expect(hashPassword).toHaveBeenCalledTimes(1);
     expect(hashPassword).toHaveBeenCalledWith("newpass");
+
+    expect(userModel.findByIdAndUpdate).toHaveBeenCalledTimes(1);
     expect(userModel.findByIdAndUpdate).toHaveBeenCalledWith("u123", {
-      password: "hashed_new",
+      password: "hashed_newpass",
     });
 
     expect(res.status).toHaveBeenCalledWith(200);
@@ -107,19 +140,53 @@ describe("forgotPasswordController", () => {
     });
   });
 
-  it("500 on exception", async () => {
-    const req = makeReq({ body: { email: "x@test.com", answer: "Football", newPassword: "newpass" } });
+  it("500 if hashPassword throws (covers catch after user found)", async () => {
+    const req = makeReq();
     const res = makeRes();
 
-    userModel.findOne.mockRejectedValue(new Error("DB error"));
+    const err = new Error("hash failed");
+    userModel.findOne.mockResolvedValue({ _id: "u123" });
+    hashPassword.mockRejectedValue(err);
 
     await forgotPasswordController(req, res);
+
+    expect(userModel.findOne).toHaveBeenCalledTimes(1);
+    expect(hashPassword).toHaveBeenCalledTimes(1);
+
+    // should not update if hashing failed
+    expect(userModel.findByIdAndUpdate).not.toHaveBeenCalled();
+
+    expect(logSpy).toHaveBeenCalledTimes(1);
+    expect(logSpy).toHaveBeenCalledWith(err);
 
     expect(res.status).toHaveBeenCalledWith(500);
     expect(res.send).toHaveBeenCalledWith({
       success: false,
       message: "Something went wrong",
-      error: expect.any(Error),
+      error: err,
     });
+  });
+
+  it("500 on exception from findOne (covers catch + logs error)", async () => {
+    const req = makeReq();
+    const res = makeRes();
+
+    const err = new Error("DB error");
+    userModel.findOne.mockRejectedValue(err);
+
+    await forgotPasswordController(req, res);
+
+    expect(logSpy).toHaveBeenCalledTimes(1);
+    expect(logSpy).toHaveBeenCalledWith(err);
+
+    expect(res.status).toHaveBeenCalledWith(500);
+    expect(res.send).toHaveBeenCalledWith({
+      success: false,
+      message: "Something went wrong",
+      error: err,
+    });
+
+    expect(hashPassword).not.toHaveBeenCalled();
+    expect(userModel.findByIdAndUpdate).not.toHaveBeenCalled();
   });
 });
