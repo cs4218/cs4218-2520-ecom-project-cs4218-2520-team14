@@ -3,9 +3,21 @@ import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import axios from "axios";
 import CategoryProduct from "./CategoryProduct"; 
+import toast from "react-hot-toast";
+import { useCart } from "../context/cart";
+import { useParams, useNavigate } from "react-router-dom";
 
 // Mock axios
 jest.mock("axios");
+
+// Mock toast
+jest.mock("react-hot-toast", () => ({
+  __esModule: true,
+  default: {
+    success: jest.fn(),
+    error: jest.fn(),
+  },
+}));
 
 // Mock Layout to avoid dependencies on Layout internals
 jest.mock("../components/Layout", () => {
@@ -14,6 +26,12 @@ jest.mock("../components/Layout", () => {
   };
 });
 
+// Mock useCart (context)
+const mockSetCart = jest.fn();
+jest.mock("../context/cart", () => ({
+  useCart: jest.fn(),
+}));
+
 // Mock react-router-dom hooks
 const mockNavigate = jest.fn();
 jest.mock("react-router-dom", () => ({
@@ -21,12 +39,12 @@ jest.mock("react-router-dom", () => ({
   useNavigate: jest.fn(),
 }));
 
-import { useParams, useNavigate } from "react-router-dom";
-
 describe("CategoryProduct", () => {
   beforeEach(() => {
     jest.clearAllMocks();
     useNavigate.mockReturnValue(mockNavigate);
+    useCart.mockReturnValue([[], mockSetCart]);
+    localStorage.clear();
   });
 
   test("renders initial UI (before products load)", () => {
@@ -152,6 +170,79 @@ describe("CategoryProduct", () => {
     expect(mockNavigate).toHaveBeenCalledWith("/product/basic-tee");
   });
 
+  test("clicking 'ADD TO CART' updates cart, localStorage, and shows toast", async () => {
+    // Arrange
+    useParams.mockReturnValue({ slug: "tshirts" });
+
+    const product = {
+      _id: "p1",
+      name: "Basic Tee",
+      slug: "basic-tee",
+      price: 12,
+      description: "A very comfy t-shirt that is great for daily wear",
+    };
+
+    // start with existing cart item to verify append behavior
+    const existingCart = [{ _id: "old" }];
+    useCart.mockReturnValue([existingCart, mockSetCart]);
+
+    axios.get.mockResolvedValueOnce({
+      data: {
+        category: { name: "T-Shirts" },
+        products: [product],
+      },
+    });
+
+    // Act
+    render(<CategoryProduct />);
+
+    await screen.findByText("Basic Tee");
+
+    const addBtn = screen.getByRole("button", { name: /add to cart/i });
+    fireEvent.click(addBtn);
+
+    // Assert
+    expect(mockSetCart).toHaveBeenCalledWith([...existingCart, product]);
+    expect(localStorage.getItem("cart")).toBe(JSON.stringify([...existingCart, product]));
+    expect(toast.success).toHaveBeenCalled();
+  });
+
+  test("shows Loadmore button when more items exist; clicking it reveals more cards", async () => {
+    // Arrange
+    useParams.mockReturnValue({ slug: "tshirts" });
+
+    // perPage is 6; make 7 items so loadmore appears
+    const fakeProducts = Array.from({ length: 7 }).map((_, i) => ({
+      _id: `p${i + 1}`,
+      name: `Prod ${i + 1}`,
+      slug: `prod-${i + 1}`,
+      price: 10 + i,
+      description: "desc",
+    }));
+
+    axios.get.mockResolvedValueOnce({
+      data: {
+        category: { name: "T-Shirts" },
+        products: fakeProducts,
+      },
+    });
+
+    // Act
+    render(<CategoryProduct />);
+
+    // Wait for initial render (first item)
+    await screen.findByText("Prod 1");
+    expect(screen.queryByText("Prod 7")).not.toBeInTheDocument();
+
+    // Loadmore visible
+    const loadBtn = await screen.getByRole("button", { name: /load\s*more/i });
+    expect(loadBtn).toBeInTheDocument();
+
+    // Click loadmore to show next page
+    fireEvent.click(loadBtn);
+    expect(await screen.findByText("Prod 7")).toBeInTheDocument();
+  });
+
   test("handles axios error (does not crash)", async () => {
     // Arrange
     useParams.mockReturnValue({ slug: "tshirts" });
@@ -165,8 +256,8 @@ describe("CategoryProduct", () => {
     // Assert that it attempted fetch
     await waitFor(() => expect(axios.get).toHaveBeenCalled());
 
-    // Confirms error path hit
-    expect(logSpy).toHaveBeenCalled();
+    // Assert toast error
+    expect(toast.error).toHaveBeenCalled();
 
     logSpy.mockRestore();
   });
