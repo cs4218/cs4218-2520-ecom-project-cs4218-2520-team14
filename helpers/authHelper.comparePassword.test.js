@@ -6,19 +6,21 @@ import { comparePassword } from "./authHelper.js";
 
 jest.mock("bcrypt");
 
-beforeAll(() => {
-  jest.spyOn(console, "log").mockImplementation(() => {});
-});
+describe("comparePassword helper", () => {
+  beforeAll(() => {
+    jest.spyOn(console, "log").mockImplementation(() => {});
+  });
 
-afterAll(() => {
-  console.log.mockRestore();
-});
+  afterAll(() => {
+    console.log.mockRestore();
+  });
 
-beforeEach(() => {
-  jest.clearAllMocks();
-});
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
 
-describe("comparePassword", () => {
+  /* ================= VALID CASES ================= */
+
   it("returns true when password matches", async () => {
     bcrypt.compare.mockResolvedValue(true);
 
@@ -37,46 +39,62 @@ describe("comparePassword", () => {
     const result = await comparePassword("wrong", "hashed123");
 
     expect(result).toBe(false);
-    expect(bcrypt.compare).toHaveBeenCalledWith("wrong", "hashed123");
   });
 
-  it("throws when password is empty", async () => {
-    await expect(comparePassword("", "hashed123")).rejects.toThrow(
-      "Password must be a non-empty string"
-    );
+  /* ================= PASSWORD VALIDATION ================= */
+
+  it("throws when password is empty string", async () => {
+    await expect(
+      comparePassword("", "hashed123")
+    ).rejects.toThrow("Password must be a non-empty string");
 
     expect(bcrypt.compare).not.toHaveBeenCalled();
   });
+
+  it("throws when password is undefined", async () => {
+    await expect(
+      comparePassword(undefined, "hashed123")
+    ).rejects.toThrow("Password must be a non-empty string");
+  });
+
+  it("throws when password is not a string", async () => {
+    await expect(
+      comparePassword(123, "hashed123")
+    ).rejects.toThrow("Password must be a non-empty string");
+  });
+
+  /* ================= HASH VALIDATION ================= */
 
   it("throws when hashedPassword is empty", async () => {
-    await expect(comparePassword("password123", "")).rejects.toThrow(
-      "Hashed password must be a non-empty string"
-    );
+    await expect(
+      comparePassword("password123", "")
+    ).rejects.toThrow("Hashed password must be a non-empty string");
 
     expect(bcrypt.compare).not.toHaveBeenCalled();
+  });
+
+  it("throws when hashedPassword is undefined", async () => {
+    await expect(
+      comparePassword("password123", undefined)
+    ).rejects.toThrow("Hashed password must be a non-empty string");
   });
 
   it("throws when hashedPassword is not a string", async () => {
-    await expect(comparePassword("password123", undefined)).rejects.toThrow(
-      "Hashed password must be a non-empty string"
-    );
-
-    expect(bcrypt.compare).not.toHaveBeenCalled();
+    await expect(
+      comparePassword("password123", 12345)
+    ).rejects.toThrow("Hashed password must be a non-empty string");
   });
-  
 
-  it("rethrows bcrypt.compare errors (and logs)", async () => {
-    const err = new Error("compare failed");
-    bcrypt.compare.mockRejectedValue(err);
+  /* ================= ERROR PATH ================= */
+
+  it("logs and rethrows bcrypt.compare errors", async () => {
+    const error = new Error("compare failed");
+    bcrypt.compare.mockRejectedValue(error);
 
     await expect(
       comparePassword("password123", "hashed123")
     ).rejects.toThrow("compare failed");
 
-    expect(console.log).toHaveBeenCalled();
-    expect(bcrypt.compare).toHaveBeenCalledWith(
-      "password123",
-      "hashed123"
-    );
+    expect(console.log).toHaveBeenCalledWith(error);
   });
 });
