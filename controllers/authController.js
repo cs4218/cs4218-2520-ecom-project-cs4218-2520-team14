@@ -3,7 +3,6 @@ import orderModel from "../models/orderModel.js";
 import { comparePassword, hashPassword } from "./../helpers/authHelper.js";
 import JWT from "jsonwebtoken";
 
-
 //Name: Shauryan Agrawal
 //Student ID: A0265846N
 /* ---------------- REGISTER ---------------- */
@@ -20,8 +19,7 @@ export const registerController = async (req, res) => {
       return res.status(400).send({ message: "Phone no is Required" });
     if (!address)
       return res.status(400).send({ message: "Address is Required" });
-    if (!answer)
-      return res.status(400).send({ message: "Answer is Required" });
+    if (!answer) return res.status(400).send({ message: "Answer is Required" });
 
     const existingUser = await userModel.findOne({ email });
 
@@ -184,7 +182,7 @@ export const updateProfileController = async (req, res) => {
         phone: phone || user.phone,
         address: address || user.address,
       },
-      { new: true }
+      { new: true },
     );
     res.status(200).send({
       success: true,
@@ -245,7 +243,7 @@ export const orderStatusController = async (req, res) => {
     const orders = await orderModel.findByIdAndUpdate(
       orderId,
       { status },
-      { new: true }
+      { new: true },
     );
     res.json(orders);
   } catch (error) {
@@ -275,4 +273,4 @@ export const getAllUsersController = async (req, res) => {
       error,
     });
   }
-}; 
+};
