@@ -25,9 +25,7 @@ export default {
 
   // jest code coverage
   collectCoverage: true,
-  collectCoverageFrom: ["client/src/**"],
-  coveragePathIgnorePatterns: ["/node_modules/", "<rootDir>/client/src/_site/"],
-
+  collectCoverageFrom: ["client/src/**/*.{js,jsx}"],
   coverageThreshold: {
     global: {
       lines: 100,
