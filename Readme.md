@@ -140,15 +140,16 @@ This section outlines the distribution of files and testing for our team. Our te
 
 ### AGRAWAL SHAURYAN A0265846N
 
-I implemented the Authentication, Authorization helpers, login, registration, and middleware modules, wrote **79 automated unit tests**, and achieved **100% statement, branch, function, and line coverage across all components under my ownership**.
+I implemented and fixed the bugs in the Authentication, Authorization helpers, login, registration, and middleware modules, wrote **80 automated unit tests**, and achieved **100% statement, branch, function, and line coverage across all components under my ownership**.
 
-| Features                                  | Client Related Files                                         | Server Related Files                                                                                                                           |
-| :---------------------------------------- | :----------------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Authentication (Login & Registration)** | `pages/Auth/Login.js`<br>`pages/Auth/Register.js`            | **`controllers/authController.js`**<br>1. `registerController`<br>2. `loginController`<br>3. `forgotPasswordController`<br>4. `testController` |
-| **Authentication Helpers**                | —                                                            | **`helpers/authHelper.js`**<br>`hashPassword`<br>`comparePassword`                                                                             |
-| **Authorization Middleware**              | —                                                            | **`middlewares/authMiddleware.js`**<br>`requireSignIn`<br>`isAdmin`                                                                            |
-| **Admin Dashboard UI**                    | `components/AdminMenu.js`<br>`pages/admin/AdminDashboard.js` | —                                                                                                                                              |
-| **Authentication Context**                | `context/auth.js`                                            | —                                                                                                                                              |
+
+| Features | Client Related Files | Server Related Files |
+| :--- | :--- | :--- |
+| **Authentication (Login & Registration)** | `pages/Auth/Login.js`<br>`pages/Auth/Register.js` | **`controllers/authController.js`**<br>1. `registerController`<br>2. `loginController`<br>3. `forgotPasswordController`<br>4. `testController` |
+| **Authentication Helpers** | — | **`helpers/authHelper.js`**<br>1. `hashPassword`<br>2. `comparePassword` |
+| **Authorization Middleware** | — | **`middlewares/authMiddleware.js`**<br>1. `requireSignIn`<br>2. `isAdmin` |
+| **Admin Dashboard UI** | `components/AdminMenu.js`<br>`pages/admin/AdminDashboard.js` | — |
+| **Authentication Context** | `context/auth.js` | — |
 
 ---
 
