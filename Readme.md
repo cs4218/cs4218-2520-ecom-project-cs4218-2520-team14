@@ -149,9 +149,13 @@ To begin unit testing with Jest in your project, follow these steps:
 
 This section outlines the distribution of files and testing for our team. Our team followed the suggested testing scope given by Prof. and split the workload by "Features" column. Each member would then be in charge of all files listed under that particular feature. 
 
-### Testing Scope & Development Distribution
+### AGRAWAL SHAURYAN A0265846N
 
-### Tan Qin Yong
+### CHIA YORK LIM A0258147X
+
+### JONAS ONG SI WEI A0252052U
+
+### TAN QIN YONG A0253468W
 
 I was in charge of these files and all unit tests for them (unit test files ends with fileName.test.js).
 
@@ -161,3 +165,5 @@ I was in charge of these files and all unit tests for them (unit test files ends
 | **Contact & Support** | `pages/Contact.js` | N/A |
 | **Legal & Policy** | `pages/Policy.js` | N/A |
 | **General & Layout** | `components/Footer.js`<br>`components/Header.js`<br>`components/Layout.js`<br>`components/Spinner.js`<br>`pages/About.js`<br>`pages/Pagenotfound.js` | N/A |
+
+### TENG HUI XIN ALICIA A02590646Y
