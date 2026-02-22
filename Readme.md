@@ -185,3 +185,7 @@ I was in charge of these files and all unit tests for them (unit test files ends
 | **General & Layout**   | `components/Footer.js`<br>`components/Header.js`<br>`components/Layout.js`<br>`components/Spinner.js`<br>`pages/About.js`<br>`pages/Pagenotfound.js` | N/A                                                                                                                                                                                                                                                                                                                                                                        |
 
 ### TENG HUI XIN ALICIA A02590646Y
+
+## 7. MS1 CI URL
+
+https://github.com/cs4218/cs4218-2520-ecom-project-cs4218-2520-team14/actions/runs/22282697634
