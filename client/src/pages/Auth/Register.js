@@ -1,9 +1,13 @@
+//Name: Shauryan Agrawal
+//Student ID: A0265846N
+
 import React, { useState } from "react";
 import Layout from "./../../components/Layout";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import "../../styles/AuthStyles.css";
+
 const Register = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -14,7 +18,6 @@ const Register = () => {
   const [answer, setAnswer] = useState("");
   const navigate = useNavigate();
 
-  // form function
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -27,14 +30,15 @@ const Register = () => {
         DOB,
         answer,
       });
+
       if (res && res.data.success) {
         toast.success("Register Successfully, please login");
         navigate("/login");
       } else {
-        toast.error(res.data.message);
+        toast.error(res?.data?.message || "Registration failed");
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
       toast.error("Something went wrong");
     }
   };
@@ -44,6 +48,7 @@ const Register = () => {
       <div className="form-container" style={{ minHeight: "90vh" }}>
         <form onSubmit={handleSubmit}>
           <h4 className="title">REGISTER FORM</h4>
+
           <div className="mb-3">
             <input
               type="text"
@@ -56,6 +61,7 @@ const Register = () => {
               autoFocus
             />
           </div>
+
           <div className="mb-3">
             <input
               type="email"
@@ -63,10 +69,11 @@ const Register = () => {
               onChange={(e) => setEmail(e.target.value)}
               className="form-control"
               id="exampleInputEmail1"
-              placeholder="Enter Your Email "
+              placeholder="Enter Your Email"
               required
             />
           </div>
+
           <div className="mb-3">
             <input
               type="password"
@@ -78,6 +85,7 @@ const Register = () => {
               required
             />
           </div>
+
           <div className="mb-3">
             <input
               type="text"
@@ -89,6 +97,7 @@ const Register = () => {
               required
             />
           </div>
+
           <div className="mb-3">
             <input
               type="text"
@@ -100,9 +109,10 @@ const Register = () => {
               required
             />
           </div>
+
           <div className="mb-3">
             <input
-              type="Date"
+              type="date"
               value={DOB}
               onChange={(e) => setDOB(e.target.value)}
               className="form-control"
@@ -111,6 +121,7 @@ const Register = () => {
               required
             />
           </div>
+
           <div className="mb-3">
             <input
               type="text"
@@ -122,6 +133,7 @@ const Register = () => {
               required
             />
           </div>
+
           <button type="submit" className="btn btn-primary">
             REGISTER
           </button>
