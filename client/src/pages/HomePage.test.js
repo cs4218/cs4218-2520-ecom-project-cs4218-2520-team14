@@ -58,6 +58,7 @@ describe('Home Component', () => {
   });
 
   it('should render Home page', async () => {
+    // Arrange
     axios.get.mockImplementation((url) => {
       if (url.includes('get-category')) {
         return Promise.resolve({ data: { success: true, category: categories } });
@@ -68,10 +69,10 @@ describe('Home Component', () => {
       if (url.includes('product-list')) {
         return Promise.resolve({ data: { products: products } });
       }
-      console.log('URL not mocked:', url);
       return Promise.resolve({ data: {} });
     });
 
+    // Act
     const { getByAltText, getByText, getAllByTestId } = render(
       <MemoryRouter initialEntries={['/']}>
         <Routes>
@@ -80,6 +81,7 @@ describe('Home Component', () => {
       </MemoryRouter>
     );
 
+    // Assert
     await waitFor(() => {
       expect(getAllByTestId('product-item')).toHaveLength(3);
     });
@@ -91,6 +93,7 @@ describe('Home Component', () => {
   });
 
   it('should handle getAllCategory fetch failure', async () => {
+    // Arrange
     const networkError = new Error('Network Error');
     axios.get.mockResolvedValueOnce({ data: { category: [] } }); // Header getCategory
     axios.get.mockRejectedValueOnce(networkError); // Home getAllCategory
@@ -98,6 +101,8 @@ describe('Home Component', () => {
     axios.get.mockResolvedValueOnce({ data: { products: [] } }); // Home getAllProducts
 
     const consoleSpy = jest.spyOn(console, 'log').mockImplementation(() => { });
+
+    // Act
     render(
       <MemoryRouter initialEntries={['/']}>
         <Routes>
@@ -106,6 +111,7 @@ describe('Home Component', () => {
       </MemoryRouter>
     );
 
+    // Assert
     await waitFor(() => {
       expect(consoleSpy).toHaveBeenCalledWith(networkError);
     });
@@ -114,6 +120,7 @@ describe('Home Component', () => {
   });
 
   it('should handle getTotal fetch failure', async () => {
+    // Arrange
     const networkError = new Error('Network Error');
     axios.get.mockResolvedValueOnce({ data: { category: [] } }); // Header getCategory
     axios.get.mockResolvedValueOnce({ data: { success: true, category: [] } }); // Home getAllCategory
@@ -122,6 +129,7 @@ describe('Home Component', () => {
 
     const consoleSpy = jest.spyOn(console, 'log').mockImplementation(() => { });
 
+    // Act
     render(
       <MemoryRouter initialEntries={['/']}>
         <Routes>
@@ -130,6 +138,7 @@ describe('Home Component', () => {
       </MemoryRouter>
     );
 
+    // Assert
     await waitFor(() => {
       expect(consoleSpy).toHaveBeenCalledWith(networkError);
     });
@@ -138,6 +147,7 @@ describe('Home Component', () => {
   });
 
   it('should handle getAllProducts fetch failure', async () => {
+    // Arrange
     const networkError = new Error('Network Error');
     axios.get.mockResolvedValueOnce({ data: { category: [] } }); // Header getCategory
     axios.get.mockResolvedValueOnce({ data: { success: true, category: [] } }); // Home getAllCategory
@@ -145,7 +155,7 @@ describe('Home Component', () => {
     axios.get.mockRejectedValueOnce(networkError); // Home getAllProducts
 
     const consoleSpy = jest.spyOn(console, 'log').mockImplementation(() => { });
-    const { } = render(
+    render(
       <MemoryRouter initialEntries={['/']}>
         <Routes>
           <Route path="/" element={<HomePage />} />
@@ -153,6 +163,7 @@ describe('Home Component', () => {
       </MemoryRouter>
     );
 
+    // Assert
     await waitFor(() => {
       expect(consoleSpy).toHaveBeenCalledWith(networkError);
     });
@@ -161,7 +172,7 @@ describe('Home Component', () => {
   });
 
   it('should be able to successfully add (one) and remove filter by category', async () => {
-    // Bug in if (!checked.length || !radio.length)
+    // Arrange 1
     axios.get.mockImplementation((url) => {
       if (url.includes('get-category')) {
         return Promise.resolve({ data: { success: true, category: categories } });
@@ -172,7 +183,6 @@ describe('Home Component', () => {
       if (url.includes('product-list')) {
         return Promise.resolve({ data: { products: products } });
       }
-      console.log('URL not mocked:', url);
       return Promise.resolve({ data: {} });
     });
 
@@ -192,10 +202,11 @@ describe('Home Component', () => {
 
     axios.get.mockClear(); // Clear previous calls
 
-    // Add category filters
+    // Act 1
     const categoryCheckbox = getByLabelText(categories[0].name);
     fireEvent.click(categoryCheckbox);
 
+    // Assert 1
     expect(categoryCheckbox.checked).toBe(true);
     expect(axios.get).not.toHaveBeenCalledWith('/api/v1/product/product-list/1');
     expect(axios.post).toHaveBeenCalledWith('/api/v1/product/product-filters', { checked: [categories[0]._id], radio: [] });
@@ -205,8 +216,10 @@ describe('Home Component', () => {
     });
     expect(getByText(products[0].name)).toBeInTheDocument();
 
-    // Remove category filter
+    // Act 2
     fireEvent.click(categoryCheckbox);
+
+    // Assert 2
     expect(categoryCheckbox.checked).toBe(false);
     expect(axios.get).toHaveBeenCalledWith('/api/v1/product/product-list/1');
 
@@ -216,7 +229,7 @@ describe('Home Component', () => {
   });
 
   it('should be able to successfully add multiple filters by category and remove one', async () => {
-    // Bug in if (!checked.length || !radio.length)
+    // Arrange 1
     axios.get.mockImplementation((url) => {
       if (url.includes('get-category')) {
         return Promise.resolve({ data: { success: true, category: categories } });
@@ -227,7 +240,6 @@ describe('Home Component', () => {
       if (url.includes('product-list')) {
         return Promise.resolve({ data: { products: products } });
       }
-      console.log('URL not mocked:', url);
       return Promise.resolve({ data: {} });
     });
 
@@ -253,12 +265,13 @@ describe('Home Component', () => {
 
     axios.get.mockClear(); // Clear previous calls
 
-    // Add category filters
+    // Act 1
     const categoryCheckbox1 = getByLabelText(categories[0].name);
     const categoryCheckbox2 = getByLabelText(categories[1].name);
     fireEvent.click(categoryCheckbox1);
     fireEvent.click(categoryCheckbox2);
 
+    // Assert 1
     expect(categoryCheckbox1.checked).toBe(true);
     expect(categoryCheckbox2.checked).toBe(true);
 
@@ -268,8 +281,10 @@ describe('Home Component', () => {
       expect(getAllByTestId('product-item')).toHaveLength(2);
     });
 
-    // Remove one category filter
+    // Act 2
     fireEvent.click(categoryCheckbox1);
+
+    // Assert 2
     expect(categoryCheckbox1.checked).toBe(false);
     expect(categoryCheckbox2.checked).toBe(true);
 
@@ -282,6 +297,7 @@ describe('Home Component', () => {
   });
 
   it('logs error when filter fails', async () => {
+    // Arrange
     const networkError = new Error('Network Error');
 
     axios.post.mockRejectedValueOnce(networkError); // Home filter products
@@ -296,7 +312,6 @@ describe('Home Component', () => {
       if (url.includes('product-list')) {
         return Promise.resolve({ data: { products: products } });
       }
-      console.log('URL not mocked:', url);
       return Promise.resolve({ data: {} });
     });
 
@@ -313,20 +328,20 @@ describe('Home Component', () => {
       expect(getAllByTestId('product-item')).toHaveLength(3);
     });
 
-    // Add category filters
+    // Act
     const categoryCheckbox = getByLabelText(categories[0].name);
     fireEvent.click(categoryCheckbox);
 
+    // Assert
     expect(categoryCheckbox.checked).toBe(true);
-
     await waitFor(() => {
       expect(consoleSpy).toHaveBeenCalledWith(networkError);
     });
-
     consoleSpy.mockRestore();
   });
 
   it('should load more products on clicking load more button', async () => {
+    // Arrange
     axios.get.mockImplementation((url) => {
       if (url.includes('get-category')) {
         return Promise.resolve({ data: { success: true, category: categories } });
@@ -337,7 +352,6 @@ describe('Home Component', () => {
       if (url.includes('product-list')) {
         return Promise.resolve({ data: { products: products } });
       }
-      console.log('URL not mocked:', url);
       return Promise.resolve({ data: {} });
     });
 
@@ -353,14 +367,17 @@ describe('Home Component', () => {
       expect(getByText("Loadmore")).toBeInTheDocument();
     });
 
+    // Act
     fireEvent.click(getByText("Loadmore"));
 
+    // Assert
     await waitFor(() => {
       expect(axios.get).toHaveBeenCalledWith('/api/v1/product/product-list/2');
     });
   });
 
   it('load more products fails on clicking load more button', async () => {
+    // Arrange
     const networkError = new Error('Network Error');
     const consoleSpy = jest.spyOn(console, 'log').mockImplementation(() => { });
     axios.get.mockImplementation((url) => {
@@ -376,7 +393,6 @@ describe('Home Component', () => {
       if (url.includes('product-list')) {
         return Promise.resolve({ data: { products: products } });
       }
-      console.log('URL not mocked:', url);
       return Promise.resolve({ data: {} });
     });
 
@@ -392,8 +408,10 @@ describe('Home Component', () => {
       expect(getByText("Loadmore")).toBeInTheDocument();
     });
 
+    // Act
     fireEvent.click(getByText("Loadmore"));
 
+    // Assert
     await waitFor(() => {
       expect(axios.get).toHaveBeenCalledWith('/api/v1/product/product-list/2');
     });
@@ -403,6 +421,7 @@ describe('Home Component', () => {
   });
 
   it('should be able to set price filter', async () => {
+    // Arrange
     axios.get.mockImplementation((url) => {
       if (url.includes('get-category')) {
         return Promise.resolve({ data: { success: true, category: categories } });
@@ -413,7 +432,6 @@ describe('Home Component', () => {
       if (url.includes('product-list')) {
         return Promise.resolve({ data: { products: products } });
       }
-      console.log('URL not mocked:', url);
       return Promise.resolve({ data: {} });
     });
 
@@ -429,9 +447,12 @@ describe('Home Component', () => {
 
 
     axios.get.mockClear(); // Clear previous calls
+
+    // Act
     const priceRadio = await findByLabelText(Prices[5].name);
     fireEvent.click(priceRadio);
 
+    // Assert
     expect(priceRadio.checked).toBe(true);
     expect(axios.post).toHaveBeenCalledWith('/api/v1/product/product-filters', { checked: [], radio: Prices[5].array });
     expect(axios.get).not.toHaveBeenCalledWith('/api/v1/product/product-list/1');
@@ -442,11 +463,11 @@ describe('Home Component', () => {
   });
 
   it('should reload page when reset filters is clicked', async () => {
+    // Arrange
     axios.get.mockImplementation((url) => {
       if (url.includes('product-list')) {
         return Promise.resolve({ data: { products: [] } });
       }
-      console.log('URL not mocked:', url);
       return Promise.resolve([]);
     });
     delete window.location;
@@ -459,16 +480,20 @@ describe('Home Component', () => {
       </MemoryRouter>
     );
     await waitFor(() => { });
+
+    // Act
     fireEvent.click(getByText('RESET FILTERS'));
+
+    // Assert
     expect(window.location.reload).toHaveBeenCalledTimes(1);
   });
 
   it('should be able to navigate to single product page', async () => {
+    // Arrange
     axios.get.mockImplementation((url) => {
       if (url.includes('product-list')) {
         return Promise.resolve({ data: { products: [products[0]] } });
       }
-      console.log('URL not mocked:', url);
       return Promise.resolve([]);
     });
 
@@ -484,16 +509,19 @@ describe('Home Component', () => {
       expect(getAllByTestId('product-item')).toHaveLength(1);
     });
 
+    // Act
     fireEvent.click(getByText("More Details"));
+
+    // Assert
     expect(mockNavigate).toHaveBeenCalledWith(`/product/${products[0].slug}`);
   });
 
   it('should be able to add to cart', async () => {
+    // Arrange
     axios.get.mockImplementation((url) => {
       if (url.includes('product-list')) {
         return Promise.resolve({ data: { products: [products[0]] } });
       }
-      console.log('URL not mocked:', url);
       return Promise.resolve([]);
     });
 
@@ -509,8 +537,10 @@ describe('Home Component', () => {
       expect(getByText(products[0].name)).toBeInTheDocument();
     });
 
+    // Act
     fireEvent.click(getByText("ADD TO CART"));
 
+    // Assert
     expect(mockCart).toHaveBeenCalledWith([products[0]]);
     expect(window.localStorage.setItem).toHaveBeenCalledWith('cart', JSON.stringify([products[0]]));
     expect(toast.success).toHaveBeenCalledWith('Item Added to cart');

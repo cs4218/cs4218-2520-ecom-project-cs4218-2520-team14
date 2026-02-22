@@ -33,6 +33,7 @@ describe('Categories Component', () => {
   });
 
   it('renders categories', async () => {
+    // Act
     const { getAllByTestId } = render(
       <MemoryRouter initialEntries={['/categories']}>
         <Routes>
@@ -40,12 +41,16 @@ describe('Categories Component', () => {
         </Routes>
       </MemoryRouter>
     );
+    // Assert
     await waitFor(() => expect(getAllByTestId('category-item')).toHaveLength(3));
   });
 
   // Currently, they have the same behavior, so we can combine them into one test case. If we want to separate them, we can create a new test case for the error scenario and mock axios.get to reject the promise.
   it('should render nothing when there are no categories (No category / error in useCategory)', async () => {
+    // Arrange
     useCategory.mockReturnValue([]);
+
+    // Act
     const { queryByTestId } = render(
       <MemoryRouter initialEntries={['/categories']}>
         <Routes>
@@ -53,11 +58,16 @@ describe('Categories Component', () => {
         </Routes>
       </MemoryRouter>
     );
+
+    // Assert
     await waitFor(() => expect(queryByTestId('category-item')).toBeNull());
   });
 
   it('should render category when there is one category', async () => {
+    // Arrange
     useCategory.mockReturnValue(mockCategories.data.category.slice(0, 1));
+
+    // Act
     const { getByTestId } = render(
       <MemoryRouter initialEntries={['/categories']}>
         <Routes>
@@ -66,12 +76,17 @@ describe('Categories Component', () => {
       </MemoryRouter>
     );
     await waitFor(() => expect(getByTestId('category-item')).toBeInTheDocument());
+
+    // Assert
     expect(getByTestId('category-item')).toHaveTextContent(mockCategories.data.category[0].name);
     expect(getByTestId('category-item').querySelector('a')).toHaveAttribute('href', `/category/${mockCategories.data.category[0].slug}`);
   });
 
   it('renders categories with correct names and links', async () => {
+    // Arrange
     useCategory.mockReturnValue(mockCategories.data.category);
+
+    // Act
     const { getAllByTestId } = render(
       <MemoryRouter initialEntries={['/categories']}>
         <Routes>
@@ -80,6 +95,7 @@ describe('Categories Component', () => {
       </MemoryRouter>
     )
 
+    // Assert
     await waitFor(() => {
       const items = getAllByTestId('category-item');
       items.forEach((item, index) => {
@@ -93,6 +109,7 @@ describe('Categories Component', () => {
   });
 
   it('should be able to navigate to category page on click', async () => {
+    // Arrange
     const { container } = render(
       <MemoryRouter initialEntries={['/categories']}>
         <Routes>
@@ -107,7 +124,10 @@ describe('Categories Component', () => {
     const categoryLink = within(row).getByText(mockCategories.data.category[0].name);
     expect(categoryLink.getAttribute('href')).toBe(`/category/${mockCategories.data.category[0].slug}`);
 
+    // Act
     fireEvent.click(categoryLink);
+
+    // Assert
     await waitFor(() => expect(container).toHaveTextContent('Category Page'));
   });
 });

@@ -13,47 +13,64 @@ describe("useCart Hook & CartProvider", () => {
   const wrapper = ({ children }) => <CartProvider>{children}</CartProvider>;
 
   it("should initialize with empty array (Empty localStorage)", () => {
+    // Act
     const { result } = renderHook(() => useCart(), { wrapper });
+    // Assert
     expect(result.current[0]).toEqual([]);
   });
 
   it("should load cart from localStorage", () => {
+    // Arrange
     const mockCart = [{ id: 1, name: "Product 1", quantity: 2 }];
     localStorage.setItem("cart", JSON.stringify(mockCart));
+    // Act
     const { result } = renderHook(() => useCart(), { wrapper });
+    // Assert
     expect(result.current[0]).toEqual(mockCart);
   });
 
   it("should manage corrupted localStorage (not JSON)", () => {
+    // Arrange
     localStorage.setItem("cart", "corrupted data");
     const consoleSpy = jest.spyOn(console, "error").mockImplementation(() => { });
+    // Act
     const { result } = renderHook(() => useCart(), { wrapper });
+    // Assert
     expect(result.current[0]).toEqual([]);
     expect(consoleSpy).toHaveBeenCalledWith("Error parsing cart from localStorage:", expect.any(Error));
   });
 
   it("should manage corrupted localStorage (not an array)", () => {
+    // Arrange
     localStorage.setItem("cart", JSON.stringify({ id: 1 }));
     const consoleSpy = jest.spyOn(console, "error").mockImplementation(() => { });
+    // Act
     const { result } = renderHook(() => useCart(), { wrapper });
+    // Assert
     expect(result.current[0]).toEqual([]);
     expect(consoleSpy).toHaveBeenCalledWith("Error parsing cart from localStorage:", expect.any(Error));
   });
 
   it("should filter corrupted cart items (non-object)", () => {
+    // Arrange
     const mockCart = [{ id: 1, name: "Product 1", quantity: 2 }, "corrupted item", null];
     localStorage.setItem("cart", JSON.stringify(mockCart));
+    // Act
     const { result } = renderHook(() => useCart(), { wrapper });
+    // Assert
     expect(result.current[0]).toEqual([{ id: 1, name: "Product 1", quantity: 2 }]);
   });
 
   it("should update cart when setCart is called", () => {
+    // Arrange
     const { result } = renderHook(() => useCart(), { wrapper });
     const newItem = [{ id: 2, name: "Product 2", quantity: 1 }];
+    // Act
     act(() => {
       result.current[1](newItem);
     });
 
+    // Assert
     expect(result.current[0]).toEqual(newItem);
   });
 
