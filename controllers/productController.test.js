@@ -23,6 +23,12 @@ jest.mock("../models/categoryModel", () => ({
   default: { findOne: jest.fn() },
 }));
 
+// Mock braintree
+jest.mock("braintree", () => ({
+  Environment: { Sandbox: "Sandbox" },
+  BraintreeGateway: jest.fn().mockImplementation(() => ({})),
+}));
+
 // Helper to create an Express-like res object
 function makeRes() {
   const res = {};
