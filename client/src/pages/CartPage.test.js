@@ -614,7 +614,7 @@ describe("CartPage Component", () => {
     axios.post.mockResolvedValueOnce([]);
 
     // Act
-    const { findByText } = render(
+    const { getByText } = render(
       <MemoryRouter initialEntries={["/cart"]}>
         <Routes>
           <Route path="/cart" element={<CartPage />} />
@@ -622,8 +622,8 @@ describe("CartPage Component", () => {
       </MemoryRouter>
     );
 
-    const makePaymentButton = await findByText("Make Payment");
-    fireEvent.click(makePaymentButton);
+    await waitFor(() => expect(getByText("Make Payment")).not.toBeDisabled());
+    fireEvent.click(getByText("Make Payment"));
 
     // Assert
     expect(mockInstance.requestPaymentMethod).toHaveBeenCalledTimes(1);
@@ -653,15 +653,15 @@ describe("CartPage Component", () => {
     axios.post.mockRejectedValue(paymentError);
 
     // Act
-    const { findByText } = render(
+    const { getByText } = render(
       <MemoryRouter initialEntries={["/cart"]}>
         <Routes>
           <Route path="/cart" element={<CartPage />} />
         </Routes>
       </MemoryRouter>
     );
-    const makePaymentButton = await findByText("Make Payment");
-    fireEvent.click(makePaymentButton);
+    await waitFor(() => expect(getByText("Make Payment")).not.toBeDisabled());
+    fireEvent.click(getByText("Make Payment"));
 
     // Assert
     expect(mockInstance.requestPaymentMethod).toHaveBeenCalledTimes(1);
@@ -670,7 +670,7 @@ describe("CartPage Component", () => {
     consoleSpy.mockRestore();
   });
 
-  it("it should show loading state when payment is processing", async () => {
+  it("should show loading state when payment is processing", async () => {
     // Arrange
     useAuth.mockReturnValue([mockAuth, jest.fn()]);
     useCart.mockReturnValue([mockItems, mockSetCart]);
@@ -694,12 +694,11 @@ describe("CartPage Component", () => {
       </MemoryRouter>
     );
 
-    const makePaymentButton = await findByText("Make Payment");
-    fireEvent.click(makePaymentButton);
+    await waitFor(() => expect(getByText("Make Payment")).not.toBeDisabled());
+    fireEvent.click(getByText("Make Payment"));
 
     // Assert
-    await waitFor(() => expect(getByText("Processing ....")).toBeInTheDocument());
-    expect(getByText("Processing ....")).toBeDisabled();
+    await waitFor(() => expect(getByText("Processing ....")).toBeDisabled());
 
     // Clean up
     await act(async () => { resolvePayment([]); });
