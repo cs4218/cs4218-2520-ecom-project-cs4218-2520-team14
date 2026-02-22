@@ -150,7 +150,8 @@ To begin unit testing with Jest in your project, follow these steps:
 This section outlines the distribution of files and testing for our team. Our team followed the suggested testing scope given by Prof. and split the workload by "Features" column. Each member would then be in charge of all files listed under that particular feature. 
 
 ### AGRAWAL SHAURYAN A0265846N
-I was in charge of these files and all unit tests for them (unit test files ends with fileName.test.js).
+I implemented the Authentication, Authorization helpers, login, registration, and middleware modules, wrote **79 automated unit tests**, and achieved **100% statement, branch, function, and line coverage across all components under my ownership**.
+
 
 | Features | Client Related Files | Server Related Files |
 | :--- | :--- | :--- |
