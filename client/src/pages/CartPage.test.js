@@ -1,11 +1,12 @@
+// Chia York Lim, A0258147X
 import React from "react";
-import { render, fireEvent, waitFor } from "@testing-library/react";
+import { render, fireEvent, waitFor, act } from "@testing-library/react";
 import axios from "axios";
 import { MemoryRouter, Routes, Route } from "react-router-dom";
 import "@testing-library/jest-dom/extend-expect";
 import toast from "react-hot-toast";
 import CartPage from "./CartPage";
-import { mockAuth, mockCartTotal, mockClientToken, mockItems, mockItemsLength } from "../tests/fixtures/test.cartpage.data";
+import { mockAuth, mockCartTotal, mockClientToken, mockItems, mockItemsLength, mockSingleCartTotal, mockSingleItem } from "../tests/fixtures/test.cartpage.data";
 import { useAuth } from "../context/auth";
 import { useCart } from "../context/cart";
 
@@ -14,9 +15,15 @@ jest.mock("react-hot-toast");
 
 const mockNavigate = jest.fn();
 const mockSetCart = jest.fn();
-const mockInstance = {
-  requestPaymentMethod: jest.fn().mockResolvedValue({ nonce: "fake-nonce" }),
-};
+const mockInstance = { requestPaymentMethod: jest.fn().mockResolvedValue({ nonce: "fake-nonce" }) };
+
+const MockDropIn = jest.fn(({ onInstance }) => {
+  const React = require("react");
+  React.useEffect(() => {
+    onInstance(mockInstance);
+  }, [onInstance]);
+  return <div>Mock Braintree Drop-in UI</div>;
+});
 
 jest.mock("react-router-dom", () => {
   const actual = jest.requireActual("react-router-dom");
@@ -27,7 +34,7 @@ jest.mock("react-router-dom", () => {
 });
 
 jest.mock('../context/auth', () => ({
-  useAuth: jest.fn(() => [[], jest.fn()]) // Mock useAuth hook to return null state and a mock function for setAuth
+  useAuth: jest.fn(() => [null, jest.fn()]) // Mock useAuth hook to return null state and a mock function for setAuth
 }));
 
 jest.mock('../context/cart', () => ({
@@ -38,15 +45,7 @@ jest.mock('../context/search', () => ({
   useSearch: jest.fn(() => [{ keyword: '' }, jest.fn()]) // Mock useSearch hook to return null state and a mock function
 }));
 
-jest.mock("braintree-web-drop-in-react", () => {
-  const React = require("react");
-  return function DummyDropIn({ onInstance }) {
-    React.useEffect(() => {
-      onInstance(mockInstance); // Mock instance
-    }, [onInstance]);
-    return <div>Mock Braintree Drop-in UI</div>;
-  }
-});
+jest.mock("braintree-web-drop-in-react", () => (props) => MockDropIn(props));
 
 Object.defineProperty(window, "localStorage", {
   value: {
@@ -60,10 +59,12 @@ Object.defineProperty(window, "localStorage", {
 describe("CartPage Component", () => {
   beforeEach(() => {
     jest.clearAllMocks();
+    useAuth.mockReturnValue([null, jest.fn()]);
+    useCart.mockReturnValue([[], jest.fn()]);
   });
 
   it("should renders cart page (empty cart & no user)", async () => {
-    axios.get.mockReturnValue(Promise.resolve([]));
+    axios.get.mockReturnValue([]);
     const { getByText } = render(
       <MemoryRouter initialEntries={["/cart"]}>
         <Routes>
@@ -71,13 +72,38 @@ describe("CartPage Component", () => {
         </Routes>
       </MemoryRouter>
     );
+    await waitFor(() => { });
 
     expect(getByText("Hello Guest")).toBeInTheDocument();
     expect(getByText("Your Cart Is Empty")).toBeInTheDocument();
     expect(getByText("Please Login to checkout")).toBeInTheDocument();
   });
 
-  it("should be able to navigate to login page when clicking login button", async () => {
+  it("should render cart page with items in cart (Non-Auth), No payment section", async () => {
+    axios.get.mockReturnValue([]);
+    useCart.mockReturnValue([mockItems, jest.fn()]);
+
+    const { getByText, getAllByText } = render(
+      <MemoryRouter initialEntries={["/cart"]}>
+        <Routes>
+          <Route path="/cart" element={<CartPage />} />
+        </Routes>
+      </MemoryRouter>
+    );
+    await waitFor(() => { });
+
+    expect(getByText(`You Have ${mockItemsLength} items in your cart please login to checkout !`)).toBeInTheDocument();
+    expect(getByText(`Total : ${mockCartTotal}`)).toBeInTheDocument();
+    expect(getAllByText("Remove")).toHaveLength(2);
+    expect(getByText("Please Login to checkout")).toBeInTheDocument();
+    expect(() => getByText("Mock Braintree Drop-in UI")).toThrow(); // Payment section should not be rendered
+  });
+
+  it("should show user name in greeting when authenticated user has no address", async () => {
+    const authWithNoAddress = { token: mockAuth.token, user: { name: mockAuth.user.name } };
+    useAuth.mockReturnValue([authWithNoAddress, jest.fn()]);
+    useCart.mockReturnValue([mockItems, mockSetCart]);
+    axios.get.mockReturnValue([]);
 
     const { getByText } = render(
       <MemoryRouter initialEntries={["/cart"]}>
@@ -86,31 +112,98 @@ describe("CartPage Component", () => {
         </Routes>
       </MemoryRouter>
     );
+
+    await waitFor(() => { });
+
+    expect(getByText(`Hello ${mockAuth.user.name}`)).toBeInTheDocument();
+    expect(getByText('Update Address')).toBeInTheDocument();
+  });
+
+  it("should truncate long description of cart item", async () => {
+    const longDescItem = {
+      ...mockItems[0],
+      description: "This is a very long description that should be truncated in the cart page to ensure that it does not overflow the UI and maintains a clean appearance for the user."
+    };
+    axios.get.mockReturnValue([]);
+    useCart.mockReturnValue([[longDescItem], jest.fn()]);
+    const { getByText } = render(
+      <MemoryRouter initialEntries={["/cart"]}>
+        <Routes>
+          <Route path="/cart" element={<CartPage />} />
+        </Routes>
+      </MemoryRouter>
+    );
+    await waitFor(() => { });
+    const truncatedDesc = "This is a very long descriptio";
+    expect(getByText(truncatedDesc)).toBeInTheDocument();
+  });
+
+  it.each([
+    ["missing description", { _id: "1", name: "Test Product", price: 10, description: null }],
+    ["missing name", { _id: "1", name: null, price: 10, description: "A description" }],
+    ["missing price", { _id: "1", name: "Test Product", price: null, description: "A description" }],
+    ["missing id", { _id: null, name: "Test Product", price: 10, description: "A description" }],
+  ])("should render cart item gracefully when %s", async (_, item) => {
+    const consoleSpy = jest.spyOn(console, "error").mockImplementation(() => { });
+    try {
+      useCart.mockReturnValue([[item], jest.fn()]);
+      axios.get.mockReturnValue([]);
+
+      render(
+        <MemoryRouter initialEntries={["/cart"]}>
+          <Routes>
+            <Route path="/cart" element={<CartPage />} />
+          </Routes>
+        </MemoryRouter>
+      )
+      await waitFor(() => { });
+
+      expect(consoleSpy).not.toHaveBeenCalled();
+    } finally {
+      consoleSpy.mockRestore();
+    }
+  });
+
+  it("should be able to navigate to login page when clicking login button", async () => {
+    axios.get.mockReturnValue([]);
+    const { getByText } = render(
+      <MemoryRouter initialEntries={["/cart"]}>
+        <Routes>
+          <Route path="/cart" element={<CartPage />} />
+        </Routes>
+      </MemoryRouter>
+    );
+    await waitFor(() => { });
     const loginButton = getByText("Please Login to checkout");
     fireEvent.click(loginButton);
     expect(mockNavigate).toHaveBeenCalledWith("/login", { state: "/cart" });
   });
 
-  it("should render cart page with items in cart (Non-Auth)", async () => {
-    axios.get.mockReturnValue(Promise.resolve([]));
-    useCart.mockReturnValue([mockItems, jest.fn()]);
-
-    const { getByText } = render(
-      <MemoryRouter initialEntries={["/cart"]}>
-        <Routes>
-          <Route path="/cart" element={<CartPage />} />
-        </Routes>
-      </MemoryRouter>
-    );
-
-    expect(getByText(`You Have ${mockItemsLength} items in your cart please login to checkout !`)).toBeInTheDocument();
-    expect(getByText(mockItems[0].name)).toBeInTheDocument();
-  });
-
-  it("should remove item in cart (success)", async () => {
-    axios.get.mockReturnValue(Promise.resolve([]));
+  it("should remove item in cart (success, multiple items)", async () => {
+    axios.get.mockReturnValue([]);
     useCart.mockReturnValue([mockItems, mockSetCart]);
 
+    const { getAllByText } = render(
+      <MemoryRouter initialEntries={["/cart"]}>
+        <Routes>
+          <Route path="/cart" element={<CartPage />} />
+        </Routes>
+      </MemoryRouter>
+    );
+
+    await waitFor(() => { });
+
+    const removeButtons = getAllByText("Remove");
+    fireEvent.click(removeButtons[1]);
+
+    expect(mockSetCart).toHaveBeenCalledTimes(1);
+    expect(mockSetCart).toHaveBeenCalledWith([mockItems[0]]);
+    expect(window.localStorage.setItem).toHaveBeenCalledWith("cart", JSON.stringify([mockItems[0]]));
+  });
+
+  it("should remove item in cart (success, single item)", async () => {
+    axios.get.mockReturnValue([]);
+    useCart.mockReturnValue([mockSingleItem, mockSetCart]);
     const { getByText } = render(
       <MemoryRouter initialEntries={["/cart"]}>
         <Routes>
@@ -118,19 +211,22 @@ describe("CartPage Component", () => {
         </Routes>
       </MemoryRouter>
     );
+
+    await waitFor(() => { });
 
     const removeButton = getByText("Remove");
     fireEvent.click(removeButton);
 
     expect(mockSetCart).toHaveBeenCalledTimes(1);
+    expect(mockSetCart).toHaveBeenCalledWith([]);
     expect(window.localStorage.setItem).toHaveBeenCalledWith("cart", JSON.stringify([]));
   });
 
   it("should handle remove item in cart (logs error)", async () => {
-    axios.get.mockReturnValue(Promise.resolve([]));
+    axios.get.mockReturnValue([]);
     const consoleSpy = jest.spyOn(console, "log").mockImplementation(() => { });
     const storageError = new Error("LocalStorage Error");
-    useCart.mockReturnValue([mockItems, mockSetCart]);
+    useCart.mockReturnValue([mockSingleItem, mockSetCart]);
     window.localStorage.setItem.mockImplementation(() => {
       throw storageError;
     });
@@ -142,6 +238,8 @@ describe("CartPage Component", () => {
       </MemoryRouter>
     );
 
+    await waitFor(() => { });
+
     const removeButton = getByText("Remove");
     fireEvent.click(removeButton);
     expect(consoleSpy).toHaveBeenCalledWith(storageError);
@@ -149,8 +247,36 @@ describe("CartPage Component", () => {
     consoleSpy.mockRestore();
   });
 
+  it("should handle total price calculation (empty cart)", async () => {
+    axios.get.mockReturnValue([]);
+    useCart.mockReturnValue([[], jest.fn()]);
+    const { getByText } = render(
+      <MemoryRouter initialEntries={["/cart"]}>
+        <Routes>
+          <Route path="/cart" element={<CartPage />} />
+        </Routes>
+      </MemoryRouter>
+    );
+    await waitFor(() => { });
+    expect(getByText("Total : $0.00")).toBeInTheDocument();
+  });
+
+  it("should handle total price calculation (single item)", async () => {
+    axios.get.mockReturnValue([]);
+    useCart.mockReturnValue([mockSingleItem, jest.fn()]);
+    const { getByText } = render(
+      <MemoryRouter initialEntries={["/cart"]}>
+        <Routes>
+          <Route path="/cart" element={<CartPage />} />
+        </Routes>
+      </MemoryRouter>
+    );
+    await waitFor(() => { });
+    expect(getByText(`Total : ${mockSingleCartTotal}`)).toBeInTheDocument();
+  });
+
   it("should handle total price calculation", async () => {
-    axios.get.mockReturnValue(Promise.resolve([]));
+    axios.get.mockReturnValue([]);
     useCart.mockReturnValue([mockItems, mockSetCart]);
     const { getByText } = render(
       <MemoryRouter initialEntries={["/cart"]}>
@@ -159,11 +285,12 @@ describe("CartPage Component", () => {
         </Routes>
       </MemoryRouter>
     );
+    await waitFor(() => { });
     expect(getByText(`Total : ${mockCartTotal}`)).toBeInTheDocument();
   });
 
   it("should handle total price calculation (logs error)", async () => {
-    axios.get.mockReturnValue(Promise.resolve([]));
+    axios.get.mockReturnValue([]);
     const localeError = new Error("toLocaleString Error");
     const consoleSpy = jest.spyOn(console, "log").mockImplementation(() => { });
     const localeSpy = jest.spyOn(Number.prototype, "toLocaleString").mockImplementation(() => {
@@ -178,6 +305,7 @@ describe("CartPage Component", () => {
         </Routes>
       </MemoryRouter>
     );
+    await waitFor(() => { });
 
     expect(localeSpy).toHaveBeenCalledTimes(1);
     expect(consoleSpy).toHaveBeenCalledWith(localeError);
@@ -185,8 +313,8 @@ describe("CartPage Component", () => {
     localeSpy.mockRestore();
   });
 
-  it("should render cart page with items in cart (Auth User)", async () => {
-    axios.get.mockReturnValue(Promise.resolve([]));
+  it("should render cart page with items in cart (Auth User + Address)", async () => {
+    axios.get.mockReturnValue([]);
     useAuth.mockReturnValue([mockAuth, jest.fn()]);
     useCart.mockReturnValue([mockItems, mockSetCart]);
 
@@ -197,14 +325,34 @@ describe("CartPage Component", () => {
         </Routes>
       </MemoryRouter>
     );
+
+    await waitFor(() => { });
 
     expect(getByText(`Hello ${mockAuth.user.name}`)).toBeInTheDocument();
     expect(getByText(`You Have ${mockItemsLength} items in your cart`)).toBeInTheDocument();
     expect(getByText(mockAuth.user.address)).toBeInTheDocument();
   });
 
+  it("should not render payment section with items no auth", async () => {
+    axios.get.mockReturnValue([]);
+    useAuth.mockReturnValue([null, jest.fn()]);
+    useCart.mockReturnValue([mockItems, mockSetCart]);
+
+    const { queryByText } = render(
+      <MemoryRouter initialEntries={["/cart"]}>
+        <Routes>
+          <Route path="/cart" element={<CartPage />} />
+        </Routes>
+      </MemoryRouter>
+    );
+
+    await waitFor(() => { });
+
+    expect(queryByText("Mock Braintree Drop-in UI")).not.toBeInTheDocument();
+  });
+
   it("should be able to navigate to update address page when clicking update address button", async () => {
-    axios.get.mockReturnValue(Promise.resolve([]));
+    axios.get.mockReturnValue([]);
     useAuth.mockReturnValue([mockAuth, jest.fn()]);
     useCart.mockReturnValue([mockItems, mockSetCart]);
     const { getByText } = render(
@@ -214,13 +362,15 @@ describe("CartPage Component", () => {
         </Routes>
       </MemoryRouter>
     );
+
+    await waitFor(() => { });
     const updateAddressButton = getByText("Update Address");
     fireEvent.click(updateAddressButton);
     expect(mockNavigate).toHaveBeenCalledWith("/dashboard/user/profile");
   });
 
   it("should be able to navigate to update address page when clicking update address button (No address)", async () => {
-    axios.get.mockReturnValue(Promise.resolve([]));
+    axios.get.mockReturnValue([]);
     useAuth.mockReturnValue([{ token: mockAuth.token }, jest.fn()]);
     useCart.mockReturnValue([mockItems, mockSetCart]);
     const { getByText } = render(
@@ -230,6 +380,8 @@ describe("CartPage Component", () => {
         </Routes>
       </MemoryRouter>
     );
+
+    await waitFor(() => { });
     const updateAddressButton = getByText("Update Address");
     fireEvent.click(updateAddressButton);
     expect(mockNavigate).toHaveBeenCalledWith("/dashboard/user/profile");
@@ -257,6 +409,90 @@ describe("CartPage Component", () => {
 
     await waitFor(() => expect(getByText("Mock Braintree Drop-in UI")).toBeInTheDocument());
     expect(getByText("Make Payment")).toBeInTheDocument();
+    expect(getByText("Make Payment")).not.toBeDisabled();
+  });
+
+  it("button should be disabled when instance is not ready", async () => {
+    useAuth.mockReturnValue([mockAuth, jest.fn()]);
+    useCart.mockReturnValue([mockItems, mockSetCart]);
+    MockDropIn.mockImplementationOnce(({ onInstance }) => <div>Mock Braintree Drop-in UI</div>);
+    axios.get.mockImplementation((url) => {
+      if (url.includes("braintree/token"))
+        return Promise.resolve({ data: mockClientToken });
+      console.log(url);
+      return Promise.resolve([]);
+    });
+
+    const { getByText } = render(
+      <MemoryRouter initialEntries={["/cart"]}>
+        <Routes>
+          <Route path="/cart" element={<CartPage />} />
+        </Routes>
+      </MemoryRouter>
+    );
+    await waitFor(() => expect(getByText("Make Payment")).toBeInTheDocument());
+    const makePaymentButton = getByText("Make Payment");
+    expect(makePaymentButton).toBeDisabled();
+  });
+
+  it("button should be disabled when auth address is not available", async () => {
+    useAuth.mockReturnValue([{ token: mockAuth.token }, jest.fn()]);
+    useCart.mockReturnValue([mockItems, mockSetCart]);
+    axios.get.mockImplementation((url) => {
+      if (url.includes("braintree/token"))
+        return Promise.resolve({ data: mockClientToken });
+      console.log(url);
+      return Promise.resolve([]);
+    });
+
+    const { getByText } = render(
+      <MemoryRouter initialEntries={["/cart"]}>
+        <Routes>
+          <Route path="/cart" element={<CartPage />} />
+        </Routes>
+      </MemoryRouter>
+    );
+    await waitFor(() => expect(getByText("Make Payment")).toBeInTheDocument());
+    const makePaymentButton = getByText("Make Payment");
+    expect(makePaymentButton).toBeDisabled();
+  });
+
+  it("should get client token (success) on mount", async () => {
+    axios.get.mockImplementation(() => []);
+
+    render(
+      <MemoryRouter initialEntries={["/cart"]}>
+        <Routes>
+          <Route path="/cart" element={<CartPage />} />
+        </Routes>
+      </MemoryRouter>
+    );
+
+    await waitFor(() => expect(axios.get).toHaveBeenCalledWith("/api/v1/product/braintree/token"));
+  });
+
+  it("should re-fetch client token when auth changes", async () => {
+    useAuth.mockReturnValue([{ user: "1", token: "1" },]);
+    axios.get.mockImplementation(() => []);
+    const { rerender } = render(
+      <MemoryRouter initialEntries={["/cart"]}>
+        <Routes>
+          <Route path="/cart" element={<CartPage />} />
+        </Routes>
+      </MemoryRouter>
+    );
+    await waitFor(() => expect(axios.get).toHaveBeenCalledWith("/api/v1/product/braintree/token"));
+    jest.clearAllMocks();
+    axios.get.mockImplementation(() => []);
+    useAuth.mockReturnValue([{ user: "1", token: "2" },]);
+    rerender(
+      <MemoryRouter initialEntries={["/cart"]}>
+        <Routes>
+          <Route path="/cart" element={<CartPage />} />
+        </Routes>
+      </MemoryRouter>
+    );
+    await waitFor(() => expect(axios.get).toHaveBeenCalledWith("/api/v1/product/braintree/token"));
   });
 
 
@@ -297,7 +533,6 @@ describe("CartPage Component", () => {
       </MemoryRouter>
     );
 
-    await waitFor(() => expect(findByText("Make Payment")).toBeDefined());
     const makePaymentButton = await findByText("Make Payment");
     fireEvent.click(makePaymentButton);
 
@@ -333,12 +568,42 @@ describe("CartPage Component", () => {
         </Routes>
       </MemoryRouter>
     );
-    await waitFor(() => expect(findByText("Make Payment")).toBeDefined());
     const makePaymentButton = await findByText("Make Payment");
     fireEvent.click(makePaymentButton);
     expect(mockInstance.requestPaymentMethod).toHaveBeenCalledTimes(1);
     await waitFor(() => expect(axios.post).toHaveBeenCalled());
     expect(consoleSpy).toHaveBeenCalledWith(paymentError);
     consoleSpy.mockRestore();
+  });
+
+  it("it should show loading state when payment is processing", async () => {
+    useAuth.mockReturnValue([mockAuth, jest.fn()]);
+    useCart.mockReturnValue([mockItems, mockSetCart]);
+    axios.get.mockResolvedValue({ data: mockClientToken });
+
+    let resolvePayment;
+    axios.post.mockImplementation(
+      () => new Promise((resolve) => { resolvePayment = resolve; })
+    );
+
+    const { findByText, getByText } = render(   // <-- destructure getByText from render
+      <MemoryRouter initialEntries={["/cart"]}>
+        <Routes>
+          <Route path="/cart" element={<CartPage />} />
+        </Routes>
+      </MemoryRouter>
+    );
+
+    const makePaymentButton = await findByText("Make Payment");
+    fireEvent.click(makePaymentButton);
+
+    await waitFor(() => expect(getByText("Processing ....")).toBeInTheDocument());
+    expect(getByText("Processing ....")).toBeDisabled();
+
+    // Resolve payment
+    act(() => resolvePayment({ data: {} }));
+
+    await waitFor(() => expect(mockNavigate).toHaveBeenCalledWith("/dashboard/user/orders"));
+    await waitFor(() => expect(getByText("Make Payment")).toBeInTheDocument());
   });
 });

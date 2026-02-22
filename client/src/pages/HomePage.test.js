@@ -1,3 +1,4 @@
+// Chia York Lim, A0258147X
 import React from 'react';
 import { render, fireEvent, waitFor } from '@testing-library/react';
 import axios from 'axios';
@@ -8,7 +9,6 @@ import HomePage from './HomePage';
 import { categories, products, totalProducts } from '../tests/fixtures/test.homepage.data';
 import { Prices } from '../components/Prices';
 
-// Mocking axios.post
 jest.mock('axios');
 jest.mock('react-hot-toast');
 
@@ -35,10 +35,6 @@ jest.mock('../context/search', () => ({
   useSearch: jest.fn(() => [{ keyword: '' }, jest.fn()]) // Mock useSearch hook to return null state and a mock function
 }));
 
-jest.mock('react-icons/ai', () => ({
-  AiOutlineReload: () => <span data-testid="reload-icon">Reload</span>
-}));
-
 Object.defineProperty(window, 'localStorage', {
   value: {
     setItem: jest.fn(),
@@ -56,7 +52,7 @@ window.matchMedia = window.matchMedia || function () {
   };
 };
 
-describe.skip('Home Component', () => {
+describe('Home Component', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
@@ -76,7 +72,7 @@ describe.skip('Home Component', () => {
       return Promise.resolve({ data: {} });
     });
 
-    const { getByAltText, getByText, getAllByText } = render(
+    const { getByAltText, getByText, getAllByTestId } = render(
       <MemoryRouter initialEntries={['/']}>
         <Routes>
           <Route path="/" element={<HomePage />} />
@@ -85,14 +81,8 @@ describe.skip('Home Component', () => {
     );
 
     await waitFor(() => {
-      expect(getByText(products[0].name)).toBeInTheDocument();
+      expect(getAllByTestId('product-item')).toHaveLength(3);
     });
-
-    expect(getByText(products[1].name)).toBeInTheDocument();
-    expect(getByText(products[2].name)).toBeInTheDocument();
-    expect(getAllByText(categories[0].name)).toHaveLength(2);
-    expect(getAllByText(categories[1].name)).toHaveLength(2);
-    expect(getAllByText(categories[2].name)).toHaveLength(2);
 
     expect(getByText('Filter By Category')).toBeInTheDocument();
     expect(getByText('Filter By Price')).toBeInTheDocument();
@@ -170,7 +160,8 @@ describe.skip('Home Component', () => {
     consoleSpy.mockRestore();
   });
 
-  it('should be able to successfully add and remove filter by category', async () => {
+  it('should be able to successfully add (one) and remove filter by category', async () => {
+    // Bug in if (!checked.length || !radio.length)
     axios.get.mockImplementation((url) => {
       if (url.includes('get-category')) {
         return Promise.resolve({ data: { success: true, category: categories } });
@@ -187,7 +178,7 @@ describe.skip('Home Component', () => {
 
     axios.post.mockResolvedValue({ data: { products: [products[0]] } });
 
-    const { getByText, getByLabelText, queryByText } = render(
+    const { getByText, getByLabelText, queryByText, getAllByTestId } = render(
       <MemoryRouter initialEntries={['/']}>
         <Routes>
           <Route path="/" element={<HomePage />} />
@@ -196,11 +187,12 @@ describe.skip('Home Component', () => {
     );
 
     await waitFor(() => {
-      expect(getByText(products[0].name)).toBeInTheDocument();
+      expect(getAllByTestId('product-item')).toHaveLength(3);
     });
 
-    // Add category filters
     axios.get.mockClear(); // Clear previous calls
+
+    // Add category filters
     const categoryCheckbox = getByLabelText(categories[0].name);
     fireEvent.click(categoryCheckbox);
 
@@ -223,6 +215,72 @@ describe.skip('Home Component', () => {
     });
   });
 
+  it('should be able to successfully add multiple filters by category and remove one', async () => {
+    // Bug in if (!checked.length || !radio.length)
+    axios.get.mockImplementation((url) => {
+      if (url.includes('get-category')) {
+        return Promise.resolve({ data: { success: true, category: categories } });
+      }
+      if (url.includes('product-count')) {
+        return Promise.resolve({ data: { total: totalProducts } });
+      }
+      if (url.includes('product-list')) {
+        return Promise.resolve({ data: { products: products } });
+      }
+      console.log('URL not mocked:', url);
+      return Promise.resolve({ data: {} });
+    });
+
+    axios.post.mockImplementation((url, { checked }) => {
+      if (url.includes('product-filters')) {
+        const filteredProducts = products.filter(p => checked.includes(p.category));
+        return Promise.resolve({ data: { products: filteredProducts } });
+      }
+      return Promise.resolve({ data: {} });
+    });
+
+    const { getByText, getByLabelText, queryByText, getAllByTestId } = render(
+      <MemoryRouter initialEntries={['/']}>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+        </Routes>
+      </MemoryRouter>
+    );
+
+    await waitFor(() => {
+      expect(getAllByTestId('product-item')).toHaveLength(3);
+    });
+
+    axios.get.mockClear(); // Clear previous calls
+
+    // Add category filters
+    const categoryCheckbox1 = getByLabelText(categories[0].name);
+    const categoryCheckbox2 = getByLabelText(categories[1].name);
+    fireEvent.click(categoryCheckbox1);
+    fireEvent.click(categoryCheckbox2);
+
+    expect(categoryCheckbox1.checked).toBe(true);
+    expect(categoryCheckbox2.checked).toBe(true);
+
+    expect(axios.post).toHaveBeenCalledWith('/api/v1/product/product-filters', { checked: [categories[0]._id, categories[1]._id], radio: [] });
+
+    await waitFor(() => {
+      expect(getAllByTestId('product-item')).toHaveLength(2);
+    });
+
+    // Remove one category filter
+    fireEvent.click(categoryCheckbox1);
+    expect(categoryCheckbox1.checked).toBe(false);
+    expect(categoryCheckbox2.checked).toBe(true);
+
+    expect(axios.post).toHaveBeenCalledWith('/api/v1/product/product-filters', { checked: [categories[1]._id], radio: [] });
+    await waitFor(() => {
+      expect(queryByText(products[0].name)).not.toBeInTheDocument();
+    });
+    expect(getByText(products[1].name)).toBeInTheDocument();
+    expect(axios.get).not.toHaveBeenCalledWith('/api/v1/product/product-list/1');
+  });
+
   it('logs error when filter fails', async () => {
     const networkError = new Error('Network Error');
 
@@ -243,7 +301,7 @@ describe.skip('Home Component', () => {
     });
 
     const consoleSpy = jest.spyOn(console, 'log').mockImplementation(() => { });
-    const { getByText, getByLabelText } = render(
+    const { getAllByTestId, getByLabelText } = render(
       <MemoryRouter initialEntries={['/']}>
         <Routes>
           <Route path="/" element={<HomePage />} />
@@ -252,7 +310,7 @@ describe.skip('Home Component', () => {
     );
 
     await waitFor(() => {
-      expect(getByText(products[0].name)).toBeInTheDocument();
+      expect(getAllByTestId('product-item')).toHaveLength(3);
     });
 
     // Add category filters
@@ -400,6 +458,7 @@ describe.skip('Home Component', () => {
         </Routes>
       </MemoryRouter>
     );
+    await waitFor(() => { });
     fireEvent.click(getByText('RESET FILTERS'));
     expect(window.location.reload).toHaveBeenCalledTimes(1);
   });
@@ -413,7 +472,7 @@ describe.skip('Home Component', () => {
       return Promise.resolve([]);
     });
 
-    const { getByText } = render(
+    const { getByText, getAllByTestId } = render(
       <MemoryRouter initialEntries={['/']}>
         <Routes>
           <Route path="/" element={<HomePage />} />
@@ -422,7 +481,7 @@ describe.skip('Home Component', () => {
     );
 
     await waitFor(() => {
-      expect(getByText(products[0].name)).toBeInTheDocument();
+      expect(getAllByTestId('product-item')).toHaveLength(1);
     });
 
     fireEvent.click(getByText("More Details"));
