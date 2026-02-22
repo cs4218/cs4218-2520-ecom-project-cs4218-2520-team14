@@ -1,3 +1,5 @@
+// Author: Tan Qin Yong A0253468W
+
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";

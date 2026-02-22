@@ -144,3 +144,20 @@ To begin unit testing with Jest in your project, follow these steps:
      ```bash
      npm run test
      ```
+
+## 6. Testing Scope Breakdown
+
+This section outlines the distribution of files and testing for our team. Our team followed the suggested testing scope given by Prof. and split the workload by "Features" column. Each member would then be in charge of all files listed under that particular feature. 
+
+### Testing Scope & Development Distribution
+
+### Tan Qin Yong
+
+I was in charge of these files and all unit tests for them (unit test files ends with fileName.test.js).
+
+| Features | Client Related Files | Server Related Files |
+| :--- | :--- | :--- |
+| **Product Management** | `pages/ProductDetails.js`<br>`pages/CategoryProduct.js` | **`controllers/productController.js`**<br>1. `getProductController`<br>2. `getSingleProductController`<br>3. `productPhotoController`<br>4. `productFiltersController`<br>5. `productCountController`<br>6. `productListController`<br>7. `searchProductController`<br>8. `realtedProductController`<br>9. `productCategoryController`<br><br>**`models/productModel.js`** |
+| **Contact & Support** | `pages/Contact.js` | N/A |
+| **Legal & Policy** | `pages/Policy.js` | N/A |
+| **General & Layout** | `components/Footer.js`<br>`components/Header.js`<br>`components/Layout.js`<br>`components/Spinner.js`<br>`pages/About.js`<br>`pages/Pagenotfound.js` | N/A |
