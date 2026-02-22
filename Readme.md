@@ -167,6 +167,14 @@ I implemented the Authentication, Authorization helpers, login, registration, an
 
 ### JONAS ONG SI WEI A0252052U
 
+I was responsible the following test files under the following categories (unit test for the following files ends with .test.js):
+| Features | Client Related Files | Server Related Files |
+| :--- | :--- | :--- |
+| **Admin Actions** | `components/Form/CategoryForm.js`<br>`pages/admin/CreateCategory.js`<br>`pages/admin/CreateProduct.js`<br>`pages/admin/UpdateProduct.js` | **`categoryController.admin.test.js`** for **`controllers/categoryController.js`**<br>1. `createCategoryController`<br>2. `updateCategoryController`<br>3. `deleteCategoryController`
+| **Admin View Orders** | `pages/admin/AdminOrders.js` | N/A
+| **Admin View Products** | `pages/admin/Products.js` | **`productController.admin.test.js`** for **`controllers/productController.js`**<br>1. `createProductController`<br>2. `updateProductController`<br>3. `deleteProductController`
+| **Admin General** | `components/Routes/Private.js`<br>`components/UserMenu.js`<br>`pages/user/Dashboard.js`<br> | N/A
+
 ### TAN QIN YONG A0253468W
 
 I was in charge of these files and all unit tests for them (unit test files ends with fileName.test.js).
