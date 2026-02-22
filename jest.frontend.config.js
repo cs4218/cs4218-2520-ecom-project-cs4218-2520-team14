@@ -21,21 +21,11 @@ export default {
 
   // only run these tests
   testMatch: ["<rootDir>/client/src/**/*.test.js"],
+  testPathIgnorePatterns: ["<rootDir>/client/src/_site"],
 
   // jest code coverage
   collectCoverage: true,
-collectCoverageFrom: [
-  "client/src/**/*.{js,jsx}",
-
-  // 🔕 Exclusions (VERY important)
-  "!client/src/index.js",
-  "!client/src/reportWebVitals.js",
-  "!client/src/setupTests.js",
-
-  // optional exclusions (recommended)
-  "!client/src/**/styles/**",
-  "!client/src/**/*.css",
-],
+  collectCoverageFrom: ["client/src/**/*.{js,jsx}"],
   coverageThreshold: {
     global: {
       lines: 100,

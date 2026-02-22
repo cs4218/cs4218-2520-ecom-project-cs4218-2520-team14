@@ -62,7 +62,10 @@ const Header = () => {
                   </li>
                   {categories?.map((c) => (
                     <li key={c._id || c.slug}>
-                      <Link className="dropdown-item" to={`/category/${c.slug}`}>
+                      <Link
+                        className="dropdown-item"
+                        to={`/category/${c.slug}`}
+                      >
                         {c.name}
                       </Link>
                     </li>
