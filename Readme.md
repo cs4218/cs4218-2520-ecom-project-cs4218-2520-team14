@@ -150,6 +150,17 @@ To begin unit testing with Jest in your project, follow these steps:
 This section outlines the distribution of files and testing for our team. Our team followed the suggested testing scope given by Prof. and split the workload by "Features" column. Each member would then be in charge of all files listed under that particular feature. 
 
 ### AGRAWAL SHAURYAN A0265846N
+I was in charge of these files and all unit tests for them (unit test files ends with fileName.test.js).
+
+| Features | Client Related Files | Server Related Files |
+| :--- | :--- | :--- |
+| **Authentication (Login & Registration)** | `pages/Auth/Login.js`<br>`pages/Auth/Register.js` | **`controllers/authController.js`**<br>1. `registerController`<br>2. `loginController`<br>3. `forgotPasswordController`<br>4. `testController` |
+| **Authentication Helpers** | — | **`helpers/authHelper.js`**<br>`hashPassword`<br>`comparePassword` |
+| **Authorization Middleware** | — | **`middlewares/authMiddleware.js`**<br>`requireSignIn`<br>`isAdmin` |
+| **Admin Dashboard UI** | `components/AdminMenu.js`<br>`pages/admin/AdminDashboard.js` | — |
+| **Authentication Context** | `context/auth.js` | — |
+
+---
 
 ### CHIA YORK LIM A0258147X
 
