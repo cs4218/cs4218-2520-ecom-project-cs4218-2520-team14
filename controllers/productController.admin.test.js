@@ -31,6 +31,11 @@ const res = {
   send: jest.fn(),
 };
 
+jest.mock("braintree", () => ({
+  BraintreeGateway: jest.fn().mockImplementation(() => ({})),
+  Environment: { Sandbox: null },
+}));
+
 describe("Product Controller", () => {
   beforeEach(() => {
     jest.restoreAllMocks();
