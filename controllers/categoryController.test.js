@@ -1,5 +1,5 @@
 // Chia York Lim, A0258147X
-import { singleCategoryController, categoryControlller } from "./categoryController";
+import { singleCategoryController, categoryController } from "./categoryController";
 import categoryModel from "../models/categoryModel";
 
 jest.mock("../models/categoryModel");
@@ -18,7 +18,7 @@ describe("categoryController", () => {
   it("should be able to get all categories", async () => {
     const mockCategories = [{ name: "Category1", slug: "category1" }, { name: "Category2", slug: "category2" }];
     categoryModel.find.mockResolvedValue(mockCategories);
-    await categoryControlller(req, res);
+    await categoryController(req, res);
 
     expect(categoryModel.find).toHaveBeenCalledWith({});
     expect(res.status).toHaveBeenCalledWith(200);
@@ -31,7 +31,7 @@ describe("categoryController", () => {
 
   it("should return empty array when there are no categories", async () => {
     categoryModel.find.mockResolvedValue([]);
-    await categoryControlller(req, res);
+    await categoryController(req, res);
     expect(categoryModel.find).toHaveBeenCalledWith({});
     expect(res.status).toHaveBeenCalledWith(200);
     expect(res.send).toHaveBeenCalledWith({
@@ -45,7 +45,7 @@ describe("categoryController", () => {
     const mockError = new Error("Database error");
     categoryModel.find.mockRejectedValue(mockError);
 
-    await categoryControlller(req, res);
+    await categoryController(req, res);
 
     expect(categoryModel.find).toHaveBeenCalledWith({});
     expect(res.status).toHaveBeenCalledWith(500);
