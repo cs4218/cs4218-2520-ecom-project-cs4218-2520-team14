@@ -23,7 +23,6 @@ Virtual Vault is a full-stack MERN (MongoDB, Express.js, React.js, Node.js) e-co
 ### 1. Installing Node.js
 
 1. **Download and Install Node.js**:
-
    - Visit [nodejs.org](https://nodejs.org) to download and install Node.js.
 
 2. **Verify Installation**:
@@ -36,26 +35,21 @@ Virtual Vault is a full-stack MERN (MongoDB, Express.js, React.js, Node.js) e-co
 ### 2. MongoDB Setup
 
 1. **Download and Install MongoDB Compass**:
-
    - Visit [MongoDB Compass](https://www.mongodb.com/products/tools/compass) and download and install MongoDB Compass for your operating system.
 
 2. **Create a New Cluster**:
-
    - Sign up or log in to [MongoDB Atlas](https://www.mongodb.com/cloud/atlas/register).
    - After logging in, create a project and within that project deploy a free cluster.
 
 3. **Configure Database Access**:
-
    - Create a new user for your database (if not alredy done so) in MongoDB Atlas.
    - Navigate to "Database Access" under "Security" and create a new user with the appropriate permissions.
 
 4. **Whitelist IP Address**:
-
    - Go to "Network Access" under "Security" and whitelist your IP address to allow access from your machine.
    - For example, you could whitelist 0.0.0.0 to allow access from anywhere for ease of use.
 
 5. **Connect to the Database**:
-
    - In your cluster's page on MongoDB Atlas, click on "Connect" and choose "Compass".
    - Copy the connection string.
 
@@ -67,7 +61,6 @@ Virtual Vault is a full-stack MERN (MongoDB, Express.js, React.js, Node.js) e-co
 To download and use the MERN (MongoDB, Express.js, React.js, Node.js) app from GitHub, follow these general steps:
 
 1. **Clone the Repository**
-
    - Go to the GitHub repository of the MERN app.
    - Click on the "Code" button and copy the URL of the repository.
    - Open your terminal or command prompt.
@@ -78,7 +71,6 @@ To download and use the MERN (MongoDB, Express.js, React.js, Node.js) app from G
    - Navigate into the cloned directory.
 
 2. **Install Frontend and Backend Dependencies**
-
    - Run the following command in your project's root directory:
 
      ```
@@ -86,14 +78,12 @@ To download and use the MERN (MongoDB, Express.js, React.js, Node.js) app from G
      ```
 
 3. **Add database connection string to `.env`**
-
    - Add the connection string copied from MongoDB Atlas to the `.env` file inside the project directory (replace the necessary placeholders):
      ```env
      MONGO_URL = <connection string>
      ```
 
 4. **Adding sample data to database**
-
    - Download “Sample DB Schema” from Canvas and extract it.
    - In MongoDB Compass, create a database named `test` under your cluster.
    - Add four collections to this database: `categories`, `orders`, `products`, and `users`.
@@ -127,7 +117,6 @@ To begin unit testing with Jest in your project, follow these steps:
 3. **Run Tests**  
    Execute your tests using Jest to ensure that your components meet the expected behaviour.  
    You can run the tests by using the following command in the root of the directory:
-
    - **Frontend tests**
 
      ```bash
@@ -147,23 +136,31 @@ To begin unit testing with Jest in your project, follow these steps:
 
 ## 6. Testing Scope Breakdown
 
-This section outlines the distribution of files and testing for our team. Our team followed the suggested testing scope given by Prof. and split the workload by "Features" column. Each member would then be in charge of all files listed under that particular feature. 
+This section outlines the distribution of files and testing for our team. Our team followed the suggested testing scope given by Prof. and split the workload by "Features" column. Each member would then be in charge of all files listed under that particular feature.
 
 ### AGRAWAL SHAURYAN A0265846N
+
 I implemented the Authentication, Authorization helpers, login, registration, and middleware modules, wrote **79 automated unit tests**, and achieved **100% statement, branch, function, and line coverage across all components under my ownership**.
 
-
-| Features | Client Related Files | Server Related Files |
-| :--- | :--- | :--- |
-| **Authentication (Login & Registration)** | `pages/Auth/Login.js`<br>`pages/Auth/Register.js` | **`controllers/authController.js`**<br>1. `registerController`<br>2. `loginController`<br>3. `forgotPasswordController`<br>4. `testController` |
-| **Authentication Helpers** | — | **`helpers/authHelper.js`**<br>`hashPassword`<br>`comparePassword` |
-| **Authorization Middleware** | — | **`middlewares/authMiddleware.js`**<br>`requireSignIn`<br>`isAdmin` |
-| **Admin Dashboard UI** | `components/AdminMenu.js`<br>`pages/admin/AdminDashboard.js` | — |
-| **Authentication Context** | `context/auth.js` | — |
+| Features                                  | Client Related Files                                         | Server Related Files                                                                                                                           |
+| :---------------------------------------- | :----------------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Authentication (Login & Registration)** | `pages/Auth/Login.js`<br>`pages/Auth/Register.js`            | **`controllers/authController.js`**<br>1. `registerController`<br>2. `loginController`<br>3. `forgotPasswordController`<br>4. `testController` |
+| **Authentication Helpers**                | —                                                            | **`helpers/authHelper.js`**<br>`hashPassword`<br>`comparePassword`                                                                             |
+| **Authorization Middleware**              | —                                                            | **`middlewares/authMiddleware.js`**<br>`requireSignIn`<br>`isAdmin`                                                                            |
+| **Admin Dashboard UI**                    | `components/AdminMenu.js`<br>`pages/admin/AdminDashboard.js` | —                                                                                                                                              |
+| **Authentication Context**                | `context/auth.js`                                            | —                                                                                                                                              |
 
 ---
 
 ### CHIA YORK LIM A0258147X
+
+I was responsible for testing and fixing the bugs in the following files.
+| Features | Client Related Files | Server Related Files |
+| :--- | :--- | :--- |
+|**Home**| <ul><li>`pages/Homepage.js` (`pages/Homepage.test.js`) </ul> | - |
+|**Cart**| <ul><li>`context/cart.js` (`context/cart.test.js`) <li> `pages/CartPage.js` (`pages/CartPage.test.js`)</ul> | - |
+|**Category**| <ul><li>`hooks/useCategory.js` (`hooks/useCategory.test.js`) <li> `pages/Categories.js` (`pages/Categories.test.js`) </ul> | <ul> <li>`controllers/categoryController.js` (`controllers/categoryController.test.js`) <ul> <li> categoryControlller <li> singleCategoryController </ul> <li> `models/categoryModel.js` (`models/categoryModel.test.js`) </ul> |
+|**Payment**| - | <ul> <li>`controllers/productController.js` (`controllers/productController.payment.test.js`) <ul> <li> braintreeTokenController <li> brainTreePaymentController </ul> |
 
 ### JONAS ONG SI WEI A0252052U
 
@@ -179,11 +176,11 @@ I was responsible the following test files under the following categories (unit 
 
 I was in charge of these files and all unit tests for them (unit test files ends with fileName.test.js).
 
-| Features | Client Related Files | Server Related Files |
-| :--- | :--- | :--- |
-| **Product Management** | `pages/ProductDetails.js`<br>`pages/CategoryProduct.js` | **`controllers/productController.js`**<br>1. `getProductController`<br>2. `getSingleProductController`<br>3. `productPhotoController`<br>4. `productFiltersController`<br>5. `productCountController`<br>6. `productListController`<br>7. `searchProductController`<br>8. `realtedProductController`<br>9. `productCategoryController`<br><br>**`models/productModel.js`** |
-| **Contact & Support** | `pages/Contact.js` | N/A |
-| **Legal & Policy** | `pages/Policy.js` | N/A |
-| **General & Layout** | `components/Footer.js`<br>`components/Header.js`<br>`components/Layout.js`<br>`components/Spinner.js`<br>`pages/About.js`<br>`pages/Pagenotfound.js` | N/A |
+| Features               | Client Related Files                                                                                                                                 | Server Related Files                                                                                                                                                                                                                                                                                                                                                       |
+| :--------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Product Management** | `pages/ProductDetails.js`<br>`pages/CategoryProduct.js`                                                                                              | **`controllers/productController.js`**<br>1. `getProductController`<br>2. `getSingleProductController`<br>3. `productPhotoController`<br>4. `productFiltersController`<br>5. `productCountController`<br>6. `productListController`<br>7. `searchProductController`<br>8. `realtedProductController`<br>9. `productCategoryController`<br><br>**`models/productModel.js`** |
+| **Contact & Support**  | `pages/Contact.js`                                                                                                                                   | N/A                                                                                                                                                                                                                                                                                                                                                                        |
+| **Legal & Policy**     | `pages/Policy.js`                                                                                                                                    | N/A                                                                                                                                                                                                                                                                                                                                                                        |
+| **General & Layout**   | `components/Footer.js`<br>`components/Header.js`<br>`components/Layout.js`<br>`components/Spinner.js`<br>`pages/About.js`<br>`pages/Pagenotfound.js` | N/A                                                                                                                                                                                                                                                                                                                                                                        |
 
 ### TENG HUI XIN ALICIA A02590646Y

@@ -372,6 +372,7 @@ export const braintreeTokenController = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
+    res.status(500).send(error);
   }
 };
 
@@ -379,32 +380,54 @@ export const braintreeTokenController = async (req, res) => {
 export const brainTreePaymentController = async (req, res) => {
   try {
     const { nonce, cart } = req.body;
+    if (!Array.isArray(cart)) {
+      return res.status(400).send({ error: "Invalid cart data" });
+    }
+
     let total = 0;
     cart.map((i) => {
+      if (!i || typeof i.price !== "number") {
+        return res.status(400).send({ error: "Invalid cart item" });
+      }
       total += i.price;
     });
-    let newTransaction = gateway.transaction.sale(
-      {
-        amount: total,
-        paymentMethodNonce: nonce,
-        options: {
-          submitForSettlement: true,
+    const result = await new Promise((resolve, reject) => {
+      gateway.transaction.sale(
+        {
+          amount: total,
+          paymentMethodNonce: nonce,
+          options: {
+            submitForSettlement: true,
+          },
         },
-      },
-      function (error, result) {
-        if (result) {
-          const order = new orderModel({
-            products: cart,
-            payment: result,
-            buyer: req.user._id,
-          }).save();
-          res.json({ ok: true });
-        } else {
-          res.status(500).send(error);
+        function (error, result) {
+          if (error) {
+            reject({ type: "gateway", error });
+          }
+          if (result.success) {
+            resolve(result);
+          } else {
+            reject({ type: "transaction", result });
+          }
         }
-      },
-    );
+      );
+    });
+
+    await new orderModel({
+      products: cart,
+      payment: result,
+      buyer: req.user._id,
+    }).save();
+    return res.json({ ok: true });
+
   } catch (error) {
     console.log(error);
+    if (error.type === "gateway") {
+      return res.status(500).send(error.error);
+    } else if (error.type === "transaction") {
+      return res.status(400).send(error.result);
+    } else {
+      return res.status(500).send(error);
+    }
   }
 };

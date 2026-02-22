@@ -1,0 +1,30 @@
+name: CI Test (Overall)
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  full-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node 24
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: 'npm'
+
+      - run: npm ci
+
+      - name: Run Full Backend Suite
+        run: npm run test:backend -- --passWithNoTests
+
+      - name: Install Client Dependencies
+        run: npm install --prefix client
+
+      - name: Run Full Frontend Suite
+        run: npm run test:frontend -- --passWithNoTests

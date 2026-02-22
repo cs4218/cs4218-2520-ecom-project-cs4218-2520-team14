@@ -48,12 +48,12 @@ describe("Login.js (detailed 100% coverage aligned with current Login.js)", () =
     mockLocationState = null;
 
     // silence console.error from catch branch
-    errorSpy = jest.spyOn(console, "error").mockImplementation(() => {});
+    errorSpy = jest.spyOn(console, "error").mockImplementation(() => { });
 
     // localStorage spy
     setItemSpy = jest
       .spyOn(Storage.prototype, "setItem")
-      .mockImplementation(() => {});
+      .mockImplementation(() => { });
   });
 
   afterEach(() => {
@@ -313,7 +313,7 @@ describe("Login.js (detailed 100% coverage aligned with current Login.js)", () =
   });
 
   it("double-submit guard: second submit while pending does not call axios twice", () => {
-    axios.post.mockImplementationOnce(() => new Promise(() => {})); // pending forever
+    axios.post.mockImplementationOnce(() => new Promise(() => { })); // pending forever
 
     const { container } = render(<Login />);
     fillFields(container);

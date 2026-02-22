@@ -30,7 +30,7 @@ describe("Register.js (detailed 100% coverage aligned with current Register.js)"
 
   beforeEach(() => {
     jest.clearAllMocks();
-    errorSpy = jest.spyOn(console, "error").mockImplementation(() => {});
+    errorSpy = jest.spyOn(console, "error").mockImplementation(() => { });
   });
 
   afterEach(() => {
