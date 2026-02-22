@@ -470,10 +470,9 @@ describe("CartPage Component", () => {
     );
 
     // Assert
-    expect(axios.get).toHaveBeenCalledWith("/api/v1/product/braintree/token");
+    await waitFor(() => expect(axios.get).toHaveBeenCalledWith("/api/v1/product/braintree/token"));
     await waitFor(() => expect(getByText("Mock Braintree Drop-in UI")).toBeInTheDocument());
-    expect(getByText("Make Payment")).toBeInTheDocument();
-    expect(getByText("Make Payment")).not.toBeDisabled();
+    await waitFor(() => expect(getByText("Make Payment")).not.toBeDisabled());
   });
 
   it("button should be disabled when instance is not ready", async () => {
