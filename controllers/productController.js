@@ -1,11 +1,11 @@
-import productModel from "../models/productModel.js";
 import categoryModel from "../models/categoryModel.js";
 import orderModel from "../models/orderModel.js";
+import productModel from "../models/productModel.js";
 
-import fs from "fs";
-import slugify from "slugify";
 import braintree from "braintree";
 import dotenv from "dotenv";
+import fs from "fs";
+import slugify from "slugify";
 
 dotenv.config();
 
@@ -19,8 +19,7 @@ var gateway = new braintree.BraintreeGateway({
 
 export const createProductController = async (req, res) => {
   try {
-    const { name, description, price, category, quantity, shipping } =
-      req.fields;
+    const { name, description, price, category, quantity } = req.fields;
     const { photo } = req.files;
     //alidation
     switch (true) {
@@ -163,8 +162,7 @@ export const deleteProductController = async (req, res) => {
 // update product
 export const updateProductController = async (req, res) => {
   try {
-    const { name, description, price, category, quantity, shipping } =
-      req.fields;
+    const { name, description, price, category, quantity } = req.fields;
     const { photo } = req.files;
     //alidation
     switch (true) {
@@ -307,10 +305,11 @@ export const searchProductController = async (req, res) => {
 export const relatedProductController = async (req, res) => {
   try {
     const { pid, cid } = req.params;
-    if (!pid || !cid) return res.status(400).send({
-      success: false,
-      message: "pid and cid are required",
-    });
+    if (!pid || !cid)
+      return res.status(400).send({
+        success: false,
+        message: "pid and cid are required",
+      });
     const products = await productModel
       .find({
         category: cid,
@@ -409,7 +408,7 @@ export const brainTreePaymentController = async (req, res) => {
           } else {
             reject({ type: "transaction", result });
           }
-        }
+        },
       );
     });
 
@@ -419,7 +418,6 @@ export const brainTreePaymentController = async (req, res) => {
       buyer: req.user._id,
     }).save();
     return res.json({ ok: true });
-
   } catch (error) {
     console.log(error);
     if (error.type === "gateway") {
