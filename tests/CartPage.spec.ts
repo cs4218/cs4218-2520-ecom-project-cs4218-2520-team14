@@ -21,7 +21,7 @@ const authData = {
     role: 0,
   },
   token:
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2OWJiZmZhYmJiNzQ0YzVjNjI2ODIyMWUiLCJpYXQiOjE3NzM5MjgzNzYsImV4cCI6MTc3NDUzMzE3Nn0.yHAjnsV-VNcR3Eaeyul5zd8gggzK18H6kFsHVS-R7gU",
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2OWJiZmZhYmJiNzQ0YzVjNjI2ODIyMWUiLCJpYXQiOjE3NzQxMTY2MzB9.GiJmKTM8iJQmY33d1OD80Bd7YuUCR6mKyqnmSJ44ZPo",
 };
 
 const cartData = [
@@ -59,6 +59,9 @@ for (const [device, viewport] of Object.entries(viewports)) {
   test.describe(`Cart Page - ${device}`, () => {
     test.beforeEach(async ({ page }) => {
       await page.setViewportSize(viewport);
+      await page.evaluate(() => {
+        localStorage.clear();
+      });
       await page.goto("/cart");
     });
 
