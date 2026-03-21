@@ -2,9 +2,9 @@ name: CI Test (Overall)
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   full-test:
@@ -15,8 +15,8 @@ jobs:
       - name: Setup Node 24
         uses: actions/setup-node@v4
         with:
-          node-version: '24'
-          cache: 'npm'
+          node-version: "24"
+          cache: "npm"
 
       - run: npm ci
 
@@ -28,3 +28,6 @@ jobs:
 
       - name: Run Full Frontend Suite
         run: npm run test:frontend -- --passWithNoTests
+
+      - name: Run Full UI Suite
+        run: npm run test:ui
