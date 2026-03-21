@@ -43,7 +43,6 @@ describe("loginController (detailed 100% coverage)", () => {
     jest.clearAllMocks();
     logSpy = jest.spyOn(console, "log").mockImplementation(() => {});
 
-    // ensure deterministic env for JWT.sign call
     process.env = { ...OLD_ENV, JWT_SECRET: "unit_test_secret" };
   });
 
@@ -174,8 +173,6 @@ describe("loginController (detailed 100% coverage)", () => {
     );
 
     expect(res.status).toHaveBeenCalledWith(200);
-
-    // Ensure returned user object is the picked fields (no password)
     expect(res.send).toHaveBeenCalledWith({
       success: true,
       message: "login successfully",
@@ -190,7 +187,6 @@ describe("loginController (detailed 100% coverage)", () => {
       token: "signed_token",
     });
 
-    // Extra safety: make sure password isn't accidentally returned
     const payload = res.send.mock.calls[0][0];
     expect(payload.user.password).toBeUndefined();
   });
@@ -211,7 +207,7 @@ describe("loginController (detailed 100% coverage)", () => {
     expect(res.send).toHaveBeenCalledWith({
       success: false,
       message: "Error in login",
-      error: err,
+      error: err.message,
     });
 
     expect(comparePassword).not.toHaveBeenCalled();
@@ -249,7 +245,7 @@ describe("loginController (detailed 100% coverage)", () => {
     expect(res.send).toHaveBeenCalledWith({
       success: false,
       message: "Error in login",
-      error: err,
+      error: err.message,
     });
   });
 
@@ -286,7 +282,7 @@ describe("loginController (detailed 100% coverage)", () => {
     expect(res.send).toHaveBeenCalledWith({
       success: false,
       message: "Error in login",
-      error: err,
+      error: err.message,
     });
   });
 });

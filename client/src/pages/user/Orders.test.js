@@ -126,8 +126,13 @@ describe("Orders", () => {
       "/api/v1/product/product-photo/p1"
     );
 
-    expect(screen.getByText(moment(orders[0].createdAt).fromNow())).toBeInTheDocument();
-    expect(screen.getByText(moment(orders[1].createdAt).fromNow())).toBeInTheDocument();
+    expect(
+      screen.getAllByText(moment(orders[0].createdAt).fromNow()).length
+    ).toBeGreaterThan(0);
+
+    expect(
+      screen.getAllByText(moment(orders[1].createdAt).fromNow()).length
+    ).toBeGreaterThan(0);
   });
 
   it("handles axios error without crashing", async () => {
@@ -167,14 +172,12 @@ describe("Orders", () => {
     axios.get.mockResolvedValueOnce({
       data: [
         {
-          // order _id intentionally missing
           status: "Processing",
           buyer: { name: "Mina Sue" },
           createdAt: "2026-02-17T10:00:00.000Z",
           payment: { success: true },
           products: [
             {
-              // product _id intentionally missing
               name: "Red Shirt",
               description: "Huat ah!",
               price: 25,

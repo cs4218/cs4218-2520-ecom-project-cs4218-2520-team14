@@ -11,15 +11,47 @@ export const registerController = async (req, res) => {
     const { name, email, password, phone, address, answer } = req.body;
 
     // validations -> 400
-    if (!name) return res.status(400).send({ error: "Name is Required" });
-    if (!email) return res.status(400).send({ message: "Email is Required" });
-    if (!password)
-      return res.status(400).send({ message: "Password is Required" });
-    if (!phone)
-      return res.status(400).send({ message: "Phone no is Required" });
-    if (!address)
-      return res.status(400).send({ message: "Address is Required" });
-    if (!answer) return res.status(400).send({ message: "Answer is Required" });
+    if (!name) {
+      return res.status(400).send({
+        success: false,
+        message: "Name is Required",
+      });
+    }
+
+    if (!email) {
+      return res.status(400).send({
+        success: false,
+        message: "Email is Required",
+      });
+    }
+
+    if (!password) {
+      return res.status(400).send({
+        success: false,
+        message: "Password is Required",
+      });
+    }
+
+    if (!phone) {
+      return res.status(400).send({
+        success: false,
+        message: "Phone no is Required",
+      });
+    }
+
+    if (!address) {
+      return res.status(400).send({
+        success: false,
+        message: "Address is Required",
+      });
+    }
+
+    if (!answer) {
+      return res.status(400).send({
+        success: false,
+        message: "Answer is Required",
+      });
+    }
 
     const existingUser = await userModel.findOne({ email });
 
@@ -42,23 +74,37 @@ export const registerController = async (req, res) => {
       answer,
     }).save();
 
+    // sanitize response
+    const userResponse = {
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      phone: user.phone,
+      address: user.address,
+      answer: user.answer,
+      role: user.role,
+      createdAt: user.createdAt,
+      updatedAt: user.updatedAt,
+    };
+
     return res.status(201).send({
       success: true,
       message: "User Register Successfully",
-      user,
+      user: userResponse,
     });
   } catch (error) {
     console.log(error);
     return res.status(500).send({
       success: false,
       message: "Error in Registration",
-      error,
+      error: error.message,
     });
   }
 };
 
 //Name: Shauryan Agrawal
 //Student ID: A0265846N
+
 /* ---------------- LOGIN ---------------- */
 export const loginController = async (req, res) => {
   try {
@@ -74,7 +120,7 @@ export const loginController = async (req, res) => {
 
     const user = await userModel.findOne({ email });
 
-    // user not found -> 404 ok
+    // user not found -> 404
     if (!user) {
       return res.status(404).send({
         success: false,
@@ -114,7 +160,7 @@ export const loginController = async (req, res) => {
     return res.status(500).send({
       success: false,
       message: "Error in login",
-      error,
+      error: error.message,
     });
   }
 };

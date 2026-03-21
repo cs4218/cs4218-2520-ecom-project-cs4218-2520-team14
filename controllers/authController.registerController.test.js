@@ -10,7 +10,7 @@ jest.mock("../helpers/authHelper.js", () => ({
 }));
 
 jest.mock("../models/userModel.js", () => {
-  const mockUserModel = jest.fn(); // constructor
+  const mockUserModel = jest.fn();
   mockUserModel.findOne = jest.fn();
   return { __esModule: true, default: mockUserModel };
 });
@@ -46,34 +46,46 @@ describe("registerController (detailed 100% coverage)", () => {
     logSpy.mockRestore();
   });
 
-  it("400 when name missing (returns { error }) and does not call findOne/hash/save", async () => {
+  //Name: Shauryan Agrawal
+//Student ID: A0265846N
+  it("400 when name missing and does not call findOne/hash/save", async () => {
     const req = makeReq({ name: "" });
     const res = makeRes();
 
     await registerController(req, res);
 
     expect(res.status).toHaveBeenCalledWith(400);
-    expect(res.send).toHaveBeenCalledWith({ error: "Name is Required" });
-
-    expect(userModel.findOne).not.toHaveBeenCalled();
-    expect(hashPassword).not.toHaveBeenCalled();
-    expect(userModel).not.toHaveBeenCalled(); // constructor not invoked
-  });
-
-  it("400 when email missing (returns { message }) and does not call findOne/hash/save", async () => {
-    const req = makeReq({ email: "" });
-    const res = makeRes();
-
-    await registerController(req, res);
-
-    expect(res.status).toHaveBeenCalledWith(400);
-    expect(res.send).toHaveBeenCalledWith({ message: "Email is Required" });
+    expect(res.send).toHaveBeenCalledWith({
+      success: false,
+      message: "Name is Required",
+    });
 
     expect(userModel.findOne).not.toHaveBeenCalled();
     expect(hashPassword).not.toHaveBeenCalled();
     expect(userModel).not.toHaveBeenCalled();
   });
 
+  //Name: Shauryan Agrawal
+//Student ID: A0265846N
+  it("400 when email missing and does not call findOne/hash/save", async () => {
+    const req = makeReq({ email: "" });
+    const res = makeRes();
+
+    await registerController(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.send).toHaveBeenCalledWith({
+      success: false,
+      message: "Email is Required",
+    });
+
+    expect(userModel.findOne).not.toHaveBeenCalled();
+    expect(hashPassword).not.toHaveBeenCalled();
+    expect(userModel).not.toHaveBeenCalled();
+  });
+
+  //Name: Shauryan Agrawal
+//Student ID: A0265846N
   it("400 when password missing", async () => {
     const req = makeReq({ password: "" });
     const res = makeRes();
@@ -81,13 +93,18 @@ describe("registerController (detailed 100% coverage)", () => {
     await registerController(req, res);
 
     expect(res.status).toHaveBeenCalledWith(400);
-    expect(res.send).toHaveBeenCalledWith({ message: "Password is Required" });
+    expect(res.send).toHaveBeenCalledWith({
+      success: false,
+      message: "Password is Required",
+    });
 
     expect(userModel.findOne).not.toHaveBeenCalled();
     expect(hashPassword).not.toHaveBeenCalled();
     expect(userModel).not.toHaveBeenCalled();
   });
 
+  //Name: Shauryan Agrawal
+//Student ID: A0265846N
   it("400 when phone missing", async () => {
     const req = makeReq({ phone: "" });
     const res = makeRes();
@@ -95,13 +112,18 @@ describe("registerController (detailed 100% coverage)", () => {
     await registerController(req, res);
 
     expect(res.status).toHaveBeenCalledWith(400);
-    expect(res.send).toHaveBeenCalledWith({ message: "Phone no is Required" });
+    expect(res.send).toHaveBeenCalledWith({
+      success: false,
+      message: "Phone no is Required",
+    });
 
     expect(userModel.findOne).not.toHaveBeenCalled();
     expect(hashPassword).not.toHaveBeenCalled();
     expect(userModel).not.toHaveBeenCalled();
   });
 
+  //Name: Shauryan Agrawal
+//Student ID: A0265846N
   it("400 when address missing", async () => {
     const req = makeReq({ address: "" });
     const res = makeRes();
@@ -109,13 +131,18 @@ describe("registerController (detailed 100% coverage)", () => {
     await registerController(req, res);
 
     expect(res.status).toHaveBeenCalledWith(400);
-    expect(res.send).toHaveBeenCalledWith({ message: "Address is Required" });
+    expect(res.send).toHaveBeenCalledWith({
+      success: false,
+      message: "Address is Required",
+    });
 
     expect(userModel.findOne).not.toHaveBeenCalled();
     expect(hashPassword).not.toHaveBeenCalled();
     expect(userModel).not.toHaveBeenCalled();
   });
 
+  //Name: Shauryan Agrawal
+//Student ID: A0265846N
   it("400 when answer missing", async () => {
     const req = makeReq({ answer: "" });
     const res = makeRes();
@@ -123,13 +150,18 @@ describe("registerController (detailed 100% coverage)", () => {
     await registerController(req, res);
 
     expect(res.status).toHaveBeenCalledWith(400);
-    expect(res.send).toHaveBeenCalledWith({ message: "Answer is Required" });
+    expect(res.send).toHaveBeenCalledWith({
+      success: false,
+      message: "Answer is Required",
+    });
 
     expect(userModel.findOne).not.toHaveBeenCalled();
     expect(hashPassword).not.toHaveBeenCalled();
     expect(userModel).not.toHaveBeenCalled();
   });
 
+  //Name: Shauryan Agrawal
+//Student ID: A0265846N
   it("409 when user already exists (findOne called with email, does not hash or save)", async () => {
     const req = makeReq({ email: "exists@test.com" });
     const res = makeRes();
@@ -148,10 +180,12 @@ describe("registerController (detailed 100% coverage)", () => {
     });
 
     expect(hashPassword).not.toHaveBeenCalled();
-    expect(userModel).not.toHaveBeenCalled(); // constructor not invoked
+    expect(userModel).not.toHaveBeenCalled();
   });
 
-  it("201 registers new user (hashPassword + new userModel(payload).save())", async () => {
+  //Name: Shauryan Agrawal
+//Student ID: A0265846N
+  it("201 registers new user (hashPassword + new userModel(payload).save()) and returns sanitized response", async () => {
     const req = makeReq({
       name: "Alice",
       email: "alice@test.com",
@@ -173,6 +207,9 @@ describe("registerController (detailed 100% coverage)", () => {
       address: "SG",
       answer: "Blue",
       password: "hashed_pw",
+      role: 0,
+      createdAt: "2026-03-21T00:00:00.000Z",
+      updatedAt: "2026-03-21T00:00:00.000Z",
     };
 
     const saveMock = jest.fn().mockResolvedValue(savedUser);
@@ -183,7 +220,6 @@ describe("registerController (detailed 100% coverage)", () => {
     expect(hashPassword).toHaveBeenCalledTimes(1);
     expect(hashPassword).toHaveBeenCalledWith("pw123");
 
-    // ensure constructor called with the exact payload in controller
     expect(userModel).toHaveBeenCalledTimes(1);
     expect(userModel).toHaveBeenCalledWith({
       name: "Alice",
@@ -200,11 +236,23 @@ describe("registerController (detailed 100% coverage)", () => {
     expect(res.send).toHaveBeenCalledWith({
       success: true,
       message: "User Register Successfully",
-      user: savedUser,
+      user: {
+        _id: "u123",
+        name: "Alice",
+        email: "alice@test.com",
+        phone: "555",
+        address: "SG",
+        answer: "Blue",
+        role: 0,
+        createdAt: "2026-03-21T00:00:00.000Z",
+        updatedAt: "2026-03-21T00:00:00.000Z",
+      },
     });
   });
 
-  it("500 when findOne throws (logs + returns error object)", async () => {
+  //Name: Shauryan Agrawal
+//Student ID: A0265846N
+  it("500 when findOne throws (logs + returns error.message)", async () => {
     const req = makeReq({ email: "x@test.com" });
     const res = makeRes();
 
@@ -220,14 +268,16 @@ describe("registerController (detailed 100% coverage)", () => {
     expect(res.send).toHaveBeenCalledWith({
       success: false,
       message: "Error in Registration",
-      error: err,
+      error: "DB error",
     });
 
     expect(hashPassword).not.toHaveBeenCalled();
-    expect(userModel).not.toHaveBeenCalled(); // constructor not invoked
+    expect(userModel).not.toHaveBeenCalled();
   });
 
-  it("500 when hashPassword throws (logs + returns error, does not save)", async () => {
+  //Name: Shauryan Agrawal
+//Student ID: A0265846N
+  it("500 when hashPassword throws (logs + returns error.message, does not save)", async () => {
     const req = makeReq({ email: "new@test.com" });
     const res = makeRes();
 
@@ -239,7 +289,7 @@ describe("registerController (detailed 100% coverage)", () => {
     await registerController(req, res);
 
     expect(hashPassword).toHaveBeenCalledTimes(1);
-    expect(userModel).not.toHaveBeenCalled(); // save not reached
+    expect(userModel).not.toHaveBeenCalled();
 
     expect(logSpy).toHaveBeenCalledTimes(1);
     expect(logSpy).toHaveBeenCalledWith(err);
@@ -248,11 +298,13 @@ describe("registerController (detailed 100% coverage)", () => {
     expect(res.send).toHaveBeenCalledWith({
       success: false,
       message: "Error in Registration",
-      error: err,
+      error: "hash fail",
     });
   });
 
-  it("500 when save throws (logs + returns error)", async () => {
+  //Name: Shauryan Agrawal
+//Student ID: A0265846N
+  it("500 when save throws (logs + returns error.message)", async () => {
     const req = makeReq({ email: "new2@test.com" });
     const res = makeRes();
 
@@ -276,7 +328,7 @@ describe("registerController (detailed 100% coverage)", () => {
     expect(res.send).toHaveBeenCalledWith({
       success: false,
       message: "Error in Registration",
-      error: err,
+      error: "save fail",
     });
   });
 });
