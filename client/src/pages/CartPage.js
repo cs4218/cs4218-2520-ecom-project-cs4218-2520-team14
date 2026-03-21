@@ -66,7 +66,7 @@ const CartPage = () => {
       if (process.env.REACT_APP_MODE === "test") {
         console.log("Running in test mode, skipping payment processing");
       } else {
-        const { nonce } = await instance.requestPaymentMethod();
+        ({ nonce } = await instance.requestPaymentMethod());
       }
       const { data } = await axios.post("/api/v1/product/braintree/payment", {
         nonce,
