@@ -15,7 +15,13 @@ testMatch: [
 
   // jest code coverage
   collectCoverage: true,
-  collectCoverageFrom: ["controllers/**", "helpers/**", "middlewares/**", "models/**"],
+  collectCoverageFrom: [
+  "controllers/**/*.js",
+  "helpers/**/*.js",
+  "middlewares/**/*.js",
+  "models/**/*.js",
+  "!**/*.test.js",
+],g
   coverageThreshold: {
     global: {
       lines: 90,
