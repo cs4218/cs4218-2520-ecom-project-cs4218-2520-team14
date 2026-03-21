@@ -385,12 +385,13 @@ export const brainTreePaymentController = async (req, res) => {
     }
 
     let total = 0;
-    cart.map((i) => {
-      if (!i || typeof i.price !== "number") {
+    for (const item of cart) {
+      if (!item || typeof item.price !== "number" || !item._id) {
         return res.status(400).send({ error: "Invalid cart item" });
       }
-      total += i.price;
-    });
+      total += item.price;
+    }
+
     const result = await new Promise((resolve, reject) => {
       gateway.transaction.sale(
         {

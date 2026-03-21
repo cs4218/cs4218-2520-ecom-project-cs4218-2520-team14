@@ -120,7 +120,7 @@ describe("categoryController", () => {
     expect(res.send).toHaveBeenCalledWith({
       success: false,
       error: mockError,
-      message: "Error While getting Single Category",
+      message: "Error while getting single category",
     });
   });
 

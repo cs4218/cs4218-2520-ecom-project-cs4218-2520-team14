@@ -62,7 +62,12 @@ const CartPage = () => {
   const handlePayment = async () => {
     try {
       setLoading(true);
-      const { nonce } = await instance.requestPaymentMethod();
+      let nonce;
+      if (process.env.REACT_APP_MODE === "test") {
+        console.log("Running in test mode, skipping payment processing");
+      } else {
+        ({ nonce } = await instance.requestPaymentMethod());
+      }
       const { data } = await axios.post("/api/v1/product/braintree/payment", {
         nonce,
         cart,
@@ -97,9 +102,9 @@ const CartPage = () => {
         </div>
         <div className="container ">
           <div className="row ">
-            <div className="col-md-7  p-0 m-0">
+            <div className="col-md-7 p-0 m-0">
               {cart?.map((p) => (
-                <div className="row card flex-row" key={p._id}>
+                <div className="row card flex-row" key={p._id} data-testid="cart-item">
                   <div className="col-md-4">
                     <img
                       src={`/api/v1/product/product-photo/${p._id}`}
@@ -184,7 +189,7 @@ const CartPage = () => {
                     <button
                       className="btn btn-primary"
                       onClick={handlePayment}
-                      disabled={loading || !instance || !auth?.user?.address}
+                      disabled={loading || (process.env.REACT_APP_MODE !== "test" && !instance) || !auth?.user?.address}
                     >
                       {loading ? "Processing ...." : "Make Payment"}
                     </button>

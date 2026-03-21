@@ -89,7 +89,7 @@ describe("Product Payment Controller", () => {
 
   it("should be able to handle payment successfully", async () => {
     // Arrange
-    const mockCart = [{ price: 10 }, { price: 20 }];
+    const mockCart = [{ _id: 1, price: 10 }, { _id: 2, price: 20 }];
     mockGateway.transaction.sale.mockImplementation((transactionDetails, callback) => {
       callback(null, { success: true });
     });
@@ -121,7 +121,7 @@ describe("Product Payment Controller", () => {
 
   it("should be able to handle payment failure but not an error", async () => {
     // Arrange
-    const mockCart = [{ price: 10 }, { price: 20 }];
+    const mockCart = [{ _id: 1, price: 10 }, { _id: 2, price: 20 }];
     mockGateway.transaction.sale.mockImplementation((transactionDetails, callback) => {
       callback(null, { success: false, message: "Payment failed" });
     });
@@ -193,7 +193,7 @@ describe("Product Payment Controller", () => {
     consoleSpy.mockRestore();
   });
 
-  it("should handle invalid cart item", async () => {
+  it("should handle invalid cart item (bad item)", async () => {
     // Arrange
     const consoleSpy = jest.spyOn(console, "log").mockImplementation(() => { });
     req = { user: { _id: "mocked-user-id" }, body: { nonce: "mocked-nonce", cart: ["test"] } };
@@ -210,11 +210,24 @@ describe("Product Payment Controller", () => {
   it("should handle invalid price in cart item", async () => {
     // Arrange
     const consoleSpy = jest.spyOn(console, "log").mockImplementation(() => { });
-    req = { user: { _id: "mocked-user-id" }, body: { nonce: "mocked-nonce", cart: [{ price: "invalid-price" }] } };
+    req = { user: { _id: "mocked-user-id" }, body: { nonce: "mocked-nonce", cart: [{ _id: 1, price: "invalid-price" }] } };
 
     // Act
     await brainTreePaymentController(req, res);
 
+    // Assert
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.send).toHaveBeenCalledWith({ error: "Invalid cart item" });
+    consoleSpy.mockRestore();
+  });
+
+  it("should handle missing _id in cart item", async () => {
+    // Arrange
+    const consoleSpy = jest.spyOn(console, "log").mockImplementation(() => { });
+    req = { user: { _id: "mocked-user-id" }, body: { nonce: "mocked-nonce", cart: [{ price: 10 }] } };
+
+    // Act
+    await brainTreePaymentController(req, res);
     // Assert
     expect(res.status).toHaveBeenCalledWith(400);
     expect(res.send).toHaveBeenCalledWith({ error: "Invalid cart item" });
@@ -227,7 +240,7 @@ describe("Product Payment Controller", () => {
     mockGateway.transaction.sale.mockImplementation((transactionDetails, callback) => {
       callback(mockError, null);
     });
-    req = { user: { _id: "mocked-user-id" }, body: { nonce: "mocked-nonce", cart: [{ price: 10 }] } };
+    req = { user: { _id: "mocked-user-id" }, body: { nonce: "mocked-nonce", cart: [{ _id: 1, price: 10 }] } };
 
     // Act
     await brainTreePaymentController(req, res);
@@ -245,7 +258,7 @@ describe("Product Payment Controller", () => {
       callback(null, { success: true });
     });
     orderModel.mockImplementationOnce(() => { throw mockError; });
-    req = { user: { _id: "mocked-user-id" }, body: { nonce: "mocked-nonce", cart: [{ price: 10 }] } };
+    req = { user: { _id: "mocked-user-id" }, body: { nonce: "mocked-nonce", cart: [{ _id: 1, price: 10 }] } };
 
     // Act
     await brainTreePaymentController(req, res);
@@ -268,7 +281,7 @@ describe("Product Payment Controller", () => {
     orderModel.mockImplementation(function () {
       this.save = jest.fn().mockRejectedValue(mockError);
     });
-    req = { user: { _id: "mocked-user-id" }, body: { nonce: "mocked-nonce", cart: [{ price: 10 }] } };
+    req = { user: { _id: "mocked-user-id" }, body: { nonce: "mocked-nonce", cart: [{ _id: 1, price: 10 }] } };
 
     // Act
     await brainTreePaymentController(req, res);
@@ -287,7 +300,7 @@ describe("Product Payment Controller", () => {
     mockGateway.transaction.sale.mockImplementation(() => {
       throw mockError;
     });
-    req = { user: { _id: "mocked-user-id" }, body: { nonce: "mocked-nonce", cart: [{ price: 10 }] } };
+    req = { user: { _id: "mocked-user-id" }, body: { nonce: "mocked-nonce", cart: [{ _id: 1, price: 10 }] } };
 
     // Act
     await brainTreePaymentController(req, res);
