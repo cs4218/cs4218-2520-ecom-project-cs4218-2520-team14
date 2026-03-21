@@ -40,11 +40,17 @@ const normalUser = {
   role: 0,
 };
 
+//Name: Shauryan Agrawal
+//Student ID: A0265846N
+
 async function connectTestDbIfNeeded() {
   if (mongoose.connection.readyState === 0) {
     await mongoose.connect(process.env.MONGO_URL as string);
   }
 }
+
+//Name: Shauryan Agrawal
+//Student ID: A0265846N
 
 async function seedUser(user: {
   name: string;
@@ -72,6 +78,9 @@ async function seedUser(user: {
   }).save();
 }
 
+//Name: Shauryan Agrawal
+//Student ID: A0265846N
+
 async function clearSeededUsers() {
   await connectTestDbIfNeeded();
   await userModel.deleteMany({
@@ -81,11 +90,17 @@ async function clearSeededUsers() {
   });
 }
 
+//Name: Shauryan Agrawal
+//Student ID: A0265846N
+
 async function clearAuthInLocalStorage(page: Page) {
   await page.addInitScript(() => {
     window.localStorage.removeItem("auth");
   });
 }
+
+//Name: Shauryan Agrawal
+//Student ID: A0265846N
 
 async function mockAdminAuthSuccess(page: Page) {
   await page.route("**/api/v1/auth/admin-auth", async (route) => {
@@ -96,6 +111,9 @@ async function mockAdminAuthSuccess(page: Page) {
     });
   });
 }
+
+//Name: Shauryan Agrawal
+//Student ID: A0265846N
 
 async function mockAdminAuthUnauthorized(page: Page) {
   await page.route("**/api/v1/auth/admin-auth", async (route) => {
@@ -110,6 +128,9 @@ async function mockAdminAuthUnauthorized(page: Page) {
   });
 }
 
+//Name: Shauryan Agrawal
+//Student ID: A0265846N
+
 async function mockAdminAuthServerFailure(page: Page) {
   await page.route("**/api/v1/auth/admin-auth", async (route) => {
     await route.fulfill({
@@ -123,6 +144,8 @@ async function mockAdminAuthServerFailure(page: Page) {
   });
 }
 
+//Name: Shauryan Agrawal
+//Student ID: A0265846N
 async function mockAdminAuthDelayedSuccess(page: Page, delayMs = 2000) {
   await page.route("**/api/v1/auth/admin-auth", async (route) => {
     await new Promise((resolve) => setTimeout(resolve, delayMs));
@@ -135,6 +158,8 @@ async function mockAdminAuthDelayedSuccess(page: Page, delayMs = 2000) {
   });
 }
 
+//Name: Shauryan Agrawal
+//Student ID: A0265846N
 async function loginThroughUI(
   page: Page,
   credentials: { email: string; password: string }
@@ -170,6 +195,8 @@ async function loginThroughUI(
   });
 }
 
+//Name: Shauryan Agrawal
+//Student ID: A0265846N
 async function gotoAdminDashboard(page: Page) {
   await page.goto(adminDashboardPath);
 }
@@ -189,6 +216,8 @@ async function expectAdminDashboardProfile(
   );
 }
 
+//Name: Shauryan Agrawal
+//Student ID: A0265846N
 async function expectAdminMenuVisible(page: Page) {
   await expect(page.locator("body")).toContainText(/Admin Panel/);
   await expect(page.getByRole("link", { name: "Create Category" })).toBeVisible();
@@ -198,6 +227,8 @@ async function expectAdminMenuVisible(page: Page) {
   await expect(page.getByRole("link", { name: "Users" })).toBeVisible();
 }
 
+//Name: Shauryan Agrawal
+//Student ID: A0265846N
 test.describe("UI Testing: Admin Dashboard Access, Rendering, Navigation, and Admin Login Flow", () => {
   test.beforeEach(async () => {
     await clearSeededUsers();
@@ -209,7 +240,8 @@ test.describe("UI Testing: Admin Dashboard Access, Rendering, Navigation, and Ad
       await mongoose.disconnect();
     }
   });
-
+//Name: Shauryan Agrawal
+//Student ID: A0265846N
   test.describe("Access Control via AdminRoute (Admin-only gate)", () => {
     test("When a valid admin logs in through the real Login page, the dashboard is accessible and renders successfully", async ({
       page,
@@ -228,7 +260,8 @@ test.describe("UI Testing: Admin Dashboard Access, Rendering, Navigation, and Ad
       await expectAdminMenuVisible(page);
       await expectAdminDashboardProfile(page, adminUserA);
     });
-
+//Name: Shauryan Agrawal
+//Student ID: A0265846N
     test("When a non-admin logs in successfully, access to admin dashboard is denied and user is redirected to login", async ({
       page,
     }) => {
@@ -249,7 +282,8 @@ test.describe("UI Testing: Admin Dashboard Access, Rendering, Navigation, and Ad
       await expect(page.locator("body")).not.toContainText("Admin Contact :");
     });
   });
-
+//Name: Shauryan Agrawal
+//Student ID: A0265846N
   test.describe("Loading State During Authorization Check (Spinner behaviour)", () => {
     test("While the admin authorization request is pending, a spinner/loading indicator is shown before dashboard content renders", async ({
       page,
@@ -275,7 +309,8 @@ test.describe("UI Testing: Admin Dashboard Access, Rendering, Navigation, and Ad
       await expectAdminDashboardProfile(page, adminUserA);
     });
   });
-
+//Name: Shauryan Agrawal
+//Student ID: A0265846N
   test.describe("Admin Profile Information Rendering (AdminDashboard content)", () => {
     test("Dashboard displays correct admin profile fields for one seeded admin who logs in through the UI", async ({
       page,
@@ -293,7 +328,8 @@ test.describe("UI Testing: Admin Dashboard Access, Rendering, Navigation, and Ad
       await expect(page).toHaveURL(adminDashboardPathRegex, { timeout: 10000 });
       await expectAdminDashboardProfile(page, adminUserA);
     });
-
+//Name: Shauryan Agrawal
+//Student ID: A0265846N
     test("Dashboard reflects correct values for a different seeded admin user after real login", async ({
       page,
     }) => {
@@ -311,7 +347,8 @@ test.describe("UI Testing: Admin Dashboard Access, Rendering, Navigation, and Ad
       await expectAdminDashboardProfile(page, adminUserB);
     });
   });
-
+//Name: Shauryan Agrawal
+//Student ID: A0265846N
   test.describe("Admin Menu Presence & Link Interactions (AdminMenu as a navigation widget)", () => {
     test("Admin Panel menu is visible and all expected admin links are rendered after admin login", async ({
       page,
@@ -329,7 +366,8 @@ test.describe("UI Testing: Admin Dashboard Access, Rendering, Navigation, and Ad
       await expect(page).toHaveURL(adminDashboardPathRegex, { timeout: 10000 });
       await expectAdminMenuVisible(page);
     });
-
+//Name: Shauryan Agrawal
+//Student ID: A0265846N
     test("Create Category link is interactable and routes to the correct admin page", async ({
       page,
     }) => {
@@ -352,7 +390,8 @@ test.describe("UI Testing: Admin Dashboard Access, Rendering, Navigation, and Ad
         timeout: 10000,
       });
     });
-
+//Name: Shauryan Agrawal
+//Student ID: A0265846N
     test("Create Product link is interactable and routes to the correct admin page", async ({
       page,
     }) => {
@@ -375,7 +414,8 @@ test.describe("UI Testing: Admin Dashboard Access, Rendering, Navigation, and Ad
         timeout: 10000,
       });
     });
-
+//Name: Shauryan Agrawal
+//Student ID: A0265846N
     test("Products link is interactable and routes to the correct admin page", async ({
       page,
     }) => {
@@ -398,7 +438,8 @@ test.describe("UI Testing: Admin Dashboard Access, Rendering, Navigation, and Ad
         timeout: 10000,
       });
     });
-
+//Name: Shauryan Agrawal
+//Student ID: A0265846N
     test("Orders link is interactable and routes to the correct admin page", async ({
       page,
     }) => {
@@ -421,7 +462,8 @@ test.describe("UI Testing: Admin Dashboard Access, Rendering, Navigation, and Ad
         timeout: 10000,
       });
     });
-
+//Name: Shauryan Agrawal
+//Student ID: A0265846N
     test("Users link is interactable and routes to the correct admin page", async ({
       page,
     }) => {
@@ -445,7 +487,8 @@ test.describe("UI Testing: Admin Dashboard Access, Rendering, Navigation, and Ad
       });
     });
   });
-
+//Name: Shauryan Agrawal
+//Student ID: A0265846N
   test.describe("Missing/Invalid Session Handling (localStorage/auth absence)", () => {
     test("If no valid auth data exists, admin dashboard content does not render and user is not treated as authenticated", async ({
       page,
@@ -462,7 +505,8 @@ test.describe("UI Testing: Admin Dashboard Access, Rendering, Navigation, and Ad
       await expect(page.locator("body")).not.toContainText("Admin Contact :");
     });
   });
-
+//Name: Shauryan Agrawal
+//Student ID: A0265846N
   test.describe("Error Handling for Authorization API Failures", () => {
     test("If admin authorization API fails, the user is redirected to login with secure fail-closed behaviour", async ({
       page,
@@ -484,7 +528,8 @@ test.describe("UI Testing: Admin Dashboard Access, Rendering, Navigation, and Ad
       await expect(page.locator("body")).not.toContainText("Admin Contact :");
     });
   });
-
+//Name: Shauryan Agrawal
+//Student ID: A0265846N
   test.describe("Additional full-flow admin UI hardening coverage", () => {
     test("Dashboard content and admin menu both appear only after successful admin login and authorization", async ({
       page,
@@ -503,7 +548,8 @@ test.describe("UI Testing: Admin Dashboard Access, Rendering, Navigation, and Ad
       await expectAdminMenuVisible(page);
       await expectAdminDashboardProfile(page, adminUserA);
     });
-
+//Name: Shauryan Agrawal
+//Student ID: A0265846N
     test("Direct access to an admin child route remains accessible after valid admin login", async ({
       page,
     }) => {
@@ -521,7 +567,8 @@ test.describe("UI Testing: Admin Dashboard Access, Rendering, Navigation, and Ad
         timeout: 10000,
       });
     });
-
+//Name: Shauryan Agrawal
+//Student ID: A0265846N
     test("Direct access to an admin child route is denied for a logged-in non-admin user", async ({
       page,
     }) => {
