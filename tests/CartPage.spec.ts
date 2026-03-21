@@ -1,5 +1,8 @@
 /* eslint-disable notice/notice */
 
+// Name: Chia York Lim
+// Student ID: A0258147X
+
 import { test, expect } from "@playwright/test";
 
 const viewports = {

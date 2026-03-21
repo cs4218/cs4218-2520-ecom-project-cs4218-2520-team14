@@ -1,3 +1,6 @@
+// Name: Chia York Lim
+// Student ID: A0258147X
+
 import mongoose from "mongoose";
 import { MongoMemoryServer } from "mongodb-memory-server";
 import app, { server } from "../server.js";

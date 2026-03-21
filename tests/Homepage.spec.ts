@@ -1,8 +1,10 @@
 /* eslint-disable notice/notice */
 
+// Name: Chia York Lim
+// Student ID: A0258147X
+
 import { test, expect } from "@playwright/test";
 import mongoose from "mongoose";
-import Category from "../models/categoryModel";
 import Product from "../models/productModel";
 
 let firstProductDetails: any;

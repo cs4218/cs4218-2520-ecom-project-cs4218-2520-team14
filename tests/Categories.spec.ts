@@ -1,9 +1,9 @@
 /* eslint-disable notice/notice */
 
-import { test, expect } from "@playwright/test";
-import mongoose from "mongoose";
-import Category from "../models/categoryModel";
+// Name: Chia York Lim
+// Student ID: A0258147X
 
+import { test, expect } from "@playwright/test";
 const viewports = {
   desktop: { width: 1280, height: 720 },
   tablet: { width: 768, height: 1024 },
