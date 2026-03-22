@@ -164,6 +164,8 @@ I was responsible for testing and fixing the bugs in the following files.
 
 ### JONAS ONG SI WEI A0252052U
 
+#### Unit Tests (MS1)
+
 I was responsible the following test files under the following categories (unit test for the following files ends with .test.js):
 | Features | Client Related Files | Server Related Files |
 | :--- | :--- | :--- |
@@ -171,6 +173,20 @@ I was responsible the following test files under the following categories (unit 
 | **Admin View Orders** | `pages/admin/AdminOrders.js` | N/A
 | **Admin View Products** | `pages/admin/Products.js` | **`productController.admin.test.js`** for **`controllers/productController.js`**<br>1. `createProductController`<br>2. `updateProductController`<br>3. `deleteProductController`
 | **Admin General** | `components/Routes/Private.js`<br>`components/UserMenu.js`<br>`pages/user/Dashboard.js`<br> | N/A
+
+#### Integration & UI Tests (MS2)
+
+- Integration tests:
+  - `controllers/categoryController.admin.integration.test.js`
+  - `controllers/productController.admin.integration.test.js`
+
+- UI tests:
+  - `tests/CreateCategory.spec.ts`
+  - `tests/CreateProduct.spec.ts`
+  - `tests/UpdateProduct.spec.ts`
+  - `tests/AdminOrders.spec.ts`
+  - `tests/Dashboard.spec.ts`
+  - `tests/Products.spec.ts`
 
 ### TAN QIN YONG A0253468W
 
