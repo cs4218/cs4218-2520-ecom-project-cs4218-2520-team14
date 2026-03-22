@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
-import Layout from "./../../components/Layout";
-import AdminMenu from "./../../components/AdminMenu";
-import toast from "react-hot-toast";
-import axios from "axios";
 import { Select } from "antd";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import AdminMenu from "./../../components/AdminMenu";
+import Layout from "./../../components/Layout";
 const { Option } = Select;
 
 const CreateProduct = () => {
@@ -24,10 +24,15 @@ const CreateProduct = () => {
       const { data } = await axios.get("/api/v1/category/get-category");
       if (data?.success) {
         setCategories(data?.category);
+      } else {
+        toast.error(data?.message);
       }
     } catch (error) {
-      console.log(error);
-      toast.error("Something went wrong in getting category");
+      const message =
+        error.response?.data?.message ||
+        "Something went wrong in getting category";
+      console.log(message);
+      toast.error(message);
     }
   };
 
@@ -58,8 +63,9 @@ const CreateProduct = () => {
         toast.error(data?.message);
       }
     } catch (error) {
-      console.log(error);
-      toast.error("something went wrong");
+      const message = error.response?.data?.message || "Something went wrong";
+      console.log(message);
+      toast.error(message);
     }
   };
 

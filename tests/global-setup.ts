@@ -1,6 +1,7 @@
 import { spawn } from "child_process";
 import { MongoMemoryServer } from "mongodb-memory-server";
 import mongoose from "mongoose";
+import { hashPassword } from "../helpers/authHelper.js";
 import Category from "../models/categoryModel.js";
 import Product from "../models/productModel.js";
 import User from "../models/userModel.js";
@@ -120,15 +121,51 @@ export default async function setup() {
     },
   ]);
 
+  const userPassword = await hashPassword("password123");
+  const adminPassword = await hashPassword("admin123");
+
+  await User.create([
+    {
+      _id: "69bbffabbb744c5c6268221e",
+      name: "Mina Sue",
+      email: "mina.sue@netflix.com",
+      password: userPassword,
+      phone: "123456789",
+      address: "Singles Inferno",
+      answer: "blue",
+      role: 0,
+    },
+    {
+      _id: "69bbffabbb744c5c62682220",
+      name: "Min Gee",
+      email: "min.gee@netflix.com",
+      password: userPassword,
+      phone: "123456789",
+      address: "",
+      answer: "green",
+      role: 0,
+    },
+    {
+      _id: "69bbffabbb744c5c62682221",
+      name: "John Doe",
+      email: "john@doe.com",
+      password: userPassword,
+      phone: "999",
+      address: "123 Avenue",
+      answer: "yellow",
+      role: 0,
+    },
+  ]);
+
   await User.create({
-    _id: "69bbffabbb744c5c6268221e",
-    name: "test",
-    email: "123@abc.com",
-    phone: "1234567890",
+    _id: "69bbffabbb744c5c6268221f",
+    name: "Admin User",
+    email: "admin@test.com",
+    password: adminPassword,
+    phone: "99999999",
     address: "SG",
+    answer: "red",
     role: 1,
-    password: "password",
-    answer: "answer",
   });
 
   await mongoose.disconnect();

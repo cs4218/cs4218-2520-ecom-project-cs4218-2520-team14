@@ -1,20 +1,24 @@
 // Jonas Ong, A0252052U
 
 import test, { expect } from "@playwright/test";
+import jsonwebtoken from "jsonwebtoken";
 
 // test.describe.configure({ mode: "parallel" });
 
 const authData = {
   user: {
-    _id: "69bbffabbb744c5c6268221e",
-    name: "test",
-    email: "123@abc.com",
-    phone: "1234567890",
+    _id: "69bbffabbb744c5c6268221f",
+    name: "Admin User",
+    email: "admin@test.com",
+    phone: "99999999",
     address: "SG",
+    answer: "red",
     role: 1,
   },
-  token:
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2OWJiZmZhYmJiNzQ0YzVjNjI2ODIyMWUiLCJpYXQiOjE3NzQxMTY2MzB9.GiJmKTM8iJQmY33d1OD80Bd7YuUCR6mKyqnmSJ44ZPo",
+  token: jsonwebtoken.sign(
+    { _id: "69bbffabbb744c5c6268221f" },
+    process.env.JWT_SECRET,
+  ),
 };
 
 test.beforeEach(async ({ page }) => {
@@ -56,13 +60,9 @@ test.describe("Create Category", () => {
 
   test("should show error if API call fails", async ({ page }) => {
     // Arrange
-    await page.route("/api/v1/category/create-category", (route) =>
-      route.fulfill({
-        body: JSON.stringify({
-          success: false,
-          message: "Failed to create category",
-        }),
-      }),
+    await page.route(
+      "/api/v1/category/create-category",
+      async (route) => await route.abort(),
     );
 
     // Act
@@ -70,7 +70,7 @@ test.describe("Create Category", () => {
     await page.getByRole("button", { name: "Submit" }).click();
 
     // Assert
-    await page.getByText("Failed to create category").waitFor();
+    await page.getByText("Something went wrong in input form").waitFor();
   });
 
   test("should create a new category with a valid name", async ({
@@ -167,13 +167,9 @@ test.describe("Update Category", () => {
     page,
   }) => {
     // Arrange
-    await page.route("/api/v1/category/update-category/*", (route) =>
-      route.fulfill({
-        body: JSON.stringify({
-          success: false,
-          message: "Failed to update category",
-        }),
-      }),
+    await page.route(
+      "/api/v1/category/update-category/*",
+      async (route) => await route.abort(),
     );
 
     // Act
@@ -192,7 +188,7 @@ test.describe("Update Category", () => {
       .getByRole("button", { name: "Submit" })
       .click();
 
-    await page.getByText("Failed to update category").waitFor();
+    await page.getByText("Something went wrong").waitFor();
   });
 
   test("should update category with a valid name", async ({
@@ -249,13 +245,9 @@ test.describe("Delete Category", () => {
     page,
   }) => {
     // Arrange
-    await page.route("/api/v1/category/delete-category/*", (route) =>
-      route.fulfill({
-        body: JSON.stringify({
-          success: false,
-          message: "Failed to delete category",
-        }),
-      }),
+    await page.route(
+      "/api/v1/category/delete-category/*",
+      async (route) => await route.abort(),
     );
 
     // Act
@@ -267,7 +259,7 @@ test.describe("Delete Category", () => {
       .click();
 
     // Assert
-    await page.getByText("Failed to delete category").waitFor();
+    await page.getByText("Something went wrong").waitFor();
   });
 
   test("should delete category when delete button is clicked", async ({
