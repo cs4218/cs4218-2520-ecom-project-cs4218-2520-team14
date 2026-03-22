@@ -13,7 +13,7 @@ const CategoryProduct = () => {
   const [cart, setCart] = useCart();
 
   const [allProducts, setAllProducts] = useState([]);
-  const [category, setCategory] = useState([]);
+  const [category, setCategory] = useState({});
 
   const [page, setPage] = useState(1);
   const perPage = 6;
@@ -32,8 +32,8 @@ const CategoryProduct = () => {
       const { data } = await axios.get(
         `/api/v1/product/product-category/${params.slug}`
       );
-      setAllProducts(data?.products);
-      setCategory(data?.category);
+      setAllProducts(Array.isArray(data?.products) ? data.products : []);
+      setCategory(data?.category || {});
     } catch (error) {
       console.log(error);
       toast.error("Failed to load category products");
@@ -82,7 +82,7 @@ const CategoryProduct = () => {
                       </h5>
                     </div>
                     <p className="card-text ">
-                      {p.description.substring(0, 60)}...
+                      {(p.description || "").substring(0, 60)}...
                     </p>
                     <div className="card-name-price">
                       <button
