@@ -1,10 +1,10 @@
 // Jonas Ong, A0252052U
 
-import { render, screen, fireEvent, waitFor } from "@testing-library/react";
-import CreateProduct from "./CreateProduct";
-import { MemoryRouter, Routes, Route, useNavigate } from "react-router-dom";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { MemoryRouter, Route, Routes, useNavigate } from "react-router-dom";
+import CreateProduct from "./CreateProduct";
 import React from "react";
 
 jest.mock("axios");
@@ -194,7 +194,7 @@ describe("CreateProduct Component", () => {
     );
 
     await waitFor(() => expect(axios.post).toHaveBeenCalled());
-    expect(toast.error).toHaveBeenCalledWith("something went wrong");
+    expect(toast.error).toHaveBeenCalledWith("Something went wrong");
   });
 
   it("should show error toast if API returns unsuccessful response", async () => {
