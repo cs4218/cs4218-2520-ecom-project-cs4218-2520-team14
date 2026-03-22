@@ -87,23 +87,7 @@ describe("Product Controller Integration Tests", () => {
   });
 
   describe("(Create)", () => {
-    it("model should work correctly", async () => {
-      const product = new productModel({
-        ...data.fields,
-        category: savedCategory._id,
-        slug: "testproduct",
-      });
-      const savedProduct = await product.save();
-
-      expect(savedProduct.name).toBe(data.fields.name);
-      expect(savedProduct.description).toBe(data.fields.description);
-      expect(savedProduct.price).toBe(data.fields.price);
-      expect(savedProduct.category).toBe(savedCategory._id);
-      expect(savedProduct.quantity).toBe(data.fields.quantity);
-      expect(savedProduct.shipping).toBe(data.fields.shipping);
-    });
-
-    it("controller should work correctly", async () => {
+    it("model + controller should work correctly", async () => {
       const req = {
         ...data,
         fields: { ...data.fields, category: savedCategory._id },
@@ -216,36 +200,7 @@ describe("Product Controller Integration Tests", () => {
   });
 
   describe("(Update)", () => {
-    it("model should work correctly", async () => {
-      const existingProduct = new productModel({
-        ...data.fields,
-        category: savedCategory._id,
-        slug: "testproduct",
-      });
-      await existingProduct.save();
-
-      const updatedProduct = await productModel.findByIdAndUpdate(
-        existingProduct._id,
-        {
-          name: "UpdatedProduct",
-          description: "UpdatedDescription",
-          price: 99,
-          category: savedCategory._id,
-          quantity: 50,
-          shipping: false,
-        },
-        { new: true },
-      );
-
-      expect(updatedProduct).not.toBeNull();
-      expect(updatedProduct.name).toBe("UpdatedProduct");
-      expect(updatedProduct.description).toBe("UpdatedDescription");
-      expect(updatedProduct.price).toBe(99);
-      expect(updatedProduct.quantity).toBe(50);
-      expect(updatedProduct.shipping).toBe(false);
-    });
-
-    it("controller should work correctly", async () => {
+    it("model + controller should work correctly", async () => {
       const existingProduct = new productModel({
         ...data.fields,
         category: savedCategory._id,
@@ -441,24 +396,7 @@ describe("Product Controller Integration Tests", () => {
   });
 
   describe("(Delete)", () => {
-    it("model should work correctly", async () => {
-      const existingProduct = new productModel({
-        ...data.fields,
-        category: savedCategory._id,
-        slug: "testproduct",
-      });
-      await existingProduct.save();
-
-      const deletedProduct = await productModel.findByIdAndDelete(
-        existingProduct._id,
-      );
-
-      expect(deletedProduct).not.toBeNull();
-      expect(deletedProduct.name).toBe("TestProduct");
-      expect(await productModel.findById(existingProduct._id)).toBeNull();
-    });
-
-    it("controller should work correctly", async () => {
+    it("model + controller should work correctly", async () => {
       const existingProduct = new productModel({
         ...data.fields,
         category: savedCategory._id,
