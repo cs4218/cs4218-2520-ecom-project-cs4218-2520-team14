@@ -57,17 +57,7 @@ describe("Category Controller Integration Tests", () => {
   });
 
   describe("(Create)", () => {
-    it("model should work correctly", async () => {
-      const categoryData = { name: "TestCategory", slug: "testcategory" };
-
-      const category = new categoryModel(categoryData);
-      const savedCategory = await category.save();
-
-      expect(savedCategory.name).toBe(categoryData.name);
-      expect(savedCategory.slug).toBe(categoryData.slug);
-    });
-
-    it("controller should work correctly", async () => {
+    it("model + controller should work correctly", async () => {
       const req = { body: { name: "TestCategory" } };
       const res = {
         status: jest.fn().mockReturnThis(),
@@ -192,27 +182,7 @@ describe("Category Controller Integration Tests", () => {
   });
 
   describe("(Update)", () => {
-    it("model should work correctly", async () => {
-      const existingCategory = await categoryModel.create({
-        name: "OldCategory",
-        slug: "oldcategory",
-      });
-
-      const updatedCategory = await categoryModel.findByIdAndUpdate(
-        existingCategory._id,
-        {
-          name: "UpdatedCategory",
-          slug: "updatedcategory",
-        },
-        { new: true },
-      );
-
-      expect(updatedCategory).not.toBeNull();
-      expect(updatedCategory.name).toBe("UpdatedCategory");
-      expect(updatedCategory.slug).toBe("updatedcategory");
-    });
-
-    it("controller should work correctly", async () => {
+    it("model + controller should work correctly", async () => {
       const existingCategory = await categoryModel.create({
         name: "OldCategory",
         slug: "oldcategory",
@@ -375,23 +345,7 @@ describe("Category Controller Integration Tests", () => {
   });
 
   describe("(Delete)", () => {
-    it("model should work correctly", async () => {
-      const existingCategory = await categoryModel.create({
-        name: "DeleteCategory",
-        slug: "deletecategory",
-      });
-
-      const deletedCategory = await categoryModel.findByIdAndDelete(
-        existingCategory._id,
-      );
-
-      expect(deletedCategory).not.toBeNull();
-      expect(deletedCategory.name).toBe("DeleteCategory");
-      expect(deletedCategory.slug).toBe("deletecategory");
-      expect(await categoryModel.find()).toHaveLength(0);
-    });
-
-    it("controller should work correctly", async () => {
+    it("model + controller should work correctly", async () => {
       const existingCategory = await categoryModel.create({
         name: "DeleteCategory",
         slug: "deletecategory",

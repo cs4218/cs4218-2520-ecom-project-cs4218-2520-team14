@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from "react";
+import { Select } from "antd";
 import axios from "axios";
+import moment from "moment";
+import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import AdminMenu from "../../components/AdminMenu";
 import Layout from "../../components/Layout";
-import { useAuth } from "../../context/auth";
-import moment from "moment";
-import { Select } from "antd";
 const { Option } = Select;
 
 const AdminOrders = () => {
@@ -38,6 +37,7 @@ const AdminOrders = () => {
       });
       getOrders();
     } catch (error) {
+      toast.error("Failed to update order status");
       console.log(error);
     }
   };
