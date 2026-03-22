@@ -1,8 +1,9 @@
+import { spawn } from "child_process";
 import { MongoMemoryServer } from "mongodb-memory-server";
 import mongoose from "mongoose";
 import Category from "../models/categoryModel.js";
 import Product from "../models/productModel.js";
-import { spawn } from "child_process";
+import User from "../models/userModel.js";
 
 export default async function setup() {
   // 1. Start memory DB
@@ -118,6 +119,17 @@ export default async function setup() {
       },
     },
   ]);
+
+  await User.create({
+    _id: "69bbffabbb744c5c6268221e",
+    name: "test",
+    email: "123@abc.com",
+    phone: "1234567890",
+    address: "SG",
+    role: 1,
+    password: "password",
+    answer: "answer",
+  });
 
   await mongoose.disconnect();
 

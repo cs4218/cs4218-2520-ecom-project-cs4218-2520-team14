@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
-import Layout from "./../../components/Layout";
-import AdminMenu from "./../../components/AdminMenu";
-import toast from "react-hot-toast";
-import axios from "axios";
-import CategoryForm from "../../components/Form/CategoryForm";
 import { Modal } from "antd";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import toast from "react-hot-toast";
+import CategoryForm from "../../components/Form/CategoryForm";
+import AdminMenu from "./../../components/AdminMenu";
+import Layout from "./../../components/Layout";
 const CreateCategory = () => {
   const [categories, setCategories] = useState([]);
   const [name, setName] = useState("");
@@ -25,8 +25,10 @@ const CreateCategory = () => {
         toast.error(data.message);
       }
     } catch (error) {
-      console.log(error);
-      toast.error("Something went wrong in input form");
+      const message =
+        error.response?.data?.message || "Something went wrong in input form";
+      console.log(message);
+      toast.error(message);
     }
   };
 
@@ -65,7 +67,9 @@ const CreateCategory = () => {
         toast.error(data.message);
       }
     } catch (error) {
-      toast.error("Something went wrong");
+      const message = error.response?.data?.message || "Something went wrong";
+      console.log(message);
+      toast.error(message);
     }
   };
   //delete category
@@ -82,7 +86,9 @@ const CreateCategory = () => {
         toast.error(data.message);
       }
     } catch (error) {
-      toast.error("Something went wrong");
+      const message = error.response?.data?.message || "Something went wrong";
+      console.log(message);
+      toast.error(message);
     }
   };
   return (
