@@ -1,6 +1,6 @@
 // Jonas Ong, A0252052U
 
-import test, { expect } from "@playwright/test";
+import test, { devices, expect } from "@playwright/test";
 import jsonwebtoken from "jsonwebtoken";
 
 const authData = {
@@ -28,136 +28,151 @@ test.beforeEach(async ({ page }) => {
   await page.reload();
 });
 
-test.describe("Product Retrieval and Display", () => {
-  test("should display all products on page load", async ({ page }) => {
-    // Arrange
-    const productsPromise = page.waitForResponse(
-      (response) =>
-        response.url().includes("/api/v1/product/get-product") &&
-        response.request().method() === "GET",
-    );
+const testDevices = ["Desktop Chrome", "iPad Pro 11", "Pixel 5"] as const;
 
-    // Act
-    await page.reload();
+for (const deviceName of testDevices) {
+  test.describe(`Dashboard on ${deviceName}`, () => {
+    const { defaultBrowserType, ...deviceConfig } = devices[deviceName];
+    test.use(deviceConfig);
 
-    // Assert
-    const productsResponse = await productsPromise;
-    const productsData = await productsResponse.json();
+    test.describe("Product Retrieval and Display", () => {
+      test("should display all products on page load", async ({ page }) => {
+        // Arrange
+        const productsPromise = page.waitForResponse(
+          (response) =>
+            response.url().includes("/api/v1/product/get-product") &&
+            response.request().method() === "GET",
+        );
 
-    await page.getByRole("heading", { name: "All Products List" }).waitFor();
-    await expect(page.locator(".product-link")).toHaveCount(
-      productsData.products.length,
-    );
-  });
+        // Act
+        await page.reload();
 
-  test("should display error when product retrieval fails", async ({
-    page,
-  }) => {
-    // Arrange
-    await page.route(
-      "/api/v1/product/get-product",
-      async (route) => await route.abort(),
-    );
+        // Assert
+        const productsResponse = await productsPromise;
+        const productsData = await productsResponse.json();
 
-    // Act
-    await page.reload();
+        await page
+          .getByRole("heading", { name: "All Products List" })
+          .waitFor();
+        await expect(page.locator(".product-link")).toHaveCount(
+          productsData.products.length,
+        );
+      });
 
-    // Assert
-    await page.getByText("Something Went Wrong").waitFor();
-    await expect(page.locator(".product-link")).toHaveCount(0);
-  });
-});
+      test("should display error when product retrieval fails", async ({
+        page,
+      }) => {
+        // Arrange
+        await page.route(
+          "/api/v1/product/get-product",
+          async (route) => await route.abort(),
+        );
 
-test.describe("Product Card Rendering", () => {
-  test("should render product cards correctly", async ({ page }) => {
-    // Assert
-    await page.getByRole("heading", { name: "All Products List" }).waitFor();
+        // Act
+        await page.reload();
 
-    const firstCard = page.locator(".card").first();
-    await expect(firstCard.locator("img.card-img-top")).toBeVisible();
-    await expect(firstCard.locator(".card-title")).not.toHaveText("");
-    await expect(firstCard.locator(".card-text")).not.toHaveText("");
-  });
-
-  test("should display product image correctly", async ({ page }) => {
-    // Arrange
-    const productsPromise = page.waitForResponse(
-      (response) =>
-        response.url().includes("/api/v1/product/get-product") &&
-        response.request().method() === "GET",
-    );
-
-    // Act
-    await page.reload();
-
-    // Assert
-    const productsResponse = await productsPromise;
-    const productsData = await productsResponse.json();
-    const firstProductId = productsData.products[0]._id;
-
-    const firstImage = page.locator("img.card-img-top").first();
-    await expect(firstImage).toHaveAttribute(
-      "src",
-      `/api/v1/product/product-photo/${firstProductId}`,
-    );
-  });
-
-  test("should display product name and description", async ({ page }) => {
-    // Arrange
-    const productsPromise = page.waitForResponse(
-      (response) =>
-        response.url().includes("/api/v1/product/get-product") &&
-        response.request().method() === "GET",
-    );
-
-    // Act
-    await page.reload();
-
-    // Assert
-    const productsResponse = await productsPromise;
-    const productsData = await productsResponse.json();
-
-    for (const product of productsData.products) {
-      await page.getByText(product.name).first().waitFor();
-      await page.getByText(product.description).first().waitFor();
-    }
-  });
-});
-
-test.describe("Navigation to Product Detail", () => {
-  test("should navigate to individual product page on click", async ({
-    page,
-  }) => {
-    // Act
-    await page.getByRole("link", { name: /iPhone 13/i }).click();
-
-    // Assert
-    await expect(page).toHaveURL(/\/dashboard\/admin\/product\/iphone-13$/);
-  });
-});
-
-test.describe("Empty Product List Handling", () => {
-  test("should render empty state gracefully", async ({ page }) => {
-    // Arrange
-    await page.route("/api/v1/product/get-product", async (route) => {
-      await route.fulfill({
-        status: 200,
-        contentType: "application/json",
-        body: JSON.stringify({
-          success: true,
-          products: [],
-          countTotal: 0,
-          message: "AllProducts",
-        }),
+        // Assert
+        await page.getByText("Something Went Wrong").waitFor();
+        await expect(page.locator(".product-link")).toHaveCount(0);
       });
     });
 
-    // Act
-    await page.reload();
+    test.describe("Product Card Rendering", () => {
+      test("should render product cards correctly", async ({ page }) => {
+        // Assert
+        await page
+          .getByRole("heading", { name: "All Products List" })
+          .waitFor();
 
-    // Assert
-    await page.getByRole("heading", { name: "All Products List" }).waitFor();
-    await expect(page.locator(".product-link")).toHaveCount(0);
-    await expect(page.locator(".card")).toHaveCount(0);
+        const firstCard = page.locator(".card").first();
+        await expect(firstCard.locator("img.card-img-top")).toBeVisible();
+        await expect(firstCard.locator(".card-title")).not.toHaveText("");
+        await expect(firstCard.locator(".card-text")).not.toHaveText("");
+      });
+
+      test("should display product image correctly", async ({ page }) => {
+        // Arrange
+        const productsPromise = page.waitForResponse(
+          (response) =>
+            response.url().includes("/api/v1/product/get-product") &&
+            response.request().method() === "GET",
+        );
+
+        // Act
+        await page.reload();
+
+        // Assert
+        const productsResponse = await productsPromise;
+        const productsData = await productsResponse.json();
+        const firstProductId = productsData.products[0]._id;
+
+        const firstImage = page.locator("img.card-img-top").first();
+        await expect(firstImage).toHaveAttribute(
+          "src",
+          `/api/v1/product/product-photo/${firstProductId}`,
+        );
+      });
+
+      test("should display product name and description", async ({ page }) => {
+        // Arrange
+        const productsPromise = page.waitForResponse(
+          (response) =>
+            response.url().includes("/api/v1/product/get-product") &&
+            response.request().method() === "GET",
+        );
+
+        // Act
+        await page.reload();
+
+        // Assert
+        const productsResponse = await productsPromise;
+        const productsData = await productsResponse.json();
+
+        for (const product of productsData.products) {
+          await page.getByText(product.name).first().waitFor();
+          await page.getByText(product.description).first().waitFor();
+        }
+      });
+    });
+
+    test.describe("Navigation to Product Detail", () => {
+      test("should navigate to individual product page on click", async ({
+        page,
+      }) => {
+        // Act
+        await page.getByRole("link", { name: /iPhone 13/i }).click();
+
+        // Assert
+        await expect(page).toHaveURL(/\/dashboard\/admin\/product\/iphone-13$/);
+      });
+    });
+
+    test.describe("Empty Product List Handling", () => {
+      test("should render empty state gracefully", async ({ page }) => {
+        // Arrange
+        await page.route("/api/v1/product/get-product", async (route) => {
+          await route.fulfill({
+            status: 200,
+            contentType: "application/json",
+            body: JSON.stringify({
+              success: true,
+              products: [],
+              countTotal: 0,
+              message: "AllProducts",
+            }),
+          });
+        });
+
+        // Act
+        await page.reload();
+
+        // Assert
+        await page
+          .getByRole("heading", { name: "All Products List" })
+          .waitFor();
+        await expect(page.locator(".product-link")).toHaveCount(0);
+        await expect(page.locator(".card")).toHaveCount(0);
+      });
+    });
   });
-});
+}

@@ -1,6 +1,6 @@
 // Jonas Ong, A0252052U
 
-import test, { expect } from "@playwright/test";
+import test, { devices, expect } from "@playwright/test";
 import jsonwebtoken from "jsonwebtoken";
 
 const authData = {
@@ -27,33 +27,42 @@ test.beforeEach(async ({ page }) => {
   await page.reload();
 });
 
-test.describe("Dashboard", () => {
-  test("renders with UserMenu correctly and links navigate correctly", async ({
-    page,
-  }) => {
-    // Assert initial dashboard render
-    await page.getByRole("heading", { name: "Dashboard" }).waitFor();
+const testDevices = ["Desktop Chrome", "iPad Pro 11", "Pixel 5"] as const;
 
-    // Act + Assert profile navigation
-    await page.getByRole("link", { name: "Profile" }).click();
-    await expect(page).toHaveURL(/\/dashboard\/user\/profile$/);
+for (const deviceName of testDevices) {
+  test.describe(`Dashboard on ${deviceName}`, () => {
+    const { defaultBrowserType, ...deviceConfig } = devices[deviceName];
+    test.use(deviceConfig);
 
-    // Act + Assert orders navigation
-    await page.goto("/dashboard/user");
-    await page.getByRole("link", { name: "Orders" }).click();
-    await expect(page).toHaveURL(/\/dashboard\/user\/orders$/);
+    test.describe("Dashboard", () => {
+      test("renders with UserMenu correctly and links navigate correctly", async ({
+        page,
+      }) => {
+        // Assert initial dashboard render
+        await page.getByRole("heading", { name: "Dashboard" }).waitFor();
+
+        // Act + Assert profile navigation
+        await page.getByRole("link", { name: "Profile" }).click();
+        await expect(page).toHaveURL(/\/dashboard\/user\/profile$/);
+
+        // Act + Assert orders navigation
+        await page.goto("/dashboard/user");
+        await page.getByRole("link", { name: "Orders" }).click();
+        await expect(page).toHaveURL(/\/dashboard\/user\/orders$/);
+      });
+
+      test("displays correct user information", async ({ page }) => {
+        // Assert
+        await page
+          .getByRole("heading", { name: authData.user.name, exact: true })
+          .waitFor();
+        await page
+          .getByRole("heading", { name: authData.user.email, exact: true })
+          .waitFor();
+        await page
+          .getByRole("heading", { name: authData.user.address, exact: true })
+          .waitFor();
+      });
+    });
   });
-
-  test("displays correct user information", async ({ page }) => {
-    // Assert
-    await page
-      .getByRole("heading", { name: authData.user.name, exact: true })
-      .waitFor();
-    await page
-      .getByRole("heading", { name: authData.user.email, exact: true })
-      .waitFor();
-    await page
-      .getByRole("heading", { name: authData.user.address, exact: true })
-      .waitFor();
-  });
-});
+}
