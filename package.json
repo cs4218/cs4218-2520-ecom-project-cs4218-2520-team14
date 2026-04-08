@@ -15,7 +15,8 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "test:ui": "npx playwright test",
-    "aigen": "node aigen/aigen.mjs"
+    "aigen": "node aigen/aigen.mjs",
+    "aigen:test": "npm test > test.log 2>&1 && node aigen/ship-log.js || node aigen/ship-log.js"
   },
   "keywords": [],
   "author": "RP",

@@ -1,0 +1,1565 @@
+{
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -1600,
+        -192
+      ],
+      "id": "989026b6-7ee7-4ab4-97f4-c3d4d2bf33fc",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $('Webhook').first().json.body.task.toLowerCase() }}",
+                    "rightValue": "fix",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "e4409a30-2105-4a10-b919-1f68e57e08cd"
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "97050052-2bf1-489b-ba76-0fb7a3967cc8",
+                    "leftValue": "={{ $('Webhook').first().json.body.task.toLowerCase() }}",
+                    "rightValue": "expand",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        1280,
+        -64
+      ],
+      "id": "b7bd842c-0c91-4fc5-b203-2d8ac55fe36c",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "test-agent",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -1600,
+        -352
+      ],
+      "id": "01d57dcc-1dbf-49cd-ad24-a6bf4f07b3bf",
+      "name": "Webhook",
+      "webhookId": "127fa037-5f24-4d73-82e0-6d40ff7126d2"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "f0a559a4-4dcb-49c0-b5c9-ab56f20538e2",
+              "name": "repoOwner",
+              "value": "https://github.com/cs4218/",
+              "type": "string"
+            },
+            {
+              "id": "128f4199-925f-43c6-b011-2d78377763d9",
+              "name": "repoName",
+              "value": "https://github.com/cs4218/cs4218-2520-ecom-project-cs4218-2520-team14/",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -1408,
+        -256
+      ],
+      "id": "8c0179e1-f5a0-44ec-b3e7-514313606f31",
+      "name": "Github Info"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "77ea73b8-02c3-4681-bb0d-6abd1d28f095",
+              "leftValue": "={{ $json.name.endsWith('.js') && !$json.name.includes('.test.') && !$json.name.includes('.spec.') }}",
+              "rightValue": "=true",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -448,
+        -208
+      ],
+      "id": "730f879c-9a41-4bff-9420-1413bc12d4b3",
+      "name": "Source"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "77ea73b8-02c3-4681-bb0d-6abd1d28f095",
+              "leftValue": "={{ $json.name.endsWith('.js') && $json.name.includes('.test.') || $json.name.includes('.spec.') }}",
+              "rightValue": "=true",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -448,
+        -32
+      ],
+      "id": "24c3a95e-e5a4-450e-95ca-13778f715d1b",
+      "name": "Test"
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.all().map(item => item.json);\n\nconst sources = items.filter(x => x.kind === 'source');\nconst tests = items.filter(x => x.kind === 'test');\n\nfunction isIntegrationTest(path) {\n  const p = path.toLowerCase();\n  return p.includes('integration') || p.includes('e2e');\n}\n\nfunction isUnitTest(path) {\n  const p = path.toLowerCase();\n  return p.includes('.test.') && !isIntegrationTest(p);\n}\n\nconst output = sources.map(source => {\n  const sourceKey = source.name.split('.')[0];\n\n  const relatedTests = tests.filter(test => {\n    const testKey = test.name.split('.')[0];\n    return testKey === sourceKey;\n  });\n\n  const unitTests = relatedTests.filter(test => isUnitTest(test.path));\n  const integrationTests = relatedTests.filter(test => isIntegrationTest(test.path));\n\n  return {\n    json: {\n      sourcePath: source.path,\n      sourceName: source.name,\n      unitTests: unitTests.map(t => t.path),\n      integrationTests: integrationTests.map(t => t.path),\n      hasUnit: unitTests.length > 0,\n      hasIntegration: integrationTests.length > 0\n    }\n  };\n});\n\nreturn output;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        112,
+        -112
+      ],
+      "id": "9bfbfa10-90fb-47f1-8359-4fcb93c8d45d",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        -64,
+        -112
+      ],
+      "id": "08811f60-7753-40ed-bdbb-3cde78ff5b35",
+      "name": "Merge1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "c19c2714-b426-4543-97df-c7f21aa4c72f",
+              "name": "kind",
+              "value": "source",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -256,
+        -224
+      ],
+      "id": "f32792ed-be9e-4081-88b1-0aba9d9e3d94",
+      "name": "Source Tagging"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "27e2b7a6-d6bb-4725-a7bd-a906a67ab078",
+              "name": "kind",
+              "value": "test",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -240,
+        -48
+      ],
+      "id": "cf36dbf2-0f50-4ae1-a8f4-90a7ae8bf4ef",
+      "name": "Test Tagging"
+    },
+    {
+      "parameters": {
+        "resource": "file",
+        "operation": "get",
+        "owner": {
+          "__rl": true,
+          "value": "={{ $('Github Info').first().json.repoOwner }}",
+          "mode": "url"
+        },
+        "repository": {
+          "__rl": true,
+          "value": "={{ $('Github Info').first().json.repoName }}",
+          "mode": "url"
+        },
+        "filePath": "={{ $json.testPath }}",
+        "asBinaryProperty": false,
+        "additionalParameters": {}
+      },
+      "type": "n8n-nodes-base.github",
+      "typeVersion": 1.1,
+      "position": [
+        832,
+        160
+      ],
+      "id": "8161b705-53b7-4cc2-9f0d-bfc23f807a7b",
+      "name": "Get Tests",
+      "webhookId": "b9bdfe44-eb48-4b91-a92d-38183b420eed",
+      "credentials": {
+        "githubApi": {
+          "id": "ASDezEawv0Cdx9H0",
+          "name": "GitHub account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "file",
+        "operation": "get",
+        "owner": {
+          "__rl": true,
+          "value": "={{ $('Github Info').first().json.repoOwner }}",
+          "mode": "url"
+        },
+        "repository": {
+          "__rl": true,
+          "value": "={{ $('Github Info').first().json.repoName }}",
+          "mode": "url"
+        },
+        "filePath": "={{ $json.sourcePath }}",
+        "asBinaryProperty": false,
+        "additionalParameters": {}
+      },
+      "type": "n8n-nodes-base.github",
+      "typeVersion": 1.1,
+      "position": [
+        512,
+        -112
+      ],
+      "id": "0b877565-2ff4-4bc1-ac9a-b9729bee7f19",
+      "name": "Get Source",
+      "webhookId": "df93c6e4-3e5b-446c-abfb-55392bbf7818",
+      "credentials": {
+        "githubApi": {
+          "id": "ASDezEawv0Cdx9H0",
+          "name": "GitHub account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const tests = $json.unitTests || [];\n\nif (tests.length === 0) {\n  return [{\n    json: {\n      testPath: null,\n      noExistingTests: true\n    }\n  }];\n}\n\nreturn tests.map(path => ({\n  json: {\n    testPath: path,\n    noExistingTests: false\n  }\n}));"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        512,
+        64
+      ],
+      "id": "a544f784-fcaa-482a-a18f-11fc8b98ea06",
+      "name": "Split Tests"
+    },
+    {
+      "parameters": {
+        "jsCode": "const base64Content = $input.first().json.content || '';\nconst decoded = base64Content\n  ? Buffer.from(base64Content, 'base64').toString('utf-8')\n  : '';\n\nreturn [{sourcePath:$input.first().json.path , sourceCode: decoded}]"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        832,
+        -112
+      ],
+      "id": "25423d7d-5cfb-414c-9a7d-e9823c1aafdb",
+      "name": "Decode Source"
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.all().map(i => i.json) || [];\n\nconst existingUnitTests = items\n  .map(item => {\n    const decoded = item.content\n      ? Buffer.from(item.content, 'base64').toString('utf8')\n      : '';\n\n    return {\n      path: item.path,\n      code: decoded\n    };\n  });\n\nreturn [{\n  json: {\n    existingUnitTests\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        832,
+        32
+      ],
+      "id": "15ecef04-268e-445c-be70-1434010b624c",
+      "name": "Decode Tests"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        688,
+        64
+      ],
+      "id": "fab5c0a6-01a4-4f4f-b203-23bbca493c28",
+      "name": "Loop Tests"
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.all().map(i => i.json);\n\n// find the source object\nconst source = items.find(i => i.sourcePath);\n\n// find the tests object\nconst tests = items.find(i => i.existingUnitTests);\n\nreturn [{\n  json: {\n    sourcePath: source?.sourcePath || '',\n    sourceCode: source?.sourceCode || '',\n    unitTestCount: tests?.existingUnitTests.length || 0,\n    existingUnitTests: tests?.existingUnitTests || [],\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1120,
+        -64
+      ],
+      "id": "86d4c379-f7f1-4581-9068-13076e967121",
+      "name": "Code in JavaScript1"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        976,
+        -64
+      ],
+      "id": "3f3bc2f7-fcf8-44a0-ade7-e0309490a9f5",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "resource": "file",
+        "owner": {
+          "__rl": true,
+          "value": "={{ $('Github Info').item.json.repoOwner }}",
+          "mode": "url"
+        },
+        "repository": {
+          "__rl": true,
+          "value": "={{ $('Github Info').item.json.repoName }}",
+          "mode": "url"
+        },
+        "filePath": "=aitest/{{ $('Webhook').item.json.body.filename.replace('.js', '') + '.' + $('Webhook').item.json.body.task.toLowerCase() + '.test.js' }}",
+        "fileContent": "={{ $json.content.parts[0].text }}",
+        "commitMessage": "=AI Test File Fix for {{ $('Code in JavaScript1').item.json.sourcePath }}",
+        "additionalParameters": {
+          "branch": {
+            "branch": "aigen"
+          }
+        }
+      },
+      "type": "n8n-nodes-base.github",
+      "typeVersion": 1.1,
+      "position": [
+        2288,
+        -144
+      ],
+      "id": "8d741dee-2371-4913-aaba-b42498460519",
+      "name": "Create a file",
+      "webhookId": "357d4ab6-7603-407e-9034-aab9108f374a",
+      "credentials": {
+        "githubApi": {
+          "id": "ASDezEawv0Cdx9H0",
+          "name": "GitHub account"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "resource": "file",
+        "operation": "list",
+        "owner": {
+          "__rl": true,
+          "value": "={{ $json.repoOwner }}",
+          "mode": "url"
+        },
+        "repository": {
+          "__rl": true,
+          "value": "={{ $json.repoName }}",
+          "mode": "url"
+        },
+        "filePath": "={{ $('Webhook').item.json.body.directory }}"
+      },
+      "type": "n8n-nodes-base.github",
+      "typeVersion": 1.1,
+      "position": [
+        -928,
+        -160
+      ],
+      "id": "be32e7c9-3464-4d33-8dcb-bd3534cd3201",
+      "name": "List files",
+      "webhookId": "2d84fc64-10e7-4a6f-9ad0-624e996f69b3",
+      "credentials": {
+        "githubApi": {
+          "id": "ASDezEawv0Cdx9H0",
+          "name": "GitHub account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "aab16631-64bc-4031-8e53-21823f14517d",
+              "leftValue": "={{ $json.name }}",
+              "rightValue": "={{ $('Webhook').item.json.body.filename.split('.')[0] }}",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -720,
+        -160
+      ],
+      "id": "2775cdcd-374c-4ed2-bdfd-6eba01ea1997",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "models/gemini-flash-lite-latest",
+          "mode": "list",
+          "cachedResultName": "models/gemini-flash-lite-latest"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=You are an expert JavaScript test engineer specializing in Jest.\n\nYour task is to FIX, CONSOLIDATE, and IMPROVE the existing unit tests for the provided source file into exactly ONE runnable JavaScript file.\n\n====================\nINPUT\n====================\nSource file path: {{$json.sourcePath}}\nSource file code: {{$json.sourceCode}}\nExisting unit tests: {{$json.existingUnitTests}}\n\n====================\nEXECUTION RULES\n====================\n1. ONLY Unit Tests: No integration or E2E logic.\n2. CONSOLIDATION: Merge ALL relevant functions from the existing tests into ONE file.\n3. ZERO DELETIONS: Do NOT truncate code. You MUST preserve every 'it' and 'test' block for success, failure, validation, and edge cases.\n4. REFACTORING: Group by function using 'describe' blocks. Deduplicate shared mocks and setup (beforeEach). \n5. MOCKING: Ensure models, helpers, and JWT are properly mocked to prevent real DB/API calls.\n6. STABILITY: Fix imports and syntax errors to ensure the file is 100% runnable.\n\n====================\nSTRICT OUTPUT FORMATTING\n====================\n- Output ONLY the raw JavaScript code.\n- DO NOT wrap the code in markdown blocks (No ```js or ```).\n- DO NOT include JSON wrappers, \"testCode\" keys, or braces.\n- DO NOT include explanations, greetings, or notes.\n- Your response must start with the first import statement and end with the last closing bracket of the test suite."
+            }
+          ]
+        },
+        "jsonOutput": true,
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1.1,
+      "position": [
+        1536,
+        -128
+      ],
+      "id": "6851f3aa-7183-465a-86ca-000a762e6486",
+      "name": "Fix",
+      "retryOnFail": true,
+      "waitBetweenTries": 5000,
+      "credentials": {
+        "googlePalmApi": {
+          "id": "3bwyDhTptO8ywUYB",
+          "name": "Google Gemini(PaLM) Api account 2"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "models/gemini-flash-lite-latest",
+          "mode": "list",
+          "cachedResultName": "models/gemini-flash-lite-latest"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=You are a Lead QA Engineer specializing in Jest, React Testing Library, and 100% Branch Coverage.\n\n====================\nINPUT\n====================\nSource Code: {{ $('Code in JavaScript1').item.json.sourceCode }}\nExisting Tests: {{ $('Code in JavaScript1').item.json.existingUnitTests }}\n\n====================\nTASK: GAP ANALYSIS & EXPANSION\n====================\n1. CRITICAL ANALYSIS: Map every conditional branch (if/else, switch, try/catch, ternary) in the 'Source Code'.\n2. GAP IDENTIFICATION: Cross-reference these branches against 'Existing Tests'. \n3. GENERATION: Write a NEW, independent Jest test file that provides 100% coverage for the missing logical branches (e.g., HTTP 500 errors, edge cases, null states, unauthorized access).\n\n====================\nEXECUTION RULES\n====================\n- INDEPENDENT RUNNABILITY: Include all necessary imports (React, @testing-library/react, axios, jest) and mocks so the file runs standalone.\n- STRUCTURE: Use 'describe(\"CartPage - Expansion Suite\", () => { ... })' as the root block.\n- MOCKING: Explicitly mock all external dependencies found in the Source Code to isolate branch logic.\n- NO DUPLICATION: Do not recreate tests already present in 'Existing Tests'.\n\n====================\nSTRICT OUTPUT FORMATTING\n====================\n- Output ONLY raw JavaScript code.\n- DO NOT use markdown code blocks (No ```).\n- DO NOT provide explanations, analysis, or conversational text.\n- The response MUST start with: import\n- The response MUST end with: });\n\nCODE:"
+            }
+          ]
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1.1,
+      "position": [
+        1536,
+        16
+      ],
+      "id": "357e75aa-f61d-4de0-80da-5c081ffb1b04",
+      "name": "Expand",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "WY77DKMrXrTeKYCs",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "models/gemini-2.5-flash-lite",
+          "mode": "list",
+          "cachedResultName": "models/gemini-2.5-flash-lite"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=You are a Code Extraction Utility. Your sole purpose is to extract raw JavaScript from a JSON-escaped string.\n\n====================\nINPUT\n====================\n{{ $json.content.parts[0].text }}\n\n====================\nTASK\n====================\n1. Locate the \"testCode\" or \"testFile\" key within the provided JSON.\n2. Extract the string value associated with that key.\n3. UNESCAPE the string: \n   - Convert all \"\\n\" back into actual new lines.\n   - Convert all \"\\\"\" back into standard double quotes.\n   - Convert all \"\\\\\" back into single backslashes.\n\n====================\nSTRICT OUTPUT RULES\n====================\n- Output ONLY the raw JavaScript code.\n- Start exactly with the first \"import\" or \"const\" statement.\n- End exactly with the final closing bracket \"});\" or \"}\".\n- DO NOT use markdown code blocks (No ```).\n- DO NOT provide any explanation, preamble, or notes.\n- If the input is already raw code, pass it through unchanged.\n\nOUTPUT:"
+            }
+          ]
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1.1,
+      "position": [
+        1936,
+        -144
+      ],
+      "id": "492a61ba-02fb-4bda-920f-34ffa3cb070c",
+      "name": "Parse",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "WY77DKMrXrTeKYCs",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "file",
+        "operation": "edit",
+        "owner": {
+          "__rl": true,
+          "value": "={{ $('Github Info').item.json.repoOwner }}",
+          "mode": "url"
+        },
+        "repository": {
+          "__rl": true,
+          "value": "={{ $('Github Info').item.json.repoName }}",
+          "mode": "url"
+        },
+        "filePath": "=aitest/{{ $('Webhook').item.json.body.filename.replace('.js', '') + '.' + $('Webhook').item.json.body.task.toLowerCase() + '.test.js' }}",
+        "fileContent": "={{ $json.content.parts[0].text }}",
+        "commitMessage": "=AI Test File Fix for {{ $('Code in JavaScript1').item.json.sourcePath }}",
+        "additionalParameters": {
+          "branch": {
+            "branch": "aigen"
+          }
+        }
+      },
+      "type": "n8n-nodes-base.github",
+      "typeVersion": 1.1,
+      "position": [
+        2288,
+        16
+      ],
+      "id": "815336d3-6a14-40c9-8d7d-56c57b152701",
+      "name": "Edit a file",
+      "webhookId": "8e6e5a5f-8467-4f44-849c-ac8fe68761bd",
+      "credentials": {
+        "githubApi": {
+          "id": "ASDezEawv0Cdx9H0",
+          "name": "GitHub account"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "resource": "file",
+        "operation": "get",
+        "owner": {
+          "__rl": true,
+          "value": "={{ $('Github Info').item.json.repoOwner }}",
+          "mode": "url"
+        },
+        "repository": {
+          "__rl": true,
+          "value": "={{ $('Github Info').item.json.repoName }}",
+          "mode": "url"
+        },
+        "filePath": "coverage\\lcov.info",
+        "asBinaryProperty": false,
+        "additionalParameters": {}
+      },
+      "type": "n8n-nodes-base.github",
+      "typeVersion": 1.1,
+      "position": [
+        -576,
+        -16
+      ],
+      "id": "edb85137-3d45-4ab9-bcad-8b41fdd2631e",
+      "name": "Get a file",
+      "webhookId": "4df613aa-3726-46f5-af9e-d2507c5ea6fd",
+      "credentials": {
+        "githubApi": {
+          "id": "ASDezEawv0Cdx9H0",
+          "name": "GitHub account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "file",
+        "operation": "get",
+        "owner": {
+          "__rl": true,
+          "value": "={{ $('Github Info').item.json.repoOwner }}",
+          "mode": "url"
+        },
+        "repository": {
+          "__rl": true,
+          "value": "={{ $('Github Info').item.json.repoName }}",
+          "mode": "url"
+        },
+        "filePath": "coverage/backend/lcov.info",
+        "asBinaryProperty": false,
+        "additionalParameters": {}
+      },
+      "type": "n8n-nodes-base.github",
+      "typeVersion": 1.1,
+      "position": [
+        -960,
+        -784
+      ],
+      "id": "012e6229-b447-4d85-ba12-e0b7527de951",
+      "name": "BE cov",
+      "webhookId": "a02d14f2-bbb3-4225-af72-7f6d98abdbc0",
+      "credentials": {
+        "githubApi": {
+          "id": "ASDezEawv0Cdx9H0",
+          "name": "GitHub account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "file",
+        "operation": "get",
+        "owner": {
+          "__rl": true,
+          "value": "={{ $('Github Info').item.json.repoOwner }}",
+          "mode": "url"
+        },
+        "repository": {
+          "__rl": true,
+          "value": "={{ $('Github Info').item.json.repoName }}",
+          "mode": "url"
+        },
+        "filePath": "coverage/frontend/lcov.info",
+        "asBinaryProperty": false,
+        "additionalParameters": {}
+      },
+      "type": "n8n-nodes-base.github",
+      "typeVersion": 1.1,
+      "position": [
+        -960,
+        -624
+      ],
+      "id": "229b65a1-c76f-4339-8d11-0f4b680b12dc",
+      "name": "FE cov",
+      "webhookId": "a02d14f2-bbb3-4225-af72-7f6d98abdbc0",
+      "credentials": {
+        "githubApi": {
+          "id": "ASDezEawv0Cdx9H0",
+          "name": "GitHub account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "document",
+        "modelId": {
+          "__rl": true,
+          "value": "models/gemini-flash-lite-latest",
+          "mode": "list",
+          "cachedResultName": "models/gemini-flash-lite-latest"
+        },
+        "text": "=You are a Lead QA Auditor. Analyze the provided LCOV coverage report.\n\n====================\nOUTPUT FORMATTING RULES\n====================\n- Use ONLY Markdown.\n- Start directly with a ### Heading (e.g., ### 🖥️ Backend Audit).\n- Use a Table for the file breakdown.\n- Do NOT include a closing summary (I will concatenate this with other reports).\n- If coverage is 100%, keep the entry brief.\n\n====================\nTASK\n====================\n1. Identify files with Branch Coverage below 80%.\n2. For each problematic file, list:\n   - File Path\n   - Branch Coverage %\n   - Missing Logic (Identify exactly what is untested based on the 0-hit DA/BRDA lines).\n3. Provide a 'Critical Action Item' for the top 2 riskiest gaps.\n\nOutput: [Markdown Report Only]",
+        "documentUrls": "={{ $json.html_url }}",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1.1,
+      "position": [
+        -752,
+        -784
+      ],
+      "id": "af796ae8-61a8-4f76-a1a4-c650975498f2",
+      "name": "Analyze document",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "3bwyDhTptO8ywUYB",
+          "name": "Google Gemini(PaLM) Api account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "document",
+        "modelId": {
+          "__rl": true,
+          "value": "models/gemini-flash-lite-latest",
+          "mode": "list",
+          "cachedResultName": "models/gemini-flash-lite-latest"
+        },
+        "text": "=You are a Lead QA Auditor. Analyze the provided LCOV coverage report.\n\n====================\nOUTPUT FORMATTING RULES\n====================\n- Use ONLY Markdown.\n- Start directly with a ### Heading (e.g., ### 🖥️ Frontend Audit).\n- Use a Table for the file breakdown.\n- Do NOT include a closing summary (I will concatenate this with other reports).\n- If coverage is 100%, keep the entry brief.\n\n====================\nTASK\n====================\n1. Identify files with Branch Coverage below 80%.\n2. For each problematic file, list:\n   - File Path\n   - Branch Coverage %\n   - Missing Logic (Identify exactly what is untested based on the 0-hit DA/BRDA lines).\n3. Provide a 'Critical Action Item' for the top 2 riskiest gaps.\n\nOutput: [Markdown Report Only]",
+        "documentUrls": "={{ $json.html_url }}",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1.1,
+      "position": [
+        -752,
+        -624
+      ],
+      "id": "5645b3dc-a200-452e-89e2-c3e2ecf9d9c8",
+      "name": "Analyze document1",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "3bwyDhTptO8ywUYB",
+          "name": "Google Gemini(PaLM) Api account 2"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        -544,
+        -704
+      ],
+      "id": "be2c5a86-0203-4484-824e-c7e6543ecea5",
+      "name": "Merge2"
+    },
+    {
+      "parameters": {
+        "jsCode": "const beReport = $input.first().json.content.parts[0].text\nconst feReport = $input.last().json.content.parts[0].text\n\nconst fullIssueBody = `\n## 🛡️ Full-Stack Automated Quality Audit\n*Generated on ${new Date().toLocaleDateString()}*\n\n---\n${feReport}\n\n---\n${beReport}\n\n---\n**Note:** This issue was automatically generated based on LCOV analysis. Please resolve the \"Critical Action Items\" to meet the Team 14 quality gate.\n`;\n\nreturn { body: fullIssueBody };"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -336,
+        -704
+      ],
+      "id": "ebbe7158-e309-427a-9541-cafa3cae0637",
+      "name": "Code in JavaScript2"
+    },
+    {
+      "parameters": {
+        "owner": {
+          "__rl": true,
+          "value": "={{ $('Github Info').item.json.repoOwner }}",
+          "mode": "url"
+        },
+        "repository": {
+          "__rl": true,
+          "value": "={{ $('Github Info').item.json.repoName }}",
+          "mode": "url"
+        },
+        "title": "AIGEN Coverage Analysis",
+        "body": "={{ $json.body }}",
+        "labels": [],
+        "assignees": []
+      },
+      "type": "n8n-nodes-base.github",
+      "typeVersion": 1.1,
+      "position": [
+        -128,
+        -704
+      ],
+      "id": "cd6f8d32-8a64-4ce4-8ec6-c7338ac97c4a",
+      "name": "Create an issue",
+      "webhookId": "eee2936e-c50c-48fd-b51c-6df0070481b5",
+      "credentials": {
+        "githubApi": {
+          "id": "ASDezEawv0Cdx9H0",
+          "name": "GitHub account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "cc29d1f0-4efb-4c8e-9df6-15004f75f64a"
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        -736,
+        -48
+      ],
+      "id": "b11e8300-5e82-4446-927e-006c44b9cb29",
+      "name": "Switch1"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $('Webhook').item.json.body.task }}",
+                    "rightValue": "cov",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "43c49f41-f667-4d28-87fc-a6475710603b"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Coverage"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "fe6f3110-ca24-4d19-862c-725dc8807264",
+                    "leftValue": "={{ $('Webhook').item.json.body.task }}",
+                    "rightValue": "log",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Log"
+            }
+          ]
+        },
+        "options": {
+          "fallbackOutput": "extra"
+        }
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        -1184,
+        -400
+      ],
+      "id": "cca4bac1-2753-4efc-8997-70d1e9dcf063",
+      "name": "Switch2"
+    },
+    {
+      "parameters": {
+        "jsCode": "const log = $('Webhook').first().json.body.rawLog;\n\n// Define high-priority failure signals\nconst signals = [\n  \"FAIL\",                // Standard Jest failure\n  \"AssertionError\",      // Logic mismatch\n  \"ECONNREFUSED\",        // Database/Network issue\n  \"ReferenceError\",      // Code typo/missing variable\n  \"Test Suites: 0 total\" // Something went catastrophically wrong with the setup\n];\n\nconst needsAI = signals.some(signal => log.includes(signal));\n\nreturn {\n  needsAI: needsAI,\n  reason: needsAI ? \"Failure detected in log\" : \"All tests passed or log empty\"\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -928,
+        -384
+      ],
+      "id": "47f2a07b-19fa-49f9-9656-2c8bfccb69fc",
+      "name": "Code in JavaScript3"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        -48,
+        -368
+      ],
+      "id": "bee56dfb-a835-47c9-96ea-54eaa8895a56",
+      "name": "Respond to Webhook"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "719b4594-fe2e-4116-815f-5bd8ab52de6c",
+              "leftValue": "={{ $json.needsAI }}",
+              "rightValue": false,
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -736,
+        -384
+      ],
+      "id": "bf9efd2e-9884-46a6-ab66-0551279aaf48",
+      "name": "If1"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "models/gemini-flash-lite-latest",
+          "mode": "list",
+          "cachedResultName": "models/gemini-flash-lite-latest"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=Act as a Senior SDET (Software Development Engineer in Test). Your goal is to perform a root-cause analysis on the provided Jest failure log.\n\n====================\nINPUT DATA\n====================\nRaw Test Log: \n{{ $('Webhook').item.json.body.rawLog }}\n\n====================\nDIAGNOSTIC TASKS\n====================\n1. CLASSIFICATION: Categorize the failure into one of these three:\n   - REGRESSION: A logic bug. The code changed, but the test wasn't updated or the code is now incorrect.\n   - BRITTLE: Environment/Flaky. Look for keywords like \"timeout\", \"ECONNREFUSED\", or \"MongooseServerSelectionError\".\n   - SYNTAX/MOCK: The test file itself has an error, such as a missing import or an invalid Jest mock.\n\n2. TRACE MAPPING:\n   - Identify the specific file path and line number of the failure.\n   - Identify which 'describe' or 'it' block failed.\n\n3. LOGIC SUMMARY:\n   - Provide a \"Expected vs. Received\" comparison in plain English.\n   - Explain the \"Root Cause\" in one simple sentence.\n\n====================\nSTRICT OUTPUT FORMAT\n====================\nReturn ONLY the following Markdown structure:\n\n### 🔍 Failure Diagnosis\n- **Classification:** [Regression | Brittle | Syntax]\n- **Location:** `File:Line`\n- **The \"Why\":** [1-sentence explanation]\n- **Recommended Action:** [What the developer should do next]"
+            }
+          ]
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1.1,
+      "position": [
+        -544,
+        -480
+      ],
+      "id": "9bde73be-078c-48f7-9c89-3fb7390e1d95",
+      "name": "Message a model",
+      "retryOnFail": true,
+      "waitBetweenTries": 5000,
+      "maxTries": 2,
+      "credentials": {
+        "googlePalmApi": {
+          "id": "3bwyDhTptO8ywUYB",
+          "name": "Google Gemini(PaLM) Api account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "763cd852-247a-471b-8cae-40d586bc6ceb",
+              "name": "text",
+              "value": "={{ $json.content.parts[0].text }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -224,
+        -480
+      ],
+      "id": "d124047a-224d-4aca-abe6-f740d8a95462",
+      "name": "Edit Fields"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Github Info",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Fix",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Expand",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Github Info",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Github Info": {
+      "main": [
+        [
+          {
+            "node": "Switch2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Source": {
+      "main": [
+        [
+          {
+            "node": "Source Tagging",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Test": {
+      "main": [
+        [
+          {
+            "node": "Test Tagging",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        []
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Get Source",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Split Tests",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Source Tagging": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Test Tagging": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge1": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Tests": {
+      "main": [
+        [
+          {
+            "node": "Loop Tests",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Source": {
+      "main": [
+        [
+          {
+            "node": "Decode Source",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Tests": {
+      "main": [
+        [
+          {
+            "node": "Loop Tests",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Decode Source": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Tests": {
+      "main": [
+        [
+          {
+            "node": "Decode Tests",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Get Tests",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Decode Tests": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript1": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "List files": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Get a file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Source",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Test",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a file": {
+      "main": [
+        []
+      ]
+    },
+    "Fix": {
+      "main": [
+        [
+          {
+            "node": "Parse",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Expand": {
+      "main": [
+        [
+          {
+            "node": "Create a file",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Edit a file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse": {
+      "main": [
+        [
+          {
+            "node": "Create a file",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Edit a file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit a file": {
+      "main": [
+        []
+      ]
+    },
+    "FE cov": {
+      "main": [
+        [
+          {
+            "node": "Analyze document1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "BE cov": {
+      "main": [
+        [
+          {
+            "node": "Analyze document",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Analyze document1": {
+      "main": [
+        [
+          {
+            "node": "Merge2",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Analyze document": {
+      "main": [
+        [
+          {
+            "node": "Merge2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge2": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript2": {
+      "main": [
+        [
+          {
+            "node": "Create an issue",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch2": {
+      "main": [
+        [
+          {
+            "node": "BE cov",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "FE cov",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Code in JavaScript3",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "List files",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript3": {
+      "main": [
+        [
+          {
+            "node": "If1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Respond to Webhook": {
+      "main": [
+        []
+      ]
+    },
+    "If1": {
+      "main": [
+        [
+          {
+            "node": "Message a model",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Message a model": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "3a08cb5e-5ef4-4e89-92b2-8db4e4760867",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "22feb9b1be35381bd87e494ed0de8589299b8a701386cc956826016b65494bdd"
+  },
+  "id": "zGw73fFcwYBzlkhE",
+  "tags": []
+}
