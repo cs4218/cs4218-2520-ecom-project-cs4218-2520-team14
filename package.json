@@ -14,7 +14,8 @@
     "test:backend": "node --experimental-vm-modules node_modules/jest/bin/jest.js --config jest.backend.config.js",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "test:ui": "npx playwright test"
+    "test:ui": "npx playwright test",
+    "aigen": "node aigen/aigen.mjs"
   },
   "keywords": [],
   "author": "RP",
