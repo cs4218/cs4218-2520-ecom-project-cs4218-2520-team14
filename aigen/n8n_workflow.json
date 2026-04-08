@@ -5,10 +5,7 @@
       "parameters": {},
       "type": "n8n-nodes-base.manualTrigger",
       "typeVersion": 1,
-      "position": [
-        -1600,
-        -192
-      ],
+      "position": [-1600, -192],
       "id": "989026b6-7ee7-4ab4-97f4-c3d4d2bf33fc",
       "name": "When clicking ‘Execute workflow’"
     },
@@ -67,10 +64,7 @@
       },
       "type": "n8n-nodes-base.switch",
       "typeVersion": 3.4,
-      "position": [
-        1280,
-        -64
-      ],
+      "position": [1280, -64],
       "id": "b7bd842c-0c91-4fc5-b203-2d8ac55fe36c",
       "name": "Switch"
     },
@@ -83,10 +77,7 @@
       },
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2.1,
-      "position": [
-        -1600,
-        -352
-      ],
+      "position": [-1600, -352],
       "id": "01d57dcc-1dbf-49cd-ad24-a6bf4f07b3bf",
       "name": "Webhook",
       "webhookId": "127fa037-5f24-4d73-82e0-6d40ff7126d2"
@@ -113,10 +104,7 @@
       },
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
-      "position": [
-        -1408,
-        -256
-      ],
+      "position": [-1408, -256],
       "id": "8c0179e1-f5a0-44ec-b3e7-514313606f31",
       "name": "Github Info"
     },
@@ -147,10 +135,7 @@
       },
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.3,
-      "position": [
-        -448,
-        -208
-      ],
+      "position": [-448, -208],
       "id": "730f879c-9a41-4bff-9420-1413bc12d4b3",
       "name": "Source"
     },
@@ -181,10 +166,7 @@
       },
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.3,
-      "position": [
-        -448,
-        -32
-      ],
+      "position": [-448, -32],
       "id": "24c3a95e-e5a4-450e-95ca-13778f715d1b",
       "name": "Test"
     },
@@ -194,10 +176,7 @@
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [
-        112,
-        -112
-      ],
+      "position": [112, -112],
       "id": "9bfbfa10-90fb-47f1-8359-4fcb93c8d45d",
       "name": "Code in JavaScript"
     },
@@ -205,10 +184,7 @@
       "parameters": {},
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3.2,
-      "position": [
-        -64,
-        -112
-      ],
+      "position": [-64, -112],
       "id": "08811f60-7753-40ed-bdbb-3cde78ff5b35",
       "name": "Merge1"
     },
@@ -229,10 +205,7 @@
       },
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
-      "position": [
-        -256,
-        -224
-      ],
+      "position": [-240, -224],
       "id": "f32792ed-be9e-4081-88b1-0aba9d9e3d94",
       "name": "Source Tagging"
     },
@@ -253,10 +226,7 @@
       },
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
-      "position": [
-        -240,
-        -48
-      ],
+      "position": [-240, -48],
       "id": "cf36dbf2-0f50-4ae1-a8f4-90a7ae8bf4ef",
       "name": "Test Tagging"
     },
@@ -280,10 +250,7 @@
       },
       "type": "n8n-nodes-base.github",
       "typeVersion": 1.1,
-      "position": [
-        832,
-        160
-      ],
+      "position": [832, 160],
       "id": "8161b705-53b7-4cc2-9f0d-bfc23f807a7b",
       "name": "Get Tests",
       "webhookId": "b9bdfe44-eb48-4b91-a92d-38183b420eed",
@@ -314,10 +281,7 @@
       },
       "type": "n8n-nodes-base.github",
       "typeVersion": 1.1,
-      "position": [
-        512,
-        -112
-      ],
+      "position": [512, -112],
       "id": "0b877565-2ff4-4bc1-ac9a-b9729bee7f19",
       "name": "Get Source",
       "webhookId": "df93c6e4-3e5b-446c-abfb-55392bbf7818",
@@ -334,10 +298,7 @@
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [
-        512,
-        64
-      ],
+      "position": [512, 64],
       "id": "a544f784-fcaa-482a-a18f-11fc8b98ea06",
       "name": "Split Tests"
     },
@@ -347,10 +308,7 @@
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [
-        832,
-        -112
-      ],
+      "position": [832, -112],
       "id": "25423d7d-5cfb-414c-9a7d-e9823c1aafdb",
       "name": "Decode Source"
     },
@@ -360,10 +318,7 @@
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [
-        832,
-        32
-      ],
+      "position": [832, 32],
       "id": "15ecef04-268e-445c-be70-1434010b624c",
       "name": "Decode Tests"
     },
@@ -373,10 +328,7 @@
       },
       "type": "n8n-nodes-base.splitInBatches",
       "typeVersion": 3,
-      "position": [
-        688,
-        64
-      ],
+      "position": [688, 64],
       "id": "fab5c0a6-01a4-4f4f-b203-23bbca493c28",
       "name": "Loop Tests"
     },
@@ -386,10 +338,7 @@
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [
-        1120,
-        -64
-      ],
+      "position": [1120, -64],
       "id": "86d4c379-f7f1-4581-9068-13076e967121",
       "name": "Code in JavaScript1"
     },
@@ -397,10 +346,7 @@
       "parameters": {},
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3.2,
-      "position": [
-        976,
-        -64
-      ],
+      "position": [976, -64],
       "id": "3f3bc2f7-fcf8-44a0-ade7-e0309490a9f5",
       "name": "Merge"
     },
@@ -428,10 +374,7 @@
       },
       "type": "n8n-nodes-base.github",
       "typeVersion": 1.1,
-      "position": [
-        2288,
-        -144
-      ],
+      "position": [2288, -144],
       "id": "8d741dee-2371-4913-aaba-b42498460519",
       "name": "Create a file",
       "webhookId": "357d4ab6-7603-407e-9034-aab9108f374a",
@@ -461,10 +404,7 @@
       },
       "type": "n8n-nodes-base.github",
       "typeVersion": 1.1,
-      "position": [
-        -928,
-        -160
-      ],
+      "position": [-928, -160],
       "id": "be32e7c9-3464-4d33-8dcb-bd3534cd3201",
       "name": "List files",
       "webhookId": "2d84fc64-10e7-4a6f-9ad0-624e996f69b3",
@@ -501,10 +441,7 @@
       },
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.3,
-      "position": [
-        -720,
-        -160
-      ],
+      "position": [-720, -160],
       "id": "2775cdcd-374c-4ed2-bdfd-6eba01ea1997",
       "name": "If"
     },
@@ -529,10 +466,7 @@
       },
       "type": "@n8n/n8n-nodes-langchain.googleGemini",
       "typeVersion": 1.1,
-      "position": [
-        1536,
-        -128
-      ],
+      "position": [1536, -128],
       "id": "6851f3aa-7183-465a-86ca-000a762e6486",
       "name": "Fix",
       "retryOnFail": true,
@@ -565,10 +499,7 @@
       },
       "type": "@n8n/n8n-nodes-langchain.googleGemini",
       "typeVersion": 1.1,
-      "position": [
-        1536,
-        16
-      ],
+      "position": [1536, 16],
       "id": "357e75aa-f61d-4de0-80da-5c081ffb1b04",
       "name": "Expand",
       "credentials": {
@@ -598,10 +529,7 @@
       },
       "type": "@n8n/n8n-nodes-langchain.googleGemini",
       "typeVersion": 1.1,
-      "position": [
-        1936,
-        -144
-      ],
+      "position": [1936, -144],
       "id": "492a61ba-02fb-4bda-920f-34ffa3cb070c",
       "name": "Parse",
       "credentials": {
@@ -636,10 +564,7 @@
       },
       "type": "n8n-nodes-base.github",
       "typeVersion": 1.1,
-      "position": [
-        2288,
-        16
-      ],
+      "position": [2288, 16],
       "id": "815336d3-6a14-40c9-8d7d-56c57b152701",
       "name": "Edit a file",
       "webhookId": "8e6e5a5f-8467-4f44-849c-ac8fe68761bd",
@@ -671,10 +596,7 @@
       },
       "type": "n8n-nodes-base.github",
       "typeVersion": 1.1,
-      "position": [
-        -576,
-        -16
-      ],
+      "position": [-576, -16],
       "id": "edb85137-3d45-4ab9-bcad-8b41fdd2631e",
       "name": "Get a file",
       "webhookId": "4df613aa-3726-46f5-af9e-d2507c5ea6fd",
@@ -705,10 +627,7 @@
       },
       "type": "n8n-nodes-base.github",
       "typeVersion": 1.1,
-      "position": [
-        -960,
-        -784
-      ],
+      "position": [-928, -928],
       "id": "012e6229-b447-4d85-ba12-e0b7527de951",
       "name": "BE cov",
       "webhookId": "a02d14f2-bbb3-4225-af72-7f6d98abdbc0",
@@ -739,10 +658,7 @@
       },
       "type": "n8n-nodes-base.github",
       "typeVersion": 1.1,
-      "position": [
-        -960,
-        -624
-      ],
+      "position": [-928, -768],
       "id": "229b65a1-c76f-4339-8d11-0f4b680b12dc",
       "name": "FE cov",
       "webhookId": "a02d14f2-bbb3-4225-af72-7f6d98abdbc0",
@@ -768,10 +684,7 @@
       },
       "type": "@n8n/n8n-nodes-langchain.googleGemini",
       "typeVersion": 1.1,
-      "position": [
-        -752,
-        -784
-      ],
+      "position": [-720, -928],
       "id": "af796ae8-61a8-4f76-a1a4-c650975498f2",
       "name": "Analyze document",
       "credentials": {
@@ -796,10 +709,7 @@
       },
       "type": "@n8n/n8n-nodes-langchain.googleGemini",
       "typeVersion": 1.1,
-      "position": [
-        -752,
-        -624
-      ],
+      "position": [-720, -768],
       "id": "5645b3dc-a200-452e-89e2-c3e2ecf9d9c8",
       "name": "Analyze document1",
       "credentials": {
@@ -813,10 +723,7 @@
       "parameters": {},
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3.2,
-      "position": [
-        -544,
-        -704
-      ],
+      "position": [-512, -848],
       "id": "be2c5a86-0203-4484-824e-c7e6543ecea5",
       "name": "Merge2"
     },
@@ -826,10 +733,7 @@
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [
-        -336,
-        -704
-      ],
+      "position": [-304, -848],
       "id": "ebbe7158-e309-427a-9541-cafa3cae0637",
       "name": "Code in JavaScript2"
     },
@@ -852,10 +756,7 @@
       },
       "type": "n8n-nodes-base.github",
       "typeVersion": 1.1,
-      "position": [
-        -128,
-        -704
-      ],
+      "position": [-96, -848],
       "id": "cd6f8d32-8a64-4ce4-8ec6-c7338ac97c4a",
       "name": "Create an issue",
       "webhookId": "eee2936e-c50c-48fd-b51c-6df0070481b5",
@@ -898,10 +799,7 @@
       },
       "type": "n8n-nodes-base.switch",
       "typeVersion": 3.4,
-      "position": [
-        -736,
-        -48
-      ],
+      "position": [-736, -48],
       "id": "b11e8300-5e82-4446-927e-006c44b9cb29",
       "name": "Switch1"
     },
@@ -956,6 +854,31 @@
               },
               "renameOutput": true,
               "outputKey": "Log"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "7288c01b-8aed-4df0-bf3b-2d304a044807",
+                    "leftValue": "={{ $('Webhook').item.json.body.task }}",
+                    "rightValue": "logfix",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "LogFix"
             }
           ]
         },
@@ -965,10 +888,7 @@
       },
       "type": "n8n-nodes-base.switch",
       "typeVersion": 3.4,
-      "position": [
-        -1184,
-        -400
-      ],
+      "position": [-1184, -400],
       "id": "cca4bac1-2753-4efc-8997-70d1e9dcf063",
       "name": "Switch2"
     },
@@ -978,10 +898,7 @@
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [
-        -928,
-        -384
-      ],
+      "position": [-928, -560],
       "id": "47f2a07b-19fa-49f9-9656-2c8bfccb69fc",
       "name": "Code in JavaScript3"
     },
@@ -991,10 +908,7 @@
       },
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1.5,
-      "position": [
-        -48,
-        -368
-      ],
+      "position": [-48, -544],
       "id": "bee56dfb-a835-47c9-96ea-54eaa8895a56",
       "name": "Respond to Webhook"
     },
@@ -1025,10 +939,7 @@
       },
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.3,
-      "position": [
-        -736,
-        -384
-      ],
+      "position": [-736, -560],
       "id": "bf9efd2e-9884-46a6-ab66-0551279aaf48",
       "name": "If1"
     },
@@ -1043,7 +954,7 @@
         "messages": {
           "values": [
             {
-              "content": "=Act as a Senior SDET (Software Development Engineer in Test). Your goal is to perform a root-cause analysis on the provided Jest failure log.\n\n====================\nINPUT DATA\n====================\nRaw Test Log: \n{{ $('Webhook').item.json.body.rawLog }}\n\n====================\nDIAGNOSTIC TASKS\n====================\n1. CLASSIFICATION: Categorize the failure into one of these three:\n   - REGRESSION: A logic bug. The code changed, but the test wasn't updated or the code is now incorrect.\n   - BRITTLE: Environment/Flaky. Look for keywords like \"timeout\", \"ECONNREFUSED\", or \"MongooseServerSelectionError\".\n   - SYNTAX/MOCK: The test file itself has an error, such as a missing import or an invalid Jest mock.\n\n2. TRACE MAPPING:\n   - Identify the specific file path and line number of the failure.\n   - Identify which 'describe' or 'it' block failed.\n\n3. LOGIC SUMMARY:\n   - Provide a \"Expected vs. Received\" comparison in plain English.\n   - Explain the \"Root Cause\" in one simple sentence.\n\n====================\nSTRICT OUTPUT FORMAT\n====================\nReturn ONLY the following Markdown structure:\n\n### 🔍 Failure Diagnosis\n- **Classification:** [Regression | Brittle | Syntax]\n- **Location:** `File:Line`\n- **The \"Why\":** [1-sentence explanation]\n- **Recommended Action:** [What the developer should do next]"
+              "content": "=Act as a Senior SDET. Analyze the provided Jest failure log. There may be one or multiple failing test cases. Extract the details for EVERY failure found.\n\n====================\nINPUT DATA\n====================\nRaw Test Log: \n\n{{ $('Webhook').item.json.body.rawLog }}\n====================\nSTRICT OUTPUT FORMAT\n====================\nReturn ONLY a valid JSON array of objects. \n- DO NOT include markdown backticks (```json).\n- DO NOT include any explanatory text, greetings, or notes.\n- If no failures are found, return an empty array [].\n\nEach object in the array must follow this exact schema:\n{\n  \"testFile\": \"path/to/file.test.js\",\n  \"sourceFile\": \"path/to/file.js\",\n  \"location\": \"Line Number\",\n  \"why\": \"Plain English explanation of the failure\",\n  \"action\": \"Brief recommendation for the fix\"\n}"
             }
           ]
         },
@@ -1052,10 +963,7 @@
       },
       "type": "@n8n/n8n-nodes-langchain.googleGemini",
       "typeVersion": 1.1,
-      "position": [
-        -544,
-        -480
-      ],
+      "position": [-544, -656],
       "id": "9bde73be-078c-48f7-9c89-3fb7390e1d95",
       "name": "Message a model",
       "retryOnFail": true,
@@ -1084,12 +992,72 @@
       },
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
-      "position": [
-        -224,
-        -480
-      ],
+      "position": [-224, -656],
       "id": "d124047a-224d-4aca-abe6-f740d8a95462",
       "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "models/gemini-flash-lite-latest",
+          "mode": "list",
+          "cachedResultName": "models/gemini-flash-lite-latest"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=Act as a Senior JavaScript Engineer. You are tasked with repairing a failing Jest test suite.\n\n====================\nINPUT CONTEXT\n====================\n- Source Code: \n{{ $('Webhook').item.json.body.sourceCode }}\n\n- Current Test Code: \n{{ $('Webhook').item.json.body.testCode }}\n\n- Reported Issue: \n{{ $('Webhook').item.json.body.issue }}\n\n- AI Recommended Action: \n{{ $('Webhook').item.json.body.action }}\n\n====================\nENGINEERING CONSTRAINTS\n====================\n1. 100% RUNNABLE: The output must be a complete, standalone Jest test file. All required imports/requires must be present.\n2. ISOLATED MOCKING: You MUST mock all external dependencies, specifically:\n   - Mongoose Models (e.g., userModel, categoryModel)\n   - JWT and Auth helpers\n   - Express Request/Response objects (use 'jest.fn()')\n3. PRESERVE SCOPE: Do not remove any existing test cases. Fix the failing logic described in the 'issue' while keeping all other 'it' and 'test' blocks intact.\n4. JEST BEST PRACTICES: Use 'describe' blocks to group functions. Use 'beforeEach' to reset mocks so tests remain independent.\n\n====================\nSTRICT OUTPUT FORMAT\n====================\n- Output ONLY the raw JavaScript code.\n- NO markdown blocks (No ```js).\n- NO greetings or \"Here is the fixed code\" notes.\n- Start with the first line of code and end with the last closing bracket."
+            }
+          ]
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1.1,
+      "position": [-928, -368],
+      "id": "496bd7d8-03be-4b82-ae26-c90604b5afe2",
+      "name": "Message a model1",
+      "retryOnFail": true,
+      "waitBetweenTries": 5000,
+      "maxTries": 2,
+      "credentials": {
+        "googlePalmApi": {
+          "id": "WY77DKMrXrTeKYCs",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [-384, -368],
+      "id": "2b980f0f-369c-49df-858e-fac416f6290b",
+      "name": "Respond to Webhook1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "89b1b11c-5686-4250-bea4-4c5093a17a5f",
+              "name": "=text",
+              "value": "={{ $json.content.parts[0].text }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [-592, -368],
+      "id": "34c50ac6-830c-466d-85a4-9fb9be834c69",
+      "name": "Edit Fields1"
     }
   ],
   "pinData": {},
@@ -1345,9 +1313,7 @@
       ]
     },
     "Create a file": {
-      "main": [
-        []
-      ]
+      "main": [[]]
     },
     "Fix": {
       "main": [
@@ -1393,9 +1359,7 @@
       ]
     },
     "Edit a file": {
-      "main": [
-        []
-      ]
+      "main": [[]]
     },
     "FE cov": {
       "main": [
@@ -1486,6 +1450,13 @@
         ],
         [
           {
+            "node": "Message a model1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
             "node": "List files",
             "type": "main",
             "index": 0
@@ -1505,9 +1476,7 @@
       ]
     },
     "Respond to Webhook": {
-      "main": [
-        []
-      ]
+      "main": [[]]
     },
     "If1": {
       "main": [
@@ -1548,6 +1517,28 @@
           }
         ]
       ]
+    },
+    "Message a model1": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "active": true,
@@ -1555,7 +1546,7 @@
     "executionOrder": "v1",
     "binaryMode": "separate"
   },
-  "versionId": "3a08cb5e-5ef4-4e89-92b2-8db4e4760867",
+  "versionId": "695bff97-221c-4163-928f-4b4be70b8cdf",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "22feb9b1be35381bd87e494ed0de8589299b8a701386cc956826016b65494bdd"
