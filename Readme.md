@@ -140,7 +140,7 @@ This section outlines the distribution of files and testing for our team. Our te
 
 ### AGRAWAL SHAURYAN A0265846N
 
-I implemented and fixed the bugs in the Authentication, Authorization helpers, login, registration, and middleware modules, wrote **80 automated unit tests**, and achieved **100% statement, branch, function, and line coverage across all components under my ownership**.
+I implemented and fixed the bugs in the Authentication, Authorization helpers, login, registration, and middleware modules, wrote **80 automated unit tests**, and achieved **100% statement, branch, function, and line coverage across all components under my ownership** (MS1). I built 61 backend integration tests using real MongoDB/bcrypt/JWT via MongoMemoryServer and 40 Playwright end-to-end UI tests covering authentication flows and admin dashboard access control, discovering and fixing 4 additional bugs invisible to unit testing (MS2).
 
 | Features                                  | Client Related Files                                         | Server Related Files                                                                                                                           |
 | :---------------------------------------- | :----------------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -150,6 +150,19 @@ I implemented and fixed the bugs in the Authentication, Authorization helpers, l
 | **Admin Dashboard UI**                    | `components/AdminMenu.js`<br>`pages/admin/AdminDashboard.js` | —                                                                                                                                              |
 | **Authentication Context**                | `context/auth.js`                                            | —                                                                                                                                              |
 
+#### Integration & UI Tests (MS2)
+
+- Integration tests (61 tests total):
+  - `controllers/authController.register.integration.test.js` (19 tests)
+  - `controllers/authController.login.integration.test.js` (18 tests)
+  - `controllers/authController.forgotPassword.integration.test.js` (15 tests)
+  - `controllers/authController.auth.e2e.integration.test.js` (9 tests)
+- UI tests (40 tests total):
+  - `tests/auth.spec.ts` (24 tests)
+  - `tests/admin-dashboard.spec.ts` (16 tests)
+- Bug fix (implemented during UI testing):
+  - `client/src/pages/Auth/ForgotPassword.js` — created missing Forgot Password page discovered during Playwright E2E testing
+  
 ---
 
 ### CHIA YORK LIM A0258147X
@@ -164,6 +177,8 @@ I was responsible for testing and fixing the bugs in the following files.
 
 ### JONAS ONG SI WEI A0252052U
 
+#### Unit Tests (MS1)
+
 I was responsible the following test files under the following categories (unit test for the following files ends with .test.js):
 | Features | Client Related Files | Server Related Files |
 | :--- | :--- | :--- |
@@ -171,6 +186,20 @@ I was responsible the following test files under the following categories (unit 
 | **Admin View Orders** | `pages/admin/AdminOrders.js` | N/A
 | **Admin View Products** | `pages/admin/Products.js` | **`productController.admin.test.js`** for **`controllers/productController.js`**<br>1. `createProductController`<br>2. `updateProductController`<br>3. `deleteProductController`
 | **Admin General** | `components/Routes/Private.js`<br>`components/UserMenu.js`<br>`pages/user/Dashboard.js`<br> | N/A
+
+#### Integration & UI Tests (MS2)
+
+- Integration tests:
+  - `controllers/categoryController.admin.integration.test.js`
+  - `controllers/productController.admin.integration.test.js`
+
+- UI tests:
+  - `tests/CreateCategory.spec.ts`
+  - `tests/CreateProduct.spec.ts`
+  - `tests/UpdateProduct.spec.ts`
+  - `tests/AdminOrders.spec.ts`
+  - `tests/Dashboard.spec.ts`
+  - `tests/Products.spec.ts`
 
 ### TAN QIN YONG A0253468W
 
@@ -181,10 +210,20 @@ I was in charge of these files and all unit tests for them (unit test files ends
 | **Product Management** | `pages/ProductDetails.js`<br>`pages/CategoryProduct.js`                                                                                              | **`controllers/productController.js`**<br>1. `getProductController`<br>2. `getSingleProductController`<br>3. `productPhotoController`<br>4. `productFiltersController`<br>5. `productCountController`<br>6. `productListController`<br>7. `searchProductController`<br>8. `realtedProductController`<br>9. `productCategoryController`<br><br>**`models/productModel.js`** |
 | **Contact & Support**  | `pages/Contact.js`                                                                                                                                   | N/A                                                                                                                                                                                                                                                                                                                                                                        |
 | **Legal & Policy**     | `pages/Policy.js`                                                                                                                                    | N/A                                                                                                                                                                                                                                                                                                                                                                        |
-| **General & Layout**   | `components/Footer.js`<br>`components/Header.js`<br>`components/Layout.js`<br>`components/Spinner.js`<br>`pages/About.js`<br>`pages/Pagenotfound.js` | N/A                                                                                                                                                                                                                                                                                                                                                                        |
+| **General & Layout**   | `components/Footer.js`<br>`components/Header.js`<br>`components/Layout.js`<br>`components/Spinner.js`<br>`pages/About.js`<br>`pages/Pagenotfound.js` | N/A                                                                                                                                                                                                                                                                       
+#### Integration & UI Tests (MS2)
+
+- Integration tests:
+  - `controllers/productController.product.integration.test.js`
+
+- UI tests:
+  - `tests/categoryProduct.spec.ts`
+  - `tests/productDetails.spec.ts`
+  - `tests/header.spec.ts`                                                                                                 |
 
 ### TENG HUI XIN ALICIA A02590646Y
 
+MS1
 I was in charge of the following sections and all the unit tests for them. For Client related files, it would be name.test.js. For server related files, it would authController.NAME.test.js.
 | Features | Client Related Files | Server Related Files |
 | :--------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -192,6 +231,20 @@ I was in charge of the following sections and all the unit tests for them. For C
 | **Profile** | `pages/user/Profile.js` | N/A |
 | **Admin View Users** | `pages/admin/Users.js` | N/A |
 | **Search** | `components/Form/SearchInput.js`<br>`pages/Search.js` | N/A
+
+MS2
+I was incharge of the following files.
+
+Integration Testing:
+- `authController.getAllUsersController.integration.test.js`
+- `authController.ordersController.integration.test.js`
+- `authController.updateProfileController.integration.test.js`
+
+UI Testing:
+- `admin-users.spec.ts`
+- `search.spec.ts`
+- `user-orders.spec.ts`
+- `user-profile.spec.ts`
 
 ## 7. MS1 CI URL
 

@@ -22,6 +22,8 @@ export default {
     "models/**/*.js",
     "!**/*.test.js",
   ],
+  coverageDirectory: "<rootDir>/coverage/backend",
+  coverageReporters: ["text", "lcov"],
   coverageThreshold: {
     global: {
       lines: 90,
