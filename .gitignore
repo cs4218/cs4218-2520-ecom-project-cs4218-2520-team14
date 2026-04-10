@@ -4,3 +4,4 @@ node_modules
 /playwright-report/
 /blob-report/
 /playwright/.cache/
+k6/node_metrics_log.csv
