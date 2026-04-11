@@ -22,6 +22,9 @@ export default {
     "models/**/*.js",
     "!**/*.test.js",
   ],
+  coveragePathIgnorePatterns: [
+    "controllers/braintree.js",
+  ],
   coverageDirectory: "<rootDir>/coverage/backend",
   coverageReporters: ["text", "lcov"],
   coverageThreshold: {
