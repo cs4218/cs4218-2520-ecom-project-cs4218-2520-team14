@@ -9,13 +9,22 @@ import slugify from "slugify";
 
 dotenv.config();
 
-//payment gateway
-var gateway = new braintree.BraintreeGateway({
-  environment: braintree.Environment.Sandbox,
-  merchantId: process.env.BRAINTREE_MERCHANT_ID,
-  publicKey: process.env.BRAINTREE_PUBLIC_KEY,
-  privateKey: process.env.BRAINTREE_PRIVATE_KEY,
-});
+function getBraintreeGateway() {
+  const merchantId = process.env.BRAINTREE_MERCHANT_ID;
+  const publicKey = process.env.BRAINTREE_PUBLIC_KEY;
+  const privateKey = process.env.BRAINTREE_PRIVATE_KEY;
+
+  if (!merchantId || !publicKey || !privateKey) {
+    return null;
+  }
+
+  return new braintree.BraintreeGateway({
+    environment: braintree.Environment.Sandbox,
+    merchantId,
+    publicKey,
+    privateKey,
+  });
+}
 
 export const createProductController = async (req, res) => {
   try {
@@ -362,6 +371,19 @@ export const productCategoryController = async (req, res) => {
 //token
 export const braintreeTokenController = async (req, res) => {
   try {
+    if (process.env.DEV_MODE == "test") {
+      return res.send({ clientToken: "fake-client-token" });
+    }
+
+    const gateway = getBraintreeGateway();
+
+    if (!gateway) {
+      return res.status(500).send({
+        success: false,
+        message: "Braintree gateway is not configured",
+      });
+    }
+
     gateway.clientToken.generate({}, function (err, response) {
       if (err) {
         res.status(500).send(err);
@@ -399,9 +421,18 @@ export const brainTreePaymentController = async (req, res) => {
         success: true,
         transaction: {
           id: "fake-transaction-id",
-        }
+        },
       };
     } else {
+      const gateway = getBraintreeGateway();
+
+      if (!gateway) {
+        return res.status(500).send({
+          success: false,
+          message: "Braintree gateway is not configured",
+        });
+      }
+
       result = await new Promise((resolve, reject) => {
         gateway.transaction.sale(
           {
@@ -414,6 +445,7 @@ export const brainTreePaymentController = async (req, res) => {
           function (error, result) {
             if (error) {
               reject({ type: "gateway", error });
+              return;
             }
             if (result.success) {
               resolve(result);
