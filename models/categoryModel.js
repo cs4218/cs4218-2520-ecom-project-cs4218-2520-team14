@@ -13,4 +13,10 @@ const categorySchema = new mongoose.Schema({
   },
 });
 
+// Name: Shauryan Agrawal
+// Student ID: A0265846N
+
+categorySchema.index({ slug: 1 }, { unique: true });
+categorySchema.index({ name: 1 }, { unique: true });
+
 export default mongoose.model("Category", categorySchema);

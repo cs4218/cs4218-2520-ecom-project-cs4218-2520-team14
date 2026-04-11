@@ -22,6 +22,8 @@ jobs:
 
       - name: Run Full Backend Suite
         run: npm run test:backend -- --passWithNoTests
+        env:
+          JWT_SECRET: "test_secret"
 
       - name: Install Client Dependencies
         run: npm install --prefix client

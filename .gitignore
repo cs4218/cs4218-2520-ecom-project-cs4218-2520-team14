@@ -1,6 +1,11 @@
-**/.env
+.env
 node_modules
 /test-results/
 /playwright-report/
 /blob-report/
+<<<<<<< HEAD
 /playwright/.cache/
+=======
+/playwright/.cache/
+k6/node_metrics_log.csv
+>>>>>>> e3c9563b3518b8ae9828c14bd709f01c84cdc30b

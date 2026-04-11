@@ -27,6 +27,8 @@ jobs:
 
       - name: Run Backend Tests
         run: npm run test:backend -- --changedSince=origin/main --passWithNoTests
+        env:
+          JWT_SECRET: "test_secret"
 
       - name: Install Client Dependencies
         run: npm install --prefix client

@@ -2,20 +2,12 @@ import categoryModel from "../models/categoryModel.js";
 import orderModel from "../models/orderModel.js";
 import productModel from "../models/productModel.js";
 
-import braintree from "braintree";
+import { getBraintreeGateway } from "./braintree.js";
 import dotenv from "dotenv";
 import fs from "fs";
 import slugify from "slugify";
 
 dotenv.config();
-
-//payment gateway
-var gateway = new braintree.BraintreeGateway({
-  environment: braintree.Environment.Sandbox,
-  merchantId: process.env.BRAINTREE_MERCHANT_ID,
-  publicKey: process.env.BRAINTREE_PUBLIC_KEY,
-  privateKey: process.env.BRAINTREE_PRIVATE_KEY,
-});
 
 export const createProductController = async (req, res) => {
   try {
@@ -362,6 +354,19 @@ export const productCategoryController = async (req, res) => {
 //token
 export const braintreeTokenController = async (req, res) => {
   try {
+    if (process.env.DEV_MODE == "test") {
+      return res.send({ clientToken: "fake-client-token" });
+    }
+
+    const gateway = getBraintreeGateway();
+
+    if (!gateway) {
+      return res.status(500).send({
+        success: false,
+        message: "Braintree gateway is not configured",
+      });
+    }
+
     gateway.clientToken.generate({}, function (err, response) {
       if (err) {
         res.status(500).send(err);
@@ -391,27 +396,49 @@ export const brainTreePaymentController = async (req, res) => {
       total += item.price;
     }
 
-    const result = await new Promise((resolve, reject) => {
-      gateway.transaction.sale(
-        {
-          amount: total,
-          paymentMethodNonce: nonce,
-          options: {
-            submitForSettlement: true,
+    let result;
+
+    if (process.env.DEV_MODE == "test") {
+      await new Promise((resolve) => setTimeout(resolve, 500));
+      result = {
+        success: true,
+        transaction: {
+          id: "fake-transaction-id",
+        },
+      };
+    } else {
+      const gateway = getBraintreeGateway();
+
+      if (!gateway) {
+        return res.status(500).send({
+          success: false,
+          message: "Braintree gateway is not configured",
+        });
+      }
+
+      result = await new Promise((resolve, reject) => {
+        gateway.transaction.sale(
+          {
+            amount: total,
+            paymentMethodNonce: nonce,
+            options: {
+              submitForSettlement: true,
+            },
           },
-        },
-        function (error, result) {
-          if (error) {
-            reject({ type: "gateway", error });
-          }
-          if (result.success) {
-            resolve(result);
-          } else {
-            reject({ type: "transaction", result });
-          }
-        },
-      );
-    });
+          function (error, result) {
+            if (error) {
+              reject({ type: "gateway", error });
+              return;
+            }
+            if (result.success) {
+              resolve(result);
+            } else {
+              reject({ type: "transaction", result });
+            }
+          },
+        );
+      });
+    }
 
     await new orderModel({
       products: cart,

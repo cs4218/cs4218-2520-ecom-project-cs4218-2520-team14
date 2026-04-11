@@ -7,25 +7,20 @@ import app from "../app.js";
 import orderModel from "../models/orderModel";
 import JWT from "jsonwebtoken";
 import request from "supertest";
-import braintree from "braintree";
-
-jest.mock("braintree", () => {
-  return {
-    Environment: {
-      Sandbox: "Sandbox",
-    },
-    BraintreeGateway: jest.fn().mockImplementation(function () {
-      this.transaction = {
-        sale: jest.fn(),
-      };
-    }),
-  };
-});
+import { getBraintreeGateway } from "./braintree.js";
 
 jest.mock("../config/db.js", () => jest.fn());
 
+jest.mock("./braintree.js", () => {
+  return {
+    getBraintreeGateway: jest.fn()
+  };
+});
+
 describe("Product Controller - Payment Integration Test", () => {
-  let mongoServer, userToken, mockGateway, userId;
+  let mongoServer, userToken, userId, mockGateway;
+
+  const JWT_SECRET = process.env.JWT_SECRET || "test_secret";
 
   beforeAll(async () => {
     mongoServer = await MongoMemoryServer.create();
@@ -33,9 +28,15 @@ describe("Product Controller - Payment Integration Test", () => {
     await mongoose.connect(uri);
 
     userId = new mongoose.Types.ObjectId();
-    userToken = JWT.sign({ _id: userId, name: "Test User" }, process.env.JWT_SECRET, { expiresIn: "1h" });
+    userToken = JWT.sign({ _id: userId, name: "Test User" }, JWT_SECRET, { expiresIn: "1h" });
+  });
 
-    mockGateway = braintree.BraintreeGateway.mock.instances[0];
+  beforeEach(() => {
+    mockGateway = {
+      clientToken: { generate: jest.fn() },
+      transaction: { sale: jest.fn() },
+    };
+    getBraintreeGateway.mockReturnValue(mockGateway);
   });
 
   afterEach(async () => {

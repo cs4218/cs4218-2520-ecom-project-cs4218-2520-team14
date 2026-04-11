@@ -162,7 +162,7 @@ I implemented and fixed the bugs in the Authentication, Authorization helpers, l
   - `tests/admin-dashboard.spec.ts` (16 tests)
 - Bug fix (implemented during UI testing):
   - `client/src/pages/Auth/ForgotPassword.js` — created missing Forgot Password page discovered during Playwright E2E testing
-  
+
 ---
 
 ### CHIA YORK LIM A0258147X
@@ -174,6 +174,23 @@ I was responsible for testing and fixing the bugs in the following files.
 |**Cart**| <ul><li>`context/cart.js` (`context/cart.test.js`) <li> `pages/CartPage.js` (`pages/CartPage.test.js`)</ul> | - | - | `pages/CartPage.js` (`test/CartPage.spec.ts`) |
 |**Category**| <ul><li>`hooks/useCategory.js` (`hooks/useCategory.test.js`) <li> `pages/Categories.js` (`pages/Categories.test.js`) </ul> | <ul> <li>`controllers/categoryController.js` (`controllers/categoryController.test.js`) <ul> <li> categoryControlller <li> singleCategoryController </ul> <li> `models/categoryModel.js` (`models/categoryModel.test.js`) </ul> | `controllers/categoryController.js` (`controllers/categoryController.integration.test.js`) | `pages/Categories.js` (`tests/Categories.spec.ts`) |
 |**Payment**| - | <ul> <li>`controllers/productController.js` (`controllers/productController.payment.test.js`) <ul> <li> braintreeTokenController <li> brainTreePaymentController </ul> | `controllers/productController.js` (`controllers/productController.payment.integration.test.js`) | - |
+
+NFT Testing (Capacity)
+
+- AuthRoute
+  - /login
+  - /orders
+  - /forgot-password
+  - /register
+- CategoryRoute
+  - /get-category
+- ProductRoute
+  - /get-product/:slug
+  - /product-photo/:pid
+  - /product-filter
+  - /product-list/:page
+  - /search/:keyword
+  - /braintree/payment
 
 ### JONAS ONG SI WEI A0252052U
 
@@ -210,7 +227,8 @@ I was in charge of these files and all unit tests for them (unit test files ends
 | **Product Management** | `pages/ProductDetails.js`<br>`pages/CategoryProduct.js`                                                                                              | **`controllers/productController.js`**<br>1. `getProductController`<br>2. `getSingleProductController`<br>3. `productPhotoController`<br>4. `productFiltersController`<br>5. `productCountController`<br>6. `productListController`<br>7. `searchProductController`<br>8. `realtedProductController`<br>9. `productCategoryController`<br><br>**`models/productModel.js`** |
 | **Contact & Support**  | `pages/Contact.js`                                                                                                                                   | N/A                                                                                                                                                                                                                                                                                                                                                                        |
 | **Legal & Policy**     | `pages/Policy.js`                                                                                                                                    | N/A                                                                                                                                                                                                                                                                                                                                                                        |
-| **General & Layout**   | `components/Footer.js`<br>`components/Header.js`<br>`components/Layout.js`<br>`components/Spinner.js`<br>`pages/About.js`<br>`pages/Pagenotfound.js` | N/A                                                                                                                                                                                                                                                                       
+| **General & Layout**   | `components/Footer.js`<br>`components/Header.js`<br>`components/Layout.js`<br>`components/Spinner.js`<br>`pages/About.js`<br>`pages/Pagenotfound.js` | N/A                                                                                                                                                                                                                                                                                                                                                                        |
+
 #### Integration & UI Tests (MS2)
 
 - Integration tests:
@@ -219,7 +237,7 @@ I was in charge of these files and all unit tests for them (unit test files ends
 - UI tests:
   - `tests/categoryProduct.spec.ts`
   - `tests/productDetails.spec.ts`
-  - `tests/header.spec.ts`                                                                                                 |
+  - `tests/header.spec.ts` |
 
 ### TENG HUI XIN ALICIA A02590646Y
 
@@ -236,11 +254,13 @@ MS2
 I was incharge of the following files.
 
 Integration Testing:
+
 - `authController.getAllUsersController.integration.test.js`
 - `authController.ordersController.integration.test.js`
 - `authController.updateProfileController.integration.test.js`
 
 UI Testing:
+
 - `admin-users.spec.ts`
 - `search.spec.ts`
 - `user-orders.spec.ts`

@@ -65,9 +65,15 @@ SF:client\src\components\Footer.js
 FN:4,(anonymous_0)
 FNF:1
 FNH:1
+<<<<<<< HEAD
 FNDA:107,(anonymous_0)
 DA:4,4
 DA:5,107
+=======
+FNDA:108,(anonymous_0)
+DA:4,4
+DA:5,108
+>>>>>>> e3c9563b3518b8ae9828c14bd709f01c84cdc30b
 LF:2
 LH:2
 BRF:0
@@ -80,6 +86,7 @@ FN:14,(anonymous_1)
 FN:63,(anonymous_2)
 FNF:3
 FNH:3
+<<<<<<< HEAD
 FNDA:110,(anonymous_0)
 FNDA:1,(anonymous_1)
 FNDA:89,(anonymous_2)
@@ -92,15 +99,35 @@ DA:15,1
 DA:20,1
 DA:21,1
 DA:23,110
+=======
+FNDA:111,(anonymous_0)
+FNDA:1,(anonymous_1)
+FNDA:89,(anonymous_2)
+DA:10,4
+DA:11,111
+DA:12,111
+DA:13,111
+DA:14,111
+DA:15,1
+DA:20,1
+DA:21,1
+DA:23,111
+>>>>>>> e3c9563b3518b8ae9828c14bd709f01c84cdc30b
 DA:64,89
 LF:10
 LH:10
 BRDA:64,0,0,89
 BRDA:64,0,1,0
 BRDA:76,1,0,84
+<<<<<<< HEAD
 BRDA:76,1,1,26
 BRDA:104,2,0,1
 BRDA:104,2,1,25
+=======
+BRDA:76,1,1,27
+BRDA:104,2,0,1
+BRDA:104,2,1,26
+>>>>>>> e3c9563b3518b8ae9828c14bd709f01c84cdc30b
 BRF:6
 BRH:5
 end_of_record
@@ -109,9 +136,15 @@ SF:client\src\components\Layout.js
 FN:8,(anonymous_0)
 FNF:1
 FNH:1
+<<<<<<< HEAD
 FNDA:107,(anonymous_0)
 DA:8,4
 DA:9,107
+=======
+FNDA:108,(anonymous_0)
+DA:8,4
+DA:9,108
+>>>>>>> e3c9563b3518b8ae9828c14bd709f01c84cdc30b
 DA:28,4
 LF:3
 LH:3
@@ -196,6 +229,7 @@ FN:10,(anonymous_1)
 FN:33,(anonymous_2)
 FNF:3
 FNH:3
+<<<<<<< HEAD
 FNDA:112,(anonymous_0)
 FNDA:5,(anonymous_1)
 FNDA:1,(anonymous_2)
@@ -203,6 +237,15 @@ DA:6,4
 DA:7,112
 DA:8,112
 DA:10,112
+=======
+FNDA:113,(anonymous_0)
+FNDA:5,(anonymous_1)
+FNDA:1,(anonymous_2)
+DA:6,4
+DA:7,113
+DA:8,113
+DA:10,113
+>>>>>>> e3c9563b3518b8ae9828c14bd709f01c84cdc30b
 DA:11,5
 DA:12,5
 DA:13,5
@@ -211,7 +254,11 @@ DA:15,4
 DA:18,3
 DA:19,3
 DA:21,1
+<<<<<<< HEAD
 DA:24,112
+=======
+DA:24,113
+>>>>>>> e3c9563b3518b8ae9828c14bd709f01c84cdc30b
 DA:33,1
 LF:14
 LH:14
@@ -376,18 +423,32 @@ FN:8,(anonymous_1)
 FN:17,(anonymous_2)
 FNF:3
 FNH:3
+<<<<<<< HEAD
 FNDA:104,useCategory
 FNDA:45,(anonymous_1)
 FNDA:45,(anonymous_2)
 DA:5,104
 DA:8,104
+=======
+FNDA:105,useCategory
+FNDA:45,(anonymous_1)
+FNDA:45,(anonymous_2)
+DA:5,105
+DA:8,105
+>>>>>>> e3c9563b3518b8ae9828c14bd709f01c84cdc30b
 DA:9,45
 DA:10,45
 DA:11,44
 DA:13,1
+<<<<<<< HEAD
 DA:17,104
 DA:18,45
 DA:21,104
+=======
+DA:17,105
+DA:18,45
+DA:21,105
+>>>>>>> e3c9563b3518b8ae9828c14bd709f01c84cdc30b
 LF:9
 LH:9
 BRF:0
@@ -424,19 +485,30 @@ FN:163,(anonymous_12)
 FN:186,(anonymous_13)
 FNF:14
 FNH:14
+<<<<<<< HEAD
 FNDA:52,(anonymous_0)
 FNDA:52,(anonymous_1)
 FNDA:82,(anonymous_2)
+=======
+FNDA:56,(anonymous_0)
+FNDA:56,(anonymous_1)
+FNDA:90,(anonymous_2)
+>>>>>>> e3c9563b3518b8ae9828c14bd709f01c84cdc30b
 FNDA:3,(anonymous_3)
 FNDA:4,(anonymous_4)
 FNDA:30,(anonymous_5)
 FNDA:30,(anonymous_6)
 FNDA:3,(anonymous_7)
+<<<<<<< HEAD
 FNDA:82,(anonymous_8)
+=======
+FNDA:90,(anonymous_8)
+>>>>>>> e3c9563b3518b8ae9828c14bd709f01c84cdc30b
 FNDA:3,(anonymous_9)
 FNDA:1,(anonymous_10)
 FNDA:1,(anonymous_11)
 FNDA:1,(anonymous_12)
+<<<<<<< HEAD
 FNDA:14,(anonymous_13)
 DA:12,1
 DA:13,52
@@ -453,6 +525,24 @@ DA:25,82
 DA:27,52
 DA:32,1
 DA:36,52
+=======
+FNDA:15,(anonymous_13)
+DA:12,1
+DA:13,56
+DA:14,56
+DA:15,56
+DA:16,56
+DA:17,56
+DA:18,56
+DA:21,56
+DA:22,56
+DA:23,56
+DA:24,56
+DA:25,90
+DA:27,56
+DA:32,1
+DA:36,56
+>>>>>>> e3c9563b3518b8ae9828c14bd709f01c84cdc30b
 DA:37,3
 DA:38,3
 DA:39,4
@@ -460,14 +550,24 @@ DA:40,3
 DA:41,3
 DA:42,3
 DA:44,1
+<<<<<<< HEAD
 DA:49,52
+=======
+DA:49,56
+>>>>>>> e3c9563b3518b8ae9828c14bd709f01c84cdc30b
 DA:50,30
 DA:51,30
 DA:52,29
 DA:54,1
+<<<<<<< HEAD
 DA:57,52
 DA:58,30
 DA:62,52
+=======
+DA:57,56
+DA:58,30
+DA:62,56
+>>>>>>> e3c9563b3518b8ae9828c14bd709f01c84cdc30b
 DA:63,3
 DA:64,3
 DA:66,3
@@ -481,18 +581,28 @@ DA:78,2
 DA:79,2
 DA:81,1
 DA:82,1
+<<<<<<< HEAD
 DA:85,52
 DA:107,82
+=======
+DA:85,56
+DA:107,90
+>>>>>>> e3c9563b3518b8ae9828c14bd709f01c84cdc30b
 DA:125,3
 DA:145,1
 DA:156,1
 DA:164,1
+<<<<<<< HEAD
 DA:186,14
+=======
+DA:186,15
+>>>>>>> e3c9563b3518b8ae9828c14bd709f01c84cdc30b
 LF:50
 LH:49
 BRDA:66,0,0,0
 BRDA:66,0,1,3
 BRDA:91,1,0,23
+<<<<<<< HEAD
 BRDA:91,1,1,29
 BRDA:93,2,0,29
 BRDA:93,2,1,29
@@ -501,10 +611,21 @@ BRDA:95,3,1,7
 BRDA:96,4,0,32
 BRDA:96,4,1,13
 BRDA:138,5,0,26
+=======
+BRDA:91,1,1,33
+BRDA:93,2,0,33
+BRDA:93,2,1,33
+BRDA:95,3,0,49
+BRDA:95,3,1,7
+BRDA:96,4,0,36
+BRDA:96,4,1,13
+BRDA:138,5,0,30
+>>>>>>> e3c9563b3518b8ae9828c14bd709f01c84cdc30b
 BRDA:138,5,1,26
 BRDA:153,6,0,8
 BRDA:153,6,1,18
 BRDA:175,7,0,30
+<<<<<<< HEAD
 BRDA:175,7,1,22
 BRDA:175,8,0,52
 BRDA:175,8,1,22
@@ -515,6 +636,18 @@ BRDA:192,9,2,16
 BRDA:192,9,3,10
 BRDA:194,10,0,6
 BRDA:194,10,1,16
+=======
+BRDA:175,7,1,26
+BRDA:175,8,0,56
+BRDA:175,8,1,26
+BRDA:175,8,2,26
+BRDA:192,9,0,26
+BRDA:192,9,1,20
+BRDA:192,9,2,20
+BRDA:192,9,3,14
+BRDA:194,10,0,6
+BRDA:194,10,1,20
+>>>>>>> e3c9563b3518b8ae9828c14bd709f01c84cdc30b
 BRF:25
 BRH:24
 end_of_record
