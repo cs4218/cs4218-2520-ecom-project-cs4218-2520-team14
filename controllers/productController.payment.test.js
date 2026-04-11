@@ -1,23 +1,7 @@
 // Chia York Lim, A0258147X
 import { braintreeTokenController, brainTreePaymentController } from "./productController";
-import braintree from "braintree";
 import orderModel from "../models/orderModel";
-
-jest.mock("braintree", () => {
-  return {
-    Environment: {
-      Sandbox: "Sandbox",
-    },
-    BraintreeGateway: jest.fn().mockImplementation(function () {
-      this.clientToken = {
-        generate: jest.fn(),
-      };
-      this.transaction = {
-        sale: jest.fn(),
-      };
-    }),
-  };
-});
+import { getBraintreeGateway } from "./braintree.js";
 
 jest.mock("../models/orderModel", () => {
   return jest.fn().mockImplementation(function () {
@@ -25,9 +9,13 @@ jest.mock("../models/orderModel", () => {
   });
 });
 
-const mockGateway = braintree.BraintreeGateway.mock.instances[0];
+jest.mock("./braintree.js", () => {
+  return {
+    getBraintreeGateway: jest.fn()
+  };
+});
 
-let req, res;
+let req, res, mockGateway;
 
 describe("Product Payment Controller", () => {
   beforeEach(() => {
@@ -38,6 +26,11 @@ describe("Product Payment Controller", () => {
       send: jest.fn(),
       json: jest.fn(),
     };
+    mockGateway = {
+      clientToken: { generate: jest.fn() },
+      transaction: { sale: jest.fn() },
+    };
+    getBraintreeGateway.mockReturnValue(mockGateway);
   });
 
   it("should generate a braintree token successfully", async () => {

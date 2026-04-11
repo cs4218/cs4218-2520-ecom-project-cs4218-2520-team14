@@ -2,29 +2,12 @@ import categoryModel from "../models/categoryModel.js";
 import orderModel from "../models/orderModel.js";
 import productModel from "../models/productModel.js";
 
-import braintree from "braintree";
+import { getBraintreeGateway } from "./braintree.js";
 import dotenv from "dotenv";
 import fs from "fs";
 import slugify from "slugify";
 
 dotenv.config();
-
-function getBraintreeGateway() {
-  const merchantId = process.env.BRAINTREE_MERCHANT_ID;
-  const publicKey = process.env.BRAINTREE_PUBLIC_KEY;
-  const privateKey = process.env.BRAINTREE_PRIVATE_KEY;
-
-  if (!merchantId || !publicKey || !privateKey) {
-    return null;
-  }
-
-  return new braintree.BraintreeGateway({
-    environment: braintree.Environment.Sandbox,
-    merchantId,
-    publicKey,
-    privateKey,
-  });
-}
 
 export const createProductController = async (req, res) => {
   try {
