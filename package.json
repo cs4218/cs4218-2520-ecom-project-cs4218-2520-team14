@@ -15,10 +15,8 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "test:ui": "npx playwright test",
-<<<<<<< HEAD
     "aigen": "node aigen/aigen.mjs",
-    "aigen:test": "npm test > test.log 2>&1 && node aigen/ship-log.js || node aigen/ship-log.js"
-=======
+    "aigen:test": "npm test > test.log 2>&1 && node aigen/ship-log.js || node aigen/ship-log.js",
     "seed:loadtest": "node scripts/seedLoadTestData.js",
     "load:story1": "k6 run nft/load-testing/story1_authentication.load.test.js",
     "load:story2": "k6 run nft/load-testing/story2_product_browsing.load.test.js",
@@ -29,8 +27,6 @@
     "load:photo": "k6 run nft/load-testing/Shauryan_A0265846N/story_photo_retrieval.load.test.js",
     "load:resource": "k6 run nft/load-testing/story_resource_stability.load.test.js",
     "cleanup:categories": "node scripts/cleanupLoadTestCategories.js"
-
->>>>>>> e3c9563b3518b8ae9828c14bd709f01c84cdc30b
   },
   "keywords": [],
   "author": "RP",
