@@ -25,7 +25,6 @@
     "load:photo": "k6 run nft/load-testing/Shauryan_A0265846N/story_photo_retrieval.load.test.js",
     "load:resource": "k6 run nft/load-testing/story_resource_stability.load.test.js",
     "cleanup:categories": "node scripts/cleanupLoadTestCategories.js"
-
   },
   "keywords": [],
   "author": "RP",
