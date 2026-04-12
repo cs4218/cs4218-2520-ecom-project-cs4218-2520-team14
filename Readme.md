@@ -260,6 +260,23 @@ I was in charge of these files and all unit tests for them (unit test files ends
   - `tests/productDetails.spec.ts`
   - `tests/header.spec.ts` |
 
+#### NFR Testing - Stress Tests(MS2)
+
+- Auth
+  - /login & /register `k6\auth.k6.stress.js`
+  - /orders `k6\orders.k6.stress.js`
+
+- Category
+  - /get-category `k6\category.stress.js`
+
+- Product
+  - /get-product/:slug `k6\product.view.k6.stress.js`
+  - /product-photo/:pid `k6\product.view.k6.stress.js`
+  - /product-filter `k6\product.filter.k6.stress.js`
+  - /product-list/:page `k6\product.browse.k6.stress.js`
+  - /search/:keyword `k6\product.search.k6.stress.js`
+  - /braintree/payment `k6\payment.k6.stress.js`
+
 ### TENG HUI XIN ALICIA A02590646Y
 
 MS1
