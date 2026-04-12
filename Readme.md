@@ -162,6 +162,27 @@ I implemented and fixed the bugs in the Authentication, Authorization helpers, l
   - `tests/admin-dashboard.spec.ts` (16 tests)
 - Bug fix (implemented during UI testing):
   - `client/src/pages/Auth/ForgotPassword.js` — created missing Forgot Password page discovered during Playwright E2E testing
+ 
+#### Non-Functional Testing — Load Testing (MS3)
+
+I designed and implemented **8 load test scripts** using Grafana k6, generating **343,981 HTTP requests** with over **1.3 million functional assertions** across all critical endpoint areas of the e-commerce application. Each script validates both performance metrics (response time, throughput, error rate) and payload structural integrity (JSON fields, data types, correct status codes) under sustained concurrent load up to 800 peak VUs.
+
+| Test Suite | Endpoints Covered | Script File |
+| :--- | :--- | :--- |
+| **Authentication** | `/login`, `/register`, `/forgot-password`, duplicate registration collision | `load-testing/story1_authentication.load.test.js` |
+| **Product Browsing** | `/product-list/:page`, `/get-product/:slug`, `/search/:keyword`, `/product-filters`, `/product-category/:slug` | `load-testing/story2_product_browsing.load.test.js` |
+| **Category Management** | `/get-category`, `/create-category`, `/update-category/:id`, mixed read/write | `load-testing/story3_category_management.load.test.js` |
+| **Profile & Orders** | `/user-auth`, `/profile`, `/orders` | `load-testing/story4_profile_orders.load.test.js` |
+| **Mixed Workload** | All operations combined at 500 VUs (product list, detail, search, filter, login, orders, profile, category CRUD) | `load-testing/story5_mixed_workload.load.test.js` |
+| **Payment Checkout** | `/braintree/token`, `/braintree/payment`, order verification pipeline | `load-testing/story6_payment_checkout.load.test.js` |
+| **Photo Retrieval** | `/product-photo/:id` (hotspot + distributed access patterns) | `load-testing/story7_photo_retrieval.load.test.js` |
+| **Resource Stability** | 10-minute sustained mixed workload at 300 VUs with post-load recovery validation | `load-testing/story8_resource_stability.load.test.js` |
+
+- Shared test infrastructure:
+  - `load-testing/config.js` — base URL, admin credentials, JSON headers
+  - `load-testing/utils.js` — JSON parsing, random selection, unique ID generation, authentication/admin/product/category extraction helpers
+- Performance bug identified (MS3):
+  - **Product detail query degradation** — `GET /api/v1/product/get-product/:slug` averaged 8,686ms under 200 concurrent users due to Mongoose `.populate("category")` triggering secondary DB lookups per request under concurrent load
 
 ---
 
