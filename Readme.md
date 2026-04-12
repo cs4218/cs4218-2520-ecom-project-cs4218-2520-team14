@@ -178,19 +178,19 @@ I was responsible for testing and fixing the bugs in the following files.
 NFT Testing (Capacity)
 
 - AuthRoute
-  - /login
-  - /orders
-  - /forgot-password
-  - /register
+  - /login `k6\authRoute.login.k6.capacity.js`
+  - /orders `k6\authRoute.order.k6.capacity.js`
+  - /forgot-password `k6\authRoute.forgot-password.k6.capacity.js`
+  - /register `k6\authRoute.register.k6.capacity.js`
 - CategoryRoute
-  - /get-category
+  - /get-category `k6\categoryRoute.get-category.k6.capacity.js`
 - ProductRoute
-  - /get-product/:slug
-  - /product-photo/:pid
-  - /product-filter
-  - /product-list/:page
-  - /search/:keyword
-  - /braintree/payment
+  - /get-product/:slug `k6\productRoute.get-product-slug.k6.capacity.js`
+  - /product-photo/:pid `k6\productRoute.product-photo.k6.capacity.js`
+  - /product-filter `k6\productRoute.product-filter.k6.capacity.js`
+  - /product-list/:page `k6\productRoute.product-list.k6.capacity.js`
+  - /search/:keyword `k6\productRoute.search.k6.capacity.js`
+  - /braintree/payment `k6\productRoute.braintree-payment.k6.capacity.js`
 
 ### JONAS ONG SI WEI A0252052U
 
