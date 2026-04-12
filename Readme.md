@@ -239,6 +239,20 @@ I was responsible the following test files under the following categories (unit 
   - `tests/Dashboard.spec.ts`
   - `tests/Products.spec.ts`
 
+#### NFR Testing - Volume Tests (MS3)
+All files under the `volume` directory, which includes:
+- `volume/tests/overall.volume.js`
+- `volume/tests/users.volume.js`
+- `volume/tests/orders.volume.js`
+- `volume/tests/categories.volume.js`
+- `volume/tests/products.volume.js`
+- `volume/setup.js`
+- `volume/teardown.js`
+- `volume/flows/categories.flow.js`
+- `volume/flows/products.flow.js`
+- `volume/flows/orders.flow.js`
+- `volume/flows/users.flow.js`
+
 ### TAN QIN YONG A0253468W
 
 I was in charge of these files and all unit tests for them (unit test files ends with fileName.test.js).
