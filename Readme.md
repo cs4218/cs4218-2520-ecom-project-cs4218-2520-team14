@@ -304,6 +304,20 @@ UI Testing:
 - `user-orders.spec.ts`
 - `user-profile.spec.ts`
 
+MS3
+For NFT, I chose to do Spike Testing.
+I was incharge of the following files.
+- `k6/category.k6.spike.js`
+- `k6/k6.spike.teardown.js`
+- `k6/login.k6.spike.js`
+- `k6/orders.k6.spike.js`
+- `k6/payment.k6.spike.js`
+- `k6/productDetails.k6.spike.js`
+- `k6/search.k6.spike.js`
+- `k6/updateProfile.k6.spike.js`
+
+AI Disclaimer: For MS3, AI was used as an assisting tool to help draft and refine portions of the test code. The overall testing strategy, scope, endpoint selection, metrics chosen, interpretation of results, and the final structure of the test suite were determined by me. All generated code was manually reviewed, heavily edited, validated through execution, and adjusted based on actual test outcomes, so the substantive design, debugging, and decision-making work was still carried out by me.
+
 ## 7. MS1 CI URL
 
 https://github.com/cs4218/cs4218-2520-ecom-project-cs4218-2520-team14/actions/runs/22282697634
