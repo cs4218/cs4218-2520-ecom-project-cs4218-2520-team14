@@ -239,6 +239,20 @@ I was responsible the following test files under the following categories (unit 
   - `tests/Dashboard.spec.ts`
   - `tests/Products.spec.ts`
 
+#### NFR Testing - Volume Tests (MS3)
+All files under the `volume` directory, which includes:
+- `volume/tests/overall.volume.js`
+- `volume/tests/users.volume.js`
+- `volume/tests/orders.volume.js`
+- `volume/tests/categories.volume.js`
+- `volume/tests/products.volume.js`
+- `volume/setup.js`
+- `volume/teardown.js`
+- `volume/flows/categories.flow.js`
+- `volume/flows/products.flow.js`
+- `volume/flows/orders.flow.js`
+- `volume/flows/users.flow.js`
+
 ### TAN QIN YONG A0253468W
 
 I was in charge of these files and all unit tests for them (unit test files ends with fileName.test.js).
@@ -259,6 +273,23 @@ I was in charge of these files and all unit tests for them (unit test files ends
   - `tests/categoryProduct.spec.ts`
   - `tests/productDetails.spec.ts`
   - `tests/header.spec.ts` |
+
+#### NFR Testing - Stress Tests(MS2)
+
+- Auth
+  - /login & /register `k6\auth.k6.stress.js`
+  - /orders `k6\orders.k6.stress.js`
+
+- Category
+  - /get-category `k6\category.stress.js`
+
+- Product
+  - /get-product/:slug `k6\product.view.k6.stress.js`
+  - /product-photo/:pid `k6\product.view.k6.stress.js`
+  - /product-filter `k6\product.filter.k6.stress.js`
+  - /product-list/:page `k6\product.browse.k6.stress.js`
+  - /search/:keyword `k6\product.search.k6.stress.js`
+  - /braintree/payment `k6\payment.k6.stress.js`
 
 ### TENG HUI XIN ALICIA A02590646Y
 
@@ -286,6 +317,20 @@ UI Testing:
 - `search.spec.ts`
 - `user-orders.spec.ts`
 - `user-profile.spec.ts`
+
+MS3
+For NFT, I chose to do Spike Testing.
+I was incharge of the following files.
+- `k6/category.k6.spike.js`
+- `k6/k6.spike.teardown.js`
+- `k6/login.k6.spike.js`
+- `k6/orders.k6.spike.js`
+- `k6/payment.k6.spike.js`
+- `k6/productDetails.k6.spike.js`
+- `k6/search.k6.spike.js`
+- `k6/updateProfile.k6.spike.js`
+
+AI Disclaimer: For MS3, AI was used as an assisting tool to help draft and refine portions of the test code. The overall testing strategy, scope, endpoint selection, metrics chosen, interpretation of results, and the final structure of the test suite were determined by me. All generated code was manually reviewed, heavily edited, validated through execution, and adjusted based on actual test outcomes, so the substantive design, debugging, and decision-making work was still carried out by me.
 
 ## 7. MS1 CI URL
 
