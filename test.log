@@ -6,99 +6,44 @@
 > ecom@1.0.0 test:backend
 > node --experimental-vm-modules node_modules/jest/bin/jest.js --config jest.backend.config.js
 
-▶ Product Controller Integration Tests
-  ✔ (Create) (0.8084ms)
-  ✔ (Update) (0.9407ms)
-  ✔ (Delete) (0.0474ms)
-✔ Product Controller Integration Tests (2.4883ms)
-▶ Category Controller Integration Tests
-  ✔ (Create) (0.8151ms)
-  ✔ (Update) (1.0498ms)
-  ✔ (Delete) (0.0433ms)
-✔ Category Controller Integration Tests (2.6114ms)
-PASS backend controllers/productController.admin.integration.test.js
-[0mPOST /api/v1/product/create-product [33m400[0m 1.963 ms - 30[0m
-[0mPOST /api/v1/product/create-product [33m401[0m 0.146 ms - 53[0m
-[0mPOST /api/v1/category/create-category [33m401[0m 0.858 ms - 46[0m
-[0mPOST /api/v1/product/create-product [33m401[0m 0.098 ms - 51[0m
-[0mPOST /api/v1/product/create-product [32m201[0m 1.547 ms - 341[0m
-[0mPOST /api/v1/category/create-category [33m409[0m 0.813 ms - 53[0m
-[0mPOST /api/v1/category/create-category [33m401[0m 0.095 ms - 53[0m
-[0mPOST /api/v1/category/create-category [33m401[0m 0.081 ms - 51[0m
-[0mPUT /api/v1/product/update-product/69d66607bcbdc5e8c758874e [33m400[0m 0.375 ms - 30[0m
-[0mPOST /api/v1/category/create-category [32m201[0m 1.319 ms - 147[0m
-[0mPUT /api/v1/product/update-product/69d66607bcbdc5e8c7588752 [33m404[0m 0.903 ms - 47[0m
-[0mPUT /api/v1/product/update-product/69d66607bcbdc5e8c7588755 [33m401[0m 0.076 ms - 53[0m
-[0mPUT /api/v1/category/update-category/69d666077f40ae49d1b82f22 [33m404[0m 0.701 ms - 48[0m
-[0mPUT /api/v1/product/update-product/69d66607bcbdc5e8c7588758 [33m401[0m 0.076 ms - 51[0m
-[0mPUT /api/v1/category/update-category/69d666077f40ae49d1b82f25 [33m401[0m 0.102 ms - 46[0m
-[0mPUT /api/v1/product/update-product/69d66607bcbdc5e8c758875b [32m201[0m 1.593 ms - 352[0m
-[0mPUT /api/v1/category/update-category/69d666077f40ae49d1b82f29 [33m401[0m 0.078 ms - 53[0m
-[0mPUT /api/v1/category/update-category/69d666077f40ae49d1b82f2d [33m401[0m 0.076 ms - 51[0m
-[0mDELETE /api/v1/product/delete-product/69d66607bcbdc5e8c7588766 [33m404[0m 0.625 ms - 47[0m
-[0mPUT /api/v1/category/update-category/69d666077f40ae49d1b82f31 [32m200[0m 0.715 ms - 162[0m
-[0mDELETE /api/v1/product/delete-product/69d66607bcbdc5e8c7588769 [33m401[0m 0.113 ms - 53[0m
-[0mDELETE /api/v1/product/delete-product/69d66607bcbdc5e8c758876d [33m401[0m 0.068 ms - 51[0m
-[0mDELETE /api/v1/category/delete-category/69d666077f40ae49d1b82f3b [33m404[0m 0.670 ms - 48[0m
-[0mDELETE /api/v1/product/delete-product/69d66607bcbdc5e8c7588771 [32m200[0m 0.645 ms - 57[0m
-[0mDELETE /api/v1/category/delete-category/69d666077f40ae49d1b82f3e [32m200[0m 0.617 ms - 58[0m
-[0mDELETE /api/v1/category/delete-category/69d666077f40ae49d1b82f43 [33m401[0m 0.067 ms - 53[0m
-[0mGET /api/v1/product/get-product [32m200[0m 20.064 ms - 3924[0m
-[0mDELETE /api/v1/category/delete-category/69d666077f40ae49d1b82f47 [33m401[0m 0.094 ms - 51[0m
-[0mDELETE /api/v1/category/delete-category/69d666077f40ae49d1b82f4b [32m200[0m 0.598 ms - 58[0m
-[0mGET /api/v1/product/get-product [31m500[0m 0.262 ms - 76[0m
-[0mGET /api/v1/product/get-product/best-book [32m200[0m 2.660 ms - 379[0m
-[0mGET /api/v1/product/get-product/does-not-exist [32m200[0m 0.607 ms - 66[0m
-[0mGET /api/v1/product/get-product/test-slug [31m500[0m 0.122 ms - 85[0m
-[0mGET /api/v1/product/product-photo/69d66607b54d1c3a386cc8fe [32m200[0m 0.921 ms - 16[0m
-[0mGET /api/v1/product/product-photo/69d66607b54d1c3a386cc906 [33m404[0m 0.530 ms - 45[0m
-[0mGET /api/v1/product/product-photo/69d66607b54d1c3a386cc90e [33m404[0m 0.620 ms - 45[0m
-[0mGET /api/v1/product/product-photo/69d66607b54d1c3a386cc915 [31m500[0m 0.142 ms - 76[0m
-PASS backend controllers/categoryController.admin.integration.test.js
-[0mPOST /api/v1/product/product-filters [32m200[0m 0.891 ms - 829[0m
-[0mPOST /api/v1/product/product-filters [32m200[0m 0.804 ms - 841[0m
-[0mPOST /api/v1/product/product-filters [32m200[0m 0.641 ms - 443[0m
-[0mPOST /api/v1/product/product-filters [32m200[0m 0.644 ms - 835[0m
-[0mPOST /api/v1/product/product-filters [33m400[0m 0.098 ms - 81[0m
-[0mGET /api/v1/product/product-count [32m200[0m 0.634 ms - 26[0m
-[0mGET /api/v1/product/product-count [32m200[0m 0.417 ms - 26[0m
-[0mGET /api/v1/product/product-count [32m200[0m 0.417 ms - 26[0m
-[0mGET /api/v1/product/product-count [32m200[0m 0.400 ms - 26[0m
-[0mGET /api/v1/product/product-count [33m400[0m 0.110 ms - 73[0m
-[0mGET /api/v1/product/product-list/1 [32m200[0m 1.068 ms - 1625[0m
-[0mGET /api/v1/product/product-list/2 [32m200[0m 0.780 ms - 561[0m
-[0mGET /api/v1/product/product-list/undefined [32m200[0m 0.938 ms - 1625[0m
-[0mGET /api/v1/product/product-list/1 [33m400[0m 0.156 ms - 73[0m
-[0mGET /api/v1/product/search/javascript [32m200[0m 0.906 ms - 288[0m
-PASS backend controllers/productController.product.integration.test.js
+(node:14292) [MONGOOSE] Warning: Duplicate schema index on {"name":1} found. This is often due to declaring an index using both "index: true" and "schema.index()". Please remove the duplicate index definition.
+(Use `node --trace-warnings ...` to show where the warning was created)
+PASS backend controllers/productController.payment.test.js
   ● Console
 
     console.log
-      [37m[46mServer running on development mode on 6060[49m[39m
+      {
+        type: 'transaction',
+        result: { success: false, message: 'Payment failed' }
+      }
 
-      at Server.log (server.js:15:13)
+      at log (controllers/productController.js:450:13)
 
-[0mGET /api/v1/product/search/react [32m200[0m 0.675 ms - 286[0m
-[0mGET /api/v1/product/search/NODE [32m200[0m 0.648 ms - 281[0m
-[0mGET /api/v1/product/search/doesnotmatch [32m200[0m 0.576 ms - 2[0m
-[0mGET /api/v1/product/search/test [33m400[0m 0.129 ms - 78[0m
-[0mGET /api/v1/product/related-product/69d66607b54d1c3a386cca31/69d66607b54d1c3a386cca2d [32m200[0m 1.583 ms - 671[0m
-[0mGET /api/v1/product/related-product/69d66607b54d1c3a386cca45/69d66607b54d1c3a386cca43 [32m200[0m 1.412 ms - 992[0m
-[0mGET /api/v1/product/related-product/69d66607b54d1c3a386cca5f/69d66607b54d1c3a386cca5d [32m200[0m 0.535 ms - 30[0m
-[0mGET /api/v1/product/related-product/69d66607b54d1c3a386cca67/69d66607b54d1c3a386cca68 [33m400[0m 0.125 ms - 86[0m
-[0mGET /api/v1/product/product-category/books [32m200[0m 1.775 ms - 995[0m
-[0mGET /api/v1/product/product-category/does-not-exist [33m404[0m 0.491 ms - 48[0m
-[0mGET /api/v1/product/product-category/books [32m200[0m 0.891 ms - 114[0m
-[0mGET /api/v1/product/product-category/books [33m400[0m 0.092 ms - 79[0m
-[0mGET /api/v1/product/product-category/books [33m400[0m 0.508 ms - 79[0m
-PASS backend controllers/authController.register.integration.test.js
-PASS backend controllers/authController.forgotPassword.integration.test.js
-PASS backend controllers/authController.login.integration.test.js
-PASS backend controllers/authController.auth.e2e.integration.test.js
-PASS backend controllers/authController.testController.test.js
-[0mGET /api/v1/auth/users [32m200[0m 5.908 ms - 475[0m
-[0mPUT /api/v1/auth/profile [32m200[0m 6.537 ms - 378[0m
-[0mGET /api/v1/auth/users [32m200[0m 2.125 ms - 475[0m
+    console.log
+      {
+        type: 'gateway',
+        error: Error: Payment processing failed
+            at Object.<anonymous> (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\controllers\productController.payment.test.js:232:23)
+            at Promise.then.completed (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\utils.js:298:28)
+            at new Promise (<anonymous>)
+            at callAsyncCircusFn (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\utils.js:231:10)
+            at _callCircusTest (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:316:40)
+            at processTicksAndRejections (node:internal/process/task_queues:103:5)
+            at _runTest (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:252:3)
+            at _runTestsForDescribeBlock (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:126:9)
+            at _runTestsForDescribeBlock (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:121:9)
+            at run (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:71:3)
+            at runAndTransformResultsToJestFormat (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\legacy-code-todo-rewrite\jestAdapterInit.js:122:21)
+            at jestAdapter (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\legacy-code-todo-rewrite\jestAdapter.js:79:19)
+            at runTestInternal (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-runner\build\runTest.js:367:16)
+            at runTest (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-runner\build\runTest.js:444:34)
+            at Object.worker (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-runner\build\testWorker.js:106:12)
+      }
+
+      at log (controllers/productController.js:450:13)
+
+(node:23968) [MONGOOSE] Warning: Duplicate schema index on {"name":1} found. This is often due to declaring an index using both "index: true" and "schema.index()". Please remove the duplicate index definition.
+(Use `node --trace-warnings ...` to show where the warning was created)
 PASS backend controllers/categoryController.test.js
   ● Console
 
@@ -142,16 +87,9 @@ PASS backend controllers/categoryController.test.js
 
       at log (controllers/categoryController.js:109:13)
 
-[0mGET /api/v1/auth/orders [32m200[0m 15.989 ms - 476[0m
-[0mPUT /api/v1/auth/profile [32m200[0m 51.524 ms - 378[0m
-[0mGET /api/v1/auth/users [32m200[0m 1.761 ms - 238[0m
-[0mGET /api/v1/auth/orders [32m200[0m 2.660 ms - 735[0m
-[0mGET /api/v1/auth/orders [32m200[0m 0.940 ms - 2[0m
-[0mGET /api/v1/auth/users [33m401[0m 0.107 ms - 58[0m
-[0mPUT /api/v1/auth/profile [32m200[0m 1.824 ms - 378[0m
-[0mGET /api/v1/auth/orders [33m401[0m 0.142 ms - 58[0m
-[0mPUT /api/v1/auth/profile [32m200[0m 0.970 ms - 53[0m
-[0mGET /api/v1/auth/users [33m401[0m 0.973 ms - 49[0m
+PASS backend controllers/authController.testController.test.js
+PASS backend controllers/authController.forgotPasswordController.test.js
+(node:23968) [MONGOOSE] Warning: Duplicate schema index on {"name":1} found. This is often due to declaring an index using both "index: true" and "schema.index()". Please remove the duplicate index definition.
 PASS backend controllers/productController.admin.test.js
   ● Console
 
@@ -174,7 +112,7 @@ PASS backend controllers/productController.admin.test.js
           at runTest (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-runner\build\runTest.js:444:34)
           at Object.worker (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-runner\build\testWorker.js:106:12)
 
-      at log (controllers/productController.js:54:13)
+      at log (controllers/productController.js:46:13)
 
     console.log
       Error: Database Error
@@ -195,7 +133,7 @@ PASS backend controllers/productController.admin.test.js
           at runTest (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-runner\build\runTest.js:444:34)
           at Object.worker (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-runner\build\testWorker.js:106:12)
 
-      at log (controllers/productController.js:207:13)
+      at log (controllers/productController.js:199:13)
 
     console.log
       Error: Database Error
@@ -216,8 +154,385 @@ PASS backend controllers/productController.admin.test.js
           at runTest (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-runner\build\runTest.js:444:34)
           at Object.worker (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-runner\build\testWorker.js:106:12)
 
-      at log (controllers/productController.js:153:13)
+      at log (controllers/productController.js:145:13)
 
+(node:33888) [MONGOOSE] Warning: Duplicate schema index on {"name":1} found. This is often due to declaring an index using both "index: true" and "schema.index()". Please remove the duplicate index definition.
+(Use `node --trace-warnings ...` to show where the warning was created)
+PASS backend controllers/categoryController.admin.test.js
+  ● Console
+
+    console.log
+      Error: Database Error
+          at Object.<anonymous> (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\controllers\categoryController.admin.test.js:79:21)
+          at Promise.then.completed (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\utils.js:298:28)
+          at new Promise (<anonymous>)
+          at callAsyncCircusFn (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\utils.js:231:10)
+          at _callCircusTest (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:316:40)
+          at processTicksAndRejections (node:internal/process/task_queues:103:5)
+          at _runTest (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:252:3)
+          at _runTestsForDescribeBlock (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:126:9)
+          at _runTestsForDescribeBlock (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:121:9)
+          at _runTestsForDescribeBlock (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:121:9)
+          at run (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:71:3)
+          at runAndTransformResultsToJestFormat (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\legacy-code-todo-rewrite\jestAdapterInit.js:122:21)
+          at jestAdapter (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\legacy-code-todo-rewrite\jestAdapter.js:79:19)
+          at runTestInternal (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-runner\build\runTest.js:367:16)
+          at runTest (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-runner\build\runTest.js:444:34)
+          at Object.worker (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-runner\build\testWorker.js:106:12)
+
+      at log (controllers/categoryController.js:28:13)
+
+    console.log
+      Error: Database Error
+          at Object.<anonymous> (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\controllers\categoryController.admin.test.js:179:21)
+          at Promise.then.completed (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\utils.js:298:28)
+          at new Promise (<anonymous>)
+          at callAsyncCircusFn (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\utils.js:231:10)
+          at _callCircusTest (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:316:40)
+          at processTicksAndRejections (node:internal/process/task_queues:103:5)
+          at _runTest (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:252:3)
+          at _runTestsForDescribeBlock (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:126:9)
+          at _runTestsForDescribeBlock (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:121:9)
+          at _runTestsForDescribeBlock (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:121:9)
+          at run (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:71:3)
+          at runAndTransformResultsToJestFormat (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\legacy-code-todo-rewrite\jestAdapterInit.js:122:21)
+          at jestAdapter (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\legacy-code-todo-rewrite\jestAdapter.js:79:19)
+          at runTestInternal (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-runner\build\runTest.js:367:16)
+          at runTest (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-runner\build\runTest.js:444:34)
+          at Object.worker (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-runner\build\testWorker.js:106:12)
+
+      at log (controllers/categoryController.js:65:13)
+
+    console.log
+      Error: Database Error
+          at Object.<anonymous> (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\controllers\categoryController.admin.test.js:240:21)
+          at Promise.then.completed (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\utils.js:298:28)
+          at new Promise (<anonymous>)
+          at callAsyncCircusFn (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\utils.js:231:10)
+          at _callCircusTest (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:316:40)
+          at processTicksAndRejections (node:internal/process/task_queues:103:5)
+          at _runTest (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:252:3)
+          at _runTestsForDescribeBlock (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:126:9)
+          at _runTestsForDescribeBlock (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:121:9)
+          at _runTestsForDescribeBlock (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:121:9)
+          at run (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:71:3)
+          at runAndTransformResultsToJestFormat (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\legacy-code-todo-rewrite\jestAdapterInit.js:122:21)
+          at jestAdapter (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\legacy-code-todo-rewrite\jestAdapter.js:79:19)
+          at runTestInternal (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-runner\build\runTest.js:367:16)
+          at runTest (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-runner\build\runTest.js:444:34)
+          at Object.worker (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-runner\build\testWorker.js:106:12)
+
+      at log (controllers/categoryController.js:134:13)
+
+PASS backend controllers/authController.ordersController.test.js
+  ● Console
+
+    console.log
+      Error: DB down
+          at Object.<anonymous> (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\controllers\authController.ordersController.test.js:66:17)
+          at Promise.then.completed (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\utils.js:298:28)
+          at new Promise (<anonymous>)
+          at callAsyncCircusFn (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\utils.js:231:10)
+          at _callCircusTest (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:316:40)
+          at processTicksAndRejections (node:internal/process/task_queues:103:5)
+          at _runTest (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:252:3)
+          at _runTestsForDescribeBlock (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:126:9)
+          at _runTestsForDescribeBlock (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:121:9)
+          at run (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:71:3)
+          at runAndTransformResultsToJestFormat (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\legacy-code-todo-rewrite\jestAdapterInit.js:122:21)
+          at jestAdapter (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\legacy-code-todo-rewrite\jestAdapter.js:79:19)
+          at runTestInternal (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-runner\build\runTest.js:367:16)
+          at runTest (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-runner\build\runTest.js:444:34)
+          at Object.worker (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-runner\build\testWorker.js:106:12)
+
+      at log (controllers/authController.js:257:13)
+
+    console.log
+      Error: DB failure
+          at Object.<anonymous> (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\controllers\authController.ordersController.test.js:124:17)
+          at Promise.then.completed (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\utils.js:298:28)
+          at new Promise (<anonymous>)
+          at callAsyncCircusFn (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\utils.js:231:10)
+          at _callCircusTest (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:316:40)
+          at processTicksAndRejections (node:internal/process/task_queues:103:5)
+          at _runTest (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:252:3)
+          at _runTestsForDescribeBlock (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:126:9)
+          at _runTestsForDescribeBlock (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:121:9)
+          at run (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:71:3)
+          at runAndTransformResultsToJestFormat (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\legacy-code-todo-rewrite\jestAdapterInit.js:122:21)
+          at jestAdapter (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\legacy-code-todo-rewrite\jestAdapter.js:79:19)
+          at runTestInternal (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-runner\build\runTest.js:367:16)
+          at runTest (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-runner\build\runTest.js:444:34)
+          at Object.worker (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-runner\build\testWorker.js:106:12)
+
+      at log (controllers/authController.js:275:13)
+
+    console.log
+      Error: DB down
+          at Object.<anonymous> (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\controllers\authController.ordersController.test.js:179:17)
+          at Promise.then.completed (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\utils.js:298:28)
+          at new Promise (<anonymous>)
+          at callAsyncCircusFn (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\utils.js:231:10)
+          at _callCircusTest (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:316:40)
+          at processTicksAndRejections (node:internal/process/task_queues:103:5)
+          at _runTest (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:252:3)
+          at _runTestsForDescribeBlock (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:126:9)
+          at _runTestsForDescribeBlock (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:121:9)
+          at run (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:71:3)
+          at runAndTransformResultsToJestFormat (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\legacy-code-todo-rewrite\jestAdapterInit.js:122:21)
+          at jestAdapter (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\legacy-code-todo-rewrite\jestAdapter.js:79:19)
+          at runTestInternal (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-runner\build\runTest.js:367:16)
+          at runTest (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-runner\build\runTest.js:444:34)
+          at Object.worker (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-runner\build\testWorker.js:106:12)
+
+      at log (controllers/authController.js:296:13)
+
+PASS backend controllers/authController.registerController.test.js
+PASS backend controllers/productController.test.js
+(node:17332) [MONGOOSE] Warning: Duplicate schema index on {"name":1} found. This is often due to declaring an index using both "index: true" and "schema.index()". Please remove the duplicate index definition.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:40844) [MONGOOSE] Warning: Duplicate schema index on {"name":1} found. This is often due to declaring an index using both "index: true" and "schema.index()". Please remove the duplicate index definition.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:35500) [MONGOOSE] Warning: Duplicate schema index on {"name":1} found. This is often due to declaring an index using both "index: true" and "schema.index()". Please remove the duplicate index definition.
+(Use `node --trace-warnings ...` to show where the warning was created)
+▶ Product Controller Integration Tests
+  ✔ (Create) (1.338ms)
+  ✔ (Update) (1.6078ms)
+  ✔ (Delete) (0.0996ms)
+✔ Product Controller Integration Tests (4.1409ms)
+▶ Category Controller Integration Tests
+  ✔ (Create) (1.3396ms)
+  ✔ (Update) (1.0549ms)
+  ✔ (Delete) (0.0889ms)
+✔ Category Controller Integration Tests (3.8202ms)
+PASS backend controllers/authController.updateProfileController.test.js
+  ● Console
+
+    console.log
+      Error: DB down
+          at Object.<anonymous> (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\controllers\authController.updateProfileController.test.js:237:17)
+          at Promise.then.completed (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\utils.js:298:28)
+          at new Promise (<anonymous>)
+          at callAsyncCircusFn (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\utils.js:231:10)
+          at _callCircusTest (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:316:40)
+          at processTicksAndRejections (node:internal/process/task_queues:103:5)
+          at _runTest (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:252:3)
+          at _runTestsForDescribeBlock (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:126:9)
+          at _runTestsForDescribeBlock (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:121:9)
+          at run (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:71:3)
+          at runAndTransformResultsToJestFormat (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\legacy-code-todo-rewrite\jestAdapterInit.js:122:21)
+          at jestAdapter (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\legacy-code-todo-rewrite\jestAdapter.js:79:19)
+          at runTestInternal (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-runner\build\runTest.js:367:16)
+          at runTest (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-runner\build\runTest.js:444:34)
+          at Object.worker (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-runner\build\testWorker.js:106:12)
+
+      at log (controllers/authController.js:239:13)
+
+PASS backend middlewares/authMiddleware.requireSignIn.test.js
+(node:1072) [MONGOOSE] Warning: Duplicate schema index on {"name":1} found. This is often due to declaring an index using both "index: true" and "schema.index()". Please remove the duplicate index definition.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:11372) [MONGOOSE] Warning: Duplicate schema index on {"name":1} found. This is often due to declaring an index using both "index: true" and "schema.index()". Please remove the duplicate index definition.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:20008) [MONGOOSE] Warning: Duplicate schema index on {"name":1} found. This is often due to declaring an index using both "index: true" and "schema.index()". Please remove the duplicate index definition.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:38960) [MONGOOSE] Warning: Duplicate schema index on {"name":1} found. This is often due to declaring an index using both "index: true" and "schema.index()". Please remove the duplicate index definition.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:27360) [MONGOOSE] Warning: Duplicate schema index on {"name":1} found. This is often due to declaring an index using both "index: true" and "schema.index()". Please remove the duplicate index definition.
+(Use `node --trace-warnings ...` to show where the warning was created)
+PASS backend controllers/authController.loginController.test.js
+PASS backend helpers/authHelper.hashPassword.test.js
+PASS backend helpers/authHelper.comparePassword.test.js
+PASS backend controllers/authController.getAllUsersController.test.js
+  ● Console
+
+    console.log
+      Error: DB down
+          at Object.<anonymous> (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\controllers\authController.getAllUsersController.test.js:62:17)
+          at Promise.then.completed (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\utils.js:298:28)
+          at new Promise (<anonymous>)
+          at callAsyncCircusFn (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\utils.js:231:10)
+          at _callCircusTest (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:316:40)
+          at processTicksAndRejections (node:internal/process/task_queues:103:5)
+          at _runTest (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:252:3)
+          at _runTestsForDescribeBlock (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:126:9)
+          at _runTestsForDescribeBlock (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:121:9)
+          at run (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:71:3)
+          at runAndTransformResultsToJestFormat (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\legacy-code-todo-rewrite\jestAdapterInit.js:122:21)
+          at jestAdapter (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\legacy-code-todo-rewrite\jestAdapter.js:79:19)
+          at runTestInternal (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-runner\build\runTest.js:367:16)
+          at runTest (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-runner\build\runTest.js:444:34)
+          at Object.worker (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-runner\build\testWorker.js:106:12)
+
+      at log (controllers/authController.js:315:13)
+
+PASS backend middlewares/authMiddleware.isAdmin.test.js
+[0mPOST /api/v1/product/braintree/payment [32m200[0m 165.137 ms - 11[0m
+[0mPOST /api/v1/product/braintree/payment [33m400[0m 0.697 ms - 29[0m
+[0mPOST /api/v1/product/braintree/payment [33m400[0m 0.341 ms - 29[0m
+[0mPOST /api/v1/product/braintree/payment [33m400[0m 0.265 ms - 29[0m
+[0mPOST /api/v1/product/create-product [33m400[0m 3.053 ms - 30[0m
+[0mPOST /api/v1/product/braintree/payment [33m401[0m 0.128 ms - 58[0m
+[0mPOST /api/v1/product/create-product [33m401[0m 0.252 ms - 53[0m
+[0mPOST /api/v1/product/braintree/payment [33m401[0m 3.876 ms - 54[0m
+[0mPOST /api/v1/product/create-product [33m401[0m 0.165 ms - 51[0m
+[0mPOST /api/v1/product/braintree/payment [31m500[0m 5.466 ms - 2[0m
+[0mPOST /api/v1/product/create-product [32m201[0m 2.552 ms - 341[0m
+[0mPOST /api/v1/product/braintree/payment [33m400[0m 0.487 ms - 44[0m
+[0mPUT /api/v1/product/update-product/69dc3a550d7f323a46f46fd2 [33m400[0m 0.472 ms - 30[0m
+[0mPUT /api/v1/product/update-product/69dc3a550d7f323a46f46fd6 [33m404[0m 1.333 ms - 47[0m
+[0mPUT /api/v1/product/update-product/69dc3a550d7f323a46f46fd9 [33m401[0m 0.118 ms - 53[0m
+[0mPUT /api/v1/product/update-product/69dc3a550d7f323a46f46fdc [33m401[0m 0.115 ms - 51[0m
+[0mPUT /api/v1/product/update-product/69dc3a550d7f323a46f46fdf [32m201[0m 2.394 ms - 352[0m
+[0mDELETE /api/v1/product/delete-product/69dc3a560d7f323a46f46fea [33m404[0m 0.851 ms - 47[0m
+[0mPOST /api/v1/category/create-category [33m401[0m 1.283 ms - 46[0m
+[0mDELETE /api/v1/product/delete-product/69dc3a560d7f323a46f46fed [33m401[0m 0.173 ms - 53[0m
+[0mDELETE /api/v1/product/delete-product/69dc3a560d7f323a46f46ff1 [33m401[0m 0.111 ms - 51[0m
+PASS backend controllers/productController.payment.integration.test.js
+  ● Console
+
+    console.log
+      JsonWebTokenError {
+        name: 'JsonWebTokenError',
+        message: 'jwt malformed'
+      }
+
+      at log (middlewares/authMiddleware.js:36:13)
+
+    console.log
+      {
+        type: 'gateway',
+        error: Error: Payment gateway error
+            at Object.<anonymous> (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\controllers\productController.payment.integration.test.js:130:23)
+            at Promise.then.completed (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\utils.js:298:28)
+            at new Promise (<anonymous>)
+            at callAsyncCircusFn (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\utils.js:231:10)
+            at _callCircusTest (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:316:40)
+            at processTicksAndRejections (node:internal/process/task_queues:103:5)
+            at _runTest (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:252:3)
+            at _runTestsForDescribeBlock (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:126:9)
+            at _runTestsForDescribeBlock (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:121:9)
+            at run (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:71:3)
+            at runAndTransformResultsToJestFormat (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\legacy-code-todo-rewrite\jestAdapterInit.js:122:21)
+            at jestAdapter (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\legacy-code-todo-rewrite\jestAdapter.js:79:19)
+            at runTestInternal (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-runner\build\runTest.js:367:16)
+            at runTest (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-runner\build\runTest.js:444:34)
+            at Object.worker (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-runner\build\testWorker.js:106:12)
+      }
+
+      at log (controllers/productController.js:450:13)
+
+    console.log
+      {
+        type: 'transaction',
+        result: { success: false, message: 'Payment failed' }
+      }
+
+      at log (controllers/productController.js:450:13)
+
+PASS backend controllers/productController.admin.integration.test.js
+PASS backend controllers/authController.register.integration.test.js
+[0mPOST /api/v1/category/create-category [33m409[0m 1.484 ms - 53[0m
+[0mDELETE /api/v1/product/delete-product/69dc3a560d7f323a46f46ff5 [32m200[0m 1.245 ms - 57[0m
+[0mPOST /api/v1/category/create-category [33m401[0m 0.181 ms - 53[0m
+[0mPOST /api/v1/category/create-category [33m401[0m 0.139 ms - 51[0m
+[0mPOST /api/v1/category/create-category [32m201[0m 1.772 ms - 147[0m
+[0mPUT /api/v1/category/update-category/69dc3a561caf1b3ec713d6d3 [33m404[0m 0.891 ms - 48[0m
+[0mPUT /api/v1/category/update-category/69dc3a561caf1b3ec713d6d6 [33m401[0m 0.122 ms - 46[0m
+[0mPUT /api/v1/category/update-category/69dc3a561caf1b3ec713d6da [33m401[0m 0.083 ms - 53[0m
+[0mPUT /api/v1/category/update-category/69dc3a561caf1b3ec713d6de [33m401[0m 0.102 ms - 51[0m
+[0mPUT /api/v1/category/update-category/69dc3a561caf1b3ec713d6e2 [32m200[0m 0.804 ms - 162[0m
+[0mDELETE /api/v1/category/delete-category/69dc3a561caf1b3ec713d6ec [33m404[0m 0.610 ms - 48[0m
+[0mDELETE /api/v1/category/delete-category/69dc3a561caf1b3ec713d6ef [32m200[0m 0.748 ms - 58[0m
+[0mDELETE /api/v1/category/delete-category/69dc3a561caf1b3ec713d6f4 [33m401[0m 0.094 ms - 53[0m
+[0mDELETE /api/v1/category/delete-category/69dc3a561caf1b3ec713d6f8 [33m401[0m 0.094 ms - 51[0m
+[0mDELETE /api/v1/category/delete-category/69dc3a561caf1b3ec713d6fc [32m200[0m 0.746 ms - 58[0m
+PASS backend controllers/categoryController.admin.integration.test.js
+[0mPUT /api/v1/auth/profile [32m200[0m 8.014 ms - 378[0m
+[0mGET /api/v1/category/get-category [32m200[0m 6.185 ms - 304[0m
+[0mGET /api/v1/auth/orders [32m200[0m 21.778 ms - 476[0m
+[0mGET /api/v1/category/get-category [32m200[0m 1.029 ms - 62[0m
+[0mGET /api/v1/category/get-category [31m500[0m 7.469 ms - 75[0m
+[0mGET /api/v1/category/single-category/category1 [32m200[0m 1.419 ms - 153[0m
+[0mGET /api/v1/auth/users [32m200[0m 9.109 ms - 475[0m
+[0mGET /api/v1/category/single-category/nonexistent [33m404[0m 0.889 ms - 48[0m
+[0mGET /api/v1/category/single-category/category1 [31m500[0m 0.438 ms - 76[0m
+PASS backend controllers/categoryController.integration.test.js
+  ● Console
+
+    console.log
+      Error: Database error
+          at Object.<anonymous> (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\controllers\categoryController.integration.test.js:64:23)
+          at Promise.then.completed (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\utils.js:298:28)
+          at new Promise (<anonymous>)
+          at callAsyncCircusFn (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\utils.js:231:10)
+          at _callCircusTest (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:316:40)
+          at processTicksAndRejections (node:internal/process/task_queues:103:5)
+          at _runTest (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:252:3)
+          at _runTestsForDescribeBlock (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:126:9)
+          at _runTestsForDescribeBlock (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:121:9)
+          at run (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:71:3)
+          at runAndTransformResultsToJestFormat (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\legacy-code-todo-rewrite\jestAdapterInit.js:122:21)
+          at jestAdapter (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\legacy-code-todo-rewrite\jestAdapter.js:79:19)
+          at runTestInternal (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-runner\build\runTest.js:367:16)
+          at runTest (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-runner\build\runTest.js:444:34)
+          at Object.worker (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-runner\build\testWorker.js:106:12)
+
+      at log (controllers/categoryController.js:84:13)
+
+    console.log
+      Error: Database error
+          at Object.<anonymous> (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\controllers\categoryController.integration.test.js:92:23)
+          at Promise.then.completed (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\utils.js:298:28)
+          at new Promise (<anonymous>)
+          at callAsyncCircusFn (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\utils.js:231:10)
+          at _callCircusTest (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:316:40)
+          at processTicksAndRejections (node:internal/process/task_queues:103:5)
+          at _runTest (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:252:3)
+          at _runTestsForDescribeBlock (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:126:9)
+          at _runTestsForDescribeBlock (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:121:9)
+          at run (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:71:3)
+          at runAndTransformResultsToJestFormat (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\legacy-code-todo-rewrite\jestAdapterInit.js:122:21)
+          at jestAdapter (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\legacy-code-todo-rewrite\jestAdapter.js:79:19)
+          at runTestInternal (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-runner\build\runTest.js:367:16)
+          at runTest (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-runner\build\runTest.js:444:34)
+          at Object.worker (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-runner\build\testWorker.js:106:12)
+
+      at log (controllers/categoryController.js:109:13)
+
+[0mPUT /api/v1/auth/profile [32m200[0m 53.555 ms - 378[0m
+[0mGET /api/v1/auth/orders [32m200[0m 3.198 ms - 735[0m
+[0mGET /api/v1/product/get-product [32m200[0m 21.982 ms - 3924[0m
+[0mGET /api/v1/product/get-product [31m500[0m 0.245 ms - 76[0m
+[0mGET /api/v1/product/get-product/best-book [32m200[0m 2.459 ms - 379[0m
+[0mGET /api/v1/product/get-product/does-not-exist [32m200[0m 0.643 ms - 66[0m
+[0mGET /api/v1/product/get-product/test-slug [31m500[0m 0.135 ms - 85[0m
+[0mGET /api/v1/auth/users [32m200[0m 2.074 ms - 475[0m
+[0mGET /api/v1/product/product-photo/69dc3a565a689399ac885fc6 [32m200[0m 0.910 ms - 16[0m
+[0mGET /api/v1/product/product-photo/69dc3a565a689399ac885fce [33m404[0m 0.534 ms - 45[0m
+[0mGET /api/v1/product/product-photo/69dc3a565a689399ac885fd6 [33m404[0m 0.644 ms - 45[0m
+[0mGET /api/v1/auth/orders [32m200[0m 0.837 ms - 2[0m
+[0mGET /api/v1/product/product-photo/69dc3a565a689399ac885fdd [31m500[0m 0.165 ms - 76[0m
+[0mPOST /api/v1/product/product-filters [32m200[0m 1.150 ms - 829[0m
+[0mPOST /api/v1/product/product-filters [32m200[0m 0.963 ms - 841[0m
+[0mPUT /api/v1/auth/profile [32m200[0m 2.266 ms - 378[0m
+[0mPOST /api/v1/product/product-filters [32m200[0m 0.842 ms - 443[0m
+[0mPOST /api/v1/product/product-filters [32m200[0m 0.690 ms - 835[0m
+[0mPOST /api/v1/product/product-filters [33m400[0m 0.103 ms - 81[0m
+[0mGET /api/v1/product/product-count [32m200[0m 0.652 ms - 26[0m
+[0mGET /api/v1/product/product-count [32m200[0m 0.450 ms - 26[0m
+[0mGET /api/v1/auth/orders [33m401[0m 0.133 ms - 58[0m
+[0mGET /api/v1/product/product-count [32m200[0m 0.392 ms - 26[0m
+[0mGET /api/v1/product/product-count [32m200[0m 0.394 ms - 26[0m
+[0mGET /api/v1/product/product-count [33m400[0m 0.116 ms - 73[0m
+[0mGET /api/v1/auth/users [32m200[0m 1.684 ms - 238[0m
+[0mGET /api/v1/product/product-list/1 [32m200[0m 1.330 ms - 1625[0m
+[0mPUT /api/v1/auth/profile [32m200[0m 1.093 ms - 53[0m
+[0mGET /api/v1/product/product-list/2 [32m200[0m 0.793 ms - 561[0m
+[0mGET /api/v1/product/product-list/undefined [32m200[0m 1.226 ms - 1625[0m
+[0mGET /api/v1/product/product-list/1 [33m400[0m 0.189 ms - 73[0m
+[0mGET /api/v1/auth/orders [31m500[0m 10.979 ms - 67[0m
+[0mGET /api/v1/product/search/javascript [32m200[0m 1.004 ms - 288[0m
+[0mGET /api/v1/product/search/react [32m200[0m 0.679 ms - 286[0m
 PASS backend controllers/authController.ordersController.integration.test.js
   ● Console
 
@@ -289,33 +604,29 @@ PASS backend controllers/authController.ordersController.integration.test.js
 
       at log (controllers/authController.js:257:13)
 
-PASS backend controllers/productController.test.js
-[0mGET /api/v1/auth/orders [31m500[0m 10.430 ms - 67[0m
-[0mPUT /api/v1/auth/profile [33m401[0m 0.109 ms - 58[0m
-[0mGET /api/v1/auth/users [31m500[0m 15.267 ms - 66[0m
-[0mGET /api/v1/category/get-category [32m200[0m 5.985 ms - 304[0m
-[0mGET /api/v1/category/get-category [32m200[0m 0.750 ms - 62[0m
-[0mPUT /api/v1/auth/profile [33m400[0m 16.865 ms - 69[0m
-[0mGET /api/v1/category/get-category [31m500[0m 5.661 ms - 75[0m
-[0mGET /api/v1/category/single-category/category1 [32m200[0m 1.363 ms - 153[0m
-[0mGET /api/v1/category/single-category/nonexistent [33m404[0m 0.678 ms - 48[0m
-[0mGET /api/v1/category/single-category/category1 [31m500[0m 0.372 ms - 76[0m
-PASS backend controllers/authController.getAllUsersController.integration.test.js
+[0mPUT /api/v1/auth/profile [33m401[0m 0.117 ms - 58[0m
+[0mGET /api/v1/product/search/NODE [32m200[0m 0.727 ms - 281[0m
+[0mGET /api/v1/auth/users [33m401[0m 0.119 ms - 58[0m
+[0mGET /api/v1/product/search/doesnotmatch [32m200[0m 0.619 ms - 2[0m
+[0mGET /api/v1/product/search/test [33m400[0m 0.134 ms - 78[0m
+[0mGET /api/v1/product/related-product/69dc3a565a689399ac8860f9/69dc3a565a689399ac8860f5 [32m200[0m 1.808 ms - 671[0m
+[0mGET /api/v1/product/related-product/69dc3a565a689399ac88610d/69dc3a565a689399ac88610b [32m200[0m 1.578 ms - 992[0m
+[0mGET /api/v1/product/related-product/69dc3a565a689399ac886127/69dc3a565a689399ac886125 [32m200[0m 0.619 ms - 30[0m
+[0mGET /api/v1/product/related-product/69dc3a565a689399ac88612f/69dc3a565a689399ac886130 [33m400[0m 0.125 ms - 86[0m
+[0mGET /api/v1/product/product-category/books [32m200[0m 2.116 ms - 995[0m
+[0mGET /api/v1/product/product-category/does-not-exist [33m404[0m 0.522 ms - 48[0m
+[0mGET /api/v1/product/product-category/books [32m200[0m 0.988 ms - 114[0m
+[0mGET /api/v1/product/product-category/books [33m400[0m 0.092 ms - 79[0m
+[0mGET /api/v1/product/product-category/books [33m400[0m 0.532 ms - 79[0m
+[0mPUT /api/v1/auth/profile [33m400[0m 21.143 ms - 69[0m
+[0mGET /api/v1/auth/users [33m401[0m 0.956 ms - 49[0m
+PASS backend controllers/productController.product.integration.test.js
   ● Console
 
     console.log
-      Error: DB down
-          at model.<anonymous> (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\controllers\authController.getAllUsersController.integration.test.js:140:13)
-          at C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-mock\build\index.js:397:39
-          at model.<anonymous> (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-mock\build\index.js:404:13)
-          at model.mockConstructor [as find] (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-mock\build\index.js:148:19)
-          at find (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\controllers\authController.js:309:8)
-          at Layer.handle [as handle_request] (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\express\lib\router\layer.js:95:5)
-          at next (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\express\lib\router\route.js:149:13)
-          at next (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\middlewares\authMiddleware.js:70:12)
-          at processTicksAndRejections (node:internal/process/task_queues:103:5)
+      [37m[46mServer running on development mode on 6060[49m[39m
 
-      at log (controllers/authController.js:315:13)
+      at Server.log (server.js:15:13)
 
 PASS backend controllers/authController.updateProfileController.integration.test.js
   ● Console
@@ -361,315 +672,27 @@ PASS backend controllers/authController.updateProfileController.integration.test
 
       at log (controllers/authController.js:239:13)
 
-PASS backend controllers/categoryController.integration.test.js
-  ● Console
-
-    console.log
-      Error: Database error
-          at Object.<anonymous> (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\controllers\categoryController.integration.test.js:64:23)
-          at Promise.then.completed (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\utils.js:298:28)
-          at new Promise (<anonymous>)
-          at callAsyncCircusFn (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\utils.js:231:10)
-          at _callCircusTest (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:316:40)
-          at processTicksAndRejections (node:internal/process/task_queues:103:5)
-          at _runTest (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:252:3)
-          at _runTestsForDescribeBlock (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:126:9)
-          at _runTestsForDescribeBlock (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:121:9)
-          at run (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:71:3)
-          at runAndTransformResultsToJestFormat (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\legacy-code-todo-rewrite\jestAdapterInit.js:122:21)
-          at jestAdapter (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\legacy-code-todo-rewrite\jestAdapter.js:79:19)
-          at runTestInternal (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-runner\build\runTest.js:367:16)
-          at runTest (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-runner\build\runTest.js:444:34)
-          at Object.worker (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-runner\build\testWorker.js:106:12)
-
-      at log (controllers/categoryController.js:84:13)
-
-    console.log
-      Error: Database error
-          at Object.<anonymous> (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\controllers\categoryController.integration.test.js:92:23)
-          at Promise.then.completed (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\utils.js:298:28)
-          at new Promise (<anonymous>)
-          at callAsyncCircusFn (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\utils.js:231:10)
-          at _callCircusTest (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:316:40)
-          at processTicksAndRejections (node:internal/process/task_queues:103:5)
-          at _runTest (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:252:3)
-          at _runTestsForDescribeBlock (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:126:9)
-          at _runTestsForDescribeBlock (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:121:9)
-          at run (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:71:3)
-          at runAndTransformResultsToJestFormat (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\legacy-code-todo-rewrite\jestAdapterInit.js:122:21)
-          at jestAdapter (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\legacy-code-todo-rewrite\jestAdapter.js:79:19)
-          at runTestInternal (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-runner\build\runTest.js:367:16)
-          at runTest (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-runner\build\runTest.js:444:34)
-          at Object.worker (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-runner\build\testWorker.js:106:12)
-
-      at log (controllers/categoryController.js:109:13)
-
-PASS backend controllers/productController.payment.test.js
-  ● Console
-
-    console.log
-      {
-        type: 'transaction',
-        result: { success: false, message: 'Payment failed' }
-      }
-
-      at log (controllers/productController.js:423:13)
-
-    console.log
-      {
-        type: 'gateway',
-        error: Error: Payment processing failed
-            at Object.<anonymous> (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\controllers\productController.payment.test.js:239:23)
-            at Promise.then.completed (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\utils.js:298:28)
-            at new Promise (<anonymous>)
-            at callAsyncCircusFn (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\utils.js:231:10)
-            at _callCircusTest (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:316:40)
-            at processTicksAndRejections (node:internal/process/task_queues:103:5)
-            at _runTest (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:252:3)
-            at _runTestsForDescribeBlock (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:126:9)
-            at _runTestsForDescribeBlock (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:121:9)
-            at run (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:71:3)
-            at runAndTransformResultsToJestFormat (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\legacy-code-todo-rewrite\jestAdapterInit.js:122:21)
-            at jestAdapter (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\legacy-code-todo-rewrite\jestAdapter.js:79:19)
-            at runTestInternal (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-runner\build\runTest.js:367:16)
-            at runTest (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-runner\build\runTest.js:444:34)
-            at Object.worker (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-runner\build\testWorker.js:106:12)
-      }
-
-      at log (controllers/productController.js:423:13)
-
-PASS backend controllers/authController.registerController.test.js
-PASS backend controllers/categoryController.admin.test.js
-  ● Console
-
-    console.log
-      Error: Database Error
-          at Object.<anonymous> (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\controllers\categoryController.admin.test.js:79:21)
-          at Promise.then.completed (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\utils.js:298:28)
-          at new Promise (<anonymous>)
-          at callAsyncCircusFn (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\utils.js:231:10)
-          at _callCircusTest (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:316:40)
-          at processTicksAndRejections (node:internal/process/task_queues:103:5)
-          at _runTest (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:252:3)
-          at _runTestsForDescribeBlock (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:126:9)
-          at _runTestsForDescribeBlock (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:121:9)
-          at _runTestsForDescribeBlock (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:121:9)
-          at run (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:71:3)
-          at runAndTransformResultsToJestFormat (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\legacy-code-todo-rewrite\jestAdapterInit.js:122:21)
-          at jestAdapter (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\legacy-code-todo-rewrite\jestAdapter.js:79:19)
-          at runTestInternal (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-runner\build\runTest.js:367:16)
-          at runTest (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-runner\build\runTest.js:444:34)
-          at Object.worker (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-runner\build\testWorker.js:106:12)
-
-      at log (controllers/categoryController.js:28:13)
-
-    console.log
-      Error: Database Error
-          at Object.<anonymous> (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\controllers\categoryController.admin.test.js:179:21)
-          at Promise.then.completed (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\utils.js:298:28)
-          at new Promise (<anonymous>)
-          at callAsyncCircusFn (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\utils.js:231:10)
-          at _callCircusTest (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:316:40)
-          at processTicksAndRejections (node:internal/process/task_queues:103:5)
-          at _runTest (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:252:3)
-          at _runTestsForDescribeBlock (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:126:9)
-          at _runTestsForDescribeBlock (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:121:9)
-          at _runTestsForDescribeBlock (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:121:9)
-          at run (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:71:3)
-          at runAndTransformResultsToJestFormat (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\legacy-code-todo-rewrite\jestAdapterInit.js:122:21)
-          at jestAdapter (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\legacy-code-todo-rewrite\jestAdapter.js:79:19)
-          at runTestInternal (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-runner\build\runTest.js:367:16)
-          at runTest (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-runner\build\runTest.js:444:34)
-          at Object.worker (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-runner\build\testWorker.js:106:12)
-
-      at log (controllers/categoryController.js:65:13)
-
-    console.log
-      Error: Database Error
-          at Object.<anonymous> (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\controllers\categoryController.admin.test.js:240:21)
-          at Promise.then.completed (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\utils.js:298:28)
-          at new Promise (<anonymous>)
-          at callAsyncCircusFn (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\utils.js:231:10)
-          at _callCircusTest (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:316:40)
-          at processTicksAndRejections (node:internal/process/task_queues:103:5)
-          at _runTest (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:252:3)
-          at _runTestsForDescribeBlock (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:126:9)
-          at _runTestsForDescribeBlock (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:121:9)
-          at _runTestsForDescribeBlock (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:121:9)
-          at run (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:71:3)
-          at runAndTransformResultsToJestFormat (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\legacy-code-todo-rewrite\jestAdapterInit.js:122:21)
-          at jestAdapter (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\legacy-code-todo-rewrite\jestAdapter.js:79:19)
-          at runTestInternal (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-runner\build\runTest.js:367:16)
-          at runTest (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-runner\build\runTest.js:444:34)
-          at Object.worker (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-runner\build\testWorker.js:106:12)
-
-      at log (controllers/categoryController.js:134:13)
-
-PASS backend controllers/authController.loginController.test.js
-PASS backend controllers/authController.forgotPasswordController.test.js
-PASS backend middlewares/authMiddleware.requireSignIn.test.js
-PASS backend controllers/authController.ordersController.test.js
+PASS backend controllers/authController.forgotPassword.integration.test.js
+PASS backend controllers/authController.getAllUsersController.integration.test.js
   ● Console
 
     console.log
       Error: DB down
-          at Object.<anonymous> (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\controllers\authController.ordersController.test.js:66:17)
-          at Promise.then.completed (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\utils.js:298:28)
-          at new Promise (<anonymous>)
-          at callAsyncCircusFn (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\utils.js:231:10)
-          at _callCircusTest (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:316:40)
+          at model.<anonymous> (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\controllers\authController.getAllUsersController.integration.test.js:140:13)
+          at C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-mock\build\index.js:397:39
+          at model.<anonymous> (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-mock\build\index.js:404:13)
+          at model.mockConstructor [as find] (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-mock\build\index.js:148:19)
+          at find (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\controllers\authController.js:309:8)
+          at Layer.handle [as handle_request] (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\express\lib\router\layer.js:95:5)
+          at next (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\express\lib\router\route.js:149:13)
+          at next (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\middlewares\authMiddleware.js:70:12)
           at processTicksAndRejections (node:internal/process/task_queues:103:5)
-          at _runTest (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:252:3)
-          at _runTestsForDescribeBlock (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:126:9)
-          at _runTestsForDescribeBlock (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:121:9)
-          at run (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:71:3)
-          at runAndTransformResultsToJestFormat (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\legacy-code-todo-rewrite\jestAdapterInit.js:122:21)
-          at jestAdapter (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\legacy-code-todo-rewrite\jestAdapter.js:79:19)
-          at runTestInternal (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-runner\build\runTest.js:367:16)
-          at runTest (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-runner\build\runTest.js:444:34)
-          at Object.worker (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-runner\build\testWorker.js:106:12)
-
-      at log (controllers/authController.js:257:13)
-
-    console.log
-      Error: DB failure
-          at Object.<anonymous> (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\controllers\authController.ordersController.test.js:124:17)
-          at Promise.then.completed (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\utils.js:298:28)
-          at new Promise (<anonymous>)
-          at callAsyncCircusFn (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\utils.js:231:10)
-          at _callCircusTest (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:316:40)
-          at processTicksAndRejections (node:internal/process/task_queues:103:5)
-          at _runTest (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:252:3)
-          at _runTestsForDescribeBlock (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:126:9)
-          at _runTestsForDescribeBlock (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:121:9)
-          at run (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:71:3)
-          at runAndTransformResultsToJestFormat (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\legacy-code-todo-rewrite\jestAdapterInit.js:122:21)
-          at jestAdapter (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\legacy-code-todo-rewrite\jestAdapter.js:79:19)
-          at runTestInternal (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-runner\build\runTest.js:367:16)
-          at runTest (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-runner\build\runTest.js:444:34)
-          at Object.worker (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-runner\build\testWorker.js:106:12)
-
-      at log (controllers/authController.js:275:13)
-
-    console.log
-      Error: DB down
-          at Object.<anonymous> (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\controllers\authController.ordersController.test.js:179:17)
-          at Promise.then.completed (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\utils.js:298:28)
-          at new Promise (<anonymous>)
-          at callAsyncCircusFn (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\utils.js:231:10)
-          at _callCircusTest (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:316:40)
-          at processTicksAndRejections (node:internal/process/task_queues:103:5)
-          at _runTest (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:252:3)
-          at _runTestsForDescribeBlock (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:126:9)
-          at _runTestsForDescribeBlock (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:121:9)
-          at run (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:71:3)
-          at runAndTransformResultsToJestFormat (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\legacy-code-todo-rewrite\jestAdapterInit.js:122:21)
-          at jestAdapter (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\legacy-code-todo-rewrite\jestAdapter.js:79:19)
-          at runTestInternal (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-runner\build\runTest.js:367:16)
-          at runTest (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-runner\build\runTest.js:444:34)
-          at Object.worker (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-runner\build\testWorker.js:106:12)
-
-      at log (controllers/authController.js:296:13)
-
-PASS backend helpers/authHelper.comparePassword.test.js
-PASS backend helpers/authHelper.hashPassword.test.js
-PASS backend controllers/authController.getAllUsersController.test.js
-  ● Console
-
-    console.log
-      Error: DB down
-          at Object.<anonymous> (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\controllers\authController.getAllUsersController.test.js:62:17)
-          at Promise.then.completed (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\utils.js:298:28)
-          at new Promise (<anonymous>)
-          at callAsyncCircusFn (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\utils.js:231:10)
-          at _callCircusTest (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:316:40)
-          at processTicksAndRejections (node:internal/process/task_queues:103:5)
-          at _runTest (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:252:3)
-          at _runTestsForDescribeBlock (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:126:9)
-          at _runTestsForDescribeBlock (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:121:9)
-          at run (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:71:3)
-          at runAndTransformResultsToJestFormat (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\legacy-code-todo-rewrite\jestAdapterInit.js:122:21)
-          at jestAdapter (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\legacy-code-todo-rewrite\jestAdapter.js:79:19)
-          at runTestInternal (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-runner\build\runTest.js:367:16)
-          at runTest (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-runner\build\runTest.js:444:34)
-          at Object.worker (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-runner\build\testWorker.js:106:12)
 
       at log (controllers/authController.js:315:13)
 
-PASS backend controllers/authController.updateProfileController.test.js
-  ● Console
-
-    console.log
-      Error: DB down
-          at Object.<anonymous> (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\controllers\authController.updateProfileController.test.js:237:17)
-          at Promise.then.completed (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\utils.js:298:28)
-          at new Promise (<anonymous>)
-          at callAsyncCircusFn (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\utils.js:231:10)
-          at _callCircusTest (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:316:40)
-          at processTicksAndRejections (node:internal/process/task_queues:103:5)
-          at _runTest (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:252:3)
-          at _runTestsForDescribeBlock (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:126:9)
-          at _runTestsForDescribeBlock (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:121:9)
-          at run (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:71:3)
-          at runAndTransformResultsToJestFormat (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\legacy-code-todo-rewrite\jestAdapterInit.js:122:21)
-          at jestAdapter (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\legacy-code-todo-rewrite\jestAdapter.js:79:19)
-          at runTestInternal (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-runner\build\runTest.js:367:16)
-          at runTest (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-runner\build\runTest.js:444:34)
-          at Object.worker (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-runner\build\testWorker.js:106:12)
-
-      at log (controllers/authController.js:239:13)
-
-PASS backend middlewares/authMiddleware.isAdmin.test.js
-PASS backend controllers/productController.payment.integration.test.js
-  ● Console
-
-    console.log
-      JsonWebTokenError {
-        name: 'JsonWebTokenError',
-        message: 'jwt malformed'
-      }
-
-      at log (middlewares/authMiddleware.js:36:13)
-
-    console.log
-      {
-        type: 'gateway',
-        error: Error: Payment gateway error
-            at Object.<anonymous> (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\controllers\productController.payment.integration.test.js:129:23)
-            at Promise.then.completed (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\utils.js:298:28)
-            at new Promise (<anonymous>)
-            at callAsyncCircusFn (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\utils.js:231:10)
-            at _callCircusTest (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:316:40)
-            at processTicksAndRejections (node:internal/process/task_queues:103:5)
-            at _runTest (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:252:3)
-            at _runTestsForDescribeBlock (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:126:9)
-            at _runTestsForDescribeBlock (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:121:9)
-            at run (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:71:3)
-            at runAndTransformResultsToJestFormat (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\legacy-code-todo-rewrite\jestAdapterInit.js:122:21)
-            at jestAdapter (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\legacy-code-todo-rewrite\jestAdapter.js:79:19)
-            at runTestInternal (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-runner\build\runTest.js:367:16)
-            at runTest (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-runner\build\runTest.js:444:34)
-            at Object.worker (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-runner\build\testWorker.js:106:12)
-      }
-
-      at log (controllers/productController.js:423:13)
-
-    console.log
-      {
-        type: 'transaction',
-        result: { success: false, message: 'Payment failed' }
-      }
-
-      at log (controllers/productController.js:423:13)
-
-[0mPOST /api/v1/product/braintree/payment [32m200[0m 54.918 ms - 11[0m
-[0mPOST /api/v1/product/braintree/payment [33m400[0m 0.434 ms - 29[0m
-[0mPOST /api/v1/product/braintree/payment [33m400[0m 0.192 ms - 29[0m
-[0mPOST /api/v1/product/braintree/payment [33m400[0m 0.179 ms - 29[0m
-[0mPOST /api/v1/product/braintree/payment [33m401[0m 0.075 ms - 58[0m
-[0mPOST /api/v1/product/braintree/payment [33m401[0m 3.851 ms - 54[0m
-[0mPOST /api/v1/product/braintree/payment [31m500[0m 4.804 ms - 2[0m
-[0mPOST /api/v1/product/braintree/payment [33m400[0m 0.313 ms - 44[0m
+PASS backend controllers/authController.login.integration.test.js
+[0mGET /api/v1/auth/users [31m500[0m 18.174 ms - 66[0m
+PASS backend controllers/authController.auth.e2e.integration.test.js
 ℹ tests 0
 ℹ suites 4
 ℹ pass 0
@@ -677,7 +700,7 @@ PASS backend controllers/productController.payment.integration.test.js
 ℹ cancelled 0
 ℹ skipped 0
 ℹ todo 0
-ℹ duration_ms 2742.121
+ℹ duration_ms 1769.2131
 ℹ tests 0
 ℹ suites 4
 ℹ pass 0
@@ -685,36 +708,37 @@ PASS backend controllers/productController.payment.integration.test.js
 ℹ cancelled 0
 ℹ skipped 0
 ℹ todo 0
-ℹ duration_ms 2741.5875
-------------------------|---------|----------|---------|---------|-------------------
-File                    | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
-------------------------|---------|----------|---------|---------|-------------------
-All files               |     100 |    99.28 |     100 |     100 |                   
- controllers            |     100 |    99.13 |     100 |     100 |                   
-  authController.js     |     100 |      100 |     100 |     100 |                   
-  categoryController.js |     100 |      100 |     100 |     100 |                   
-  productController.js  |     100 |     98.3 |     100 |     100 | 122               
- helpers                |     100 |      100 |     100 |     100 |                   
-  authHelper.js         |     100 |      100 |     100 |     100 |                   
- middlewares            |     100 |      100 |     100 |     100 |                   
-  authMiddleware.js     |     100 |      100 |     100 |     100 |                   
- models                 |     100 |      100 |     100 |     100 |                   
-  categoryModel.js      |     100 |      100 |     100 |     100 |                   
-  orderModel.js         |     100 |      100 |     100 |     100 |                   
-  productModel.js       |     100 |      100 |     100 |     100 |                   
-  userModel.js          |     100 |      100 |     100 |     100 |                   
-------------------------|---------|----------|---------|---------|-------------------
+ℹ duration_ms 1775.7367
+------------------------|---------|----------|---------|---------|---------------------
+File                    | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s   
+------------------------|---------|----------|---------|---------|---------------------
+All files               |   98.34 |    96.59 |   97.22 |    98.6 |                     
+ controllers            |   98.06 |    95.93 |   96.87 |   98.36 |                     
+  authController.js     |     100 |      100 |     100 |     100 |                     
+  categoryController.js |     100 |      100 |     100 |     100 |                     
+  productController.js  |   96.42 |    92.53 |   94.44 |   96.96 | 358,364,402-403,413 
+ helpers                |     100 |      100 |     100 |     100 |                     
+  authHelper.js         |     100 |      100 |     100 |     100 |                     
+ middlewares            |     100 |      100 |     100 |     100 |                     
+  authMiddleware.js     |     100 |      100 |     100 |     100 |                     
+ models                 |     100 |      100 |     100 |     100 |                     
+  categoryModel.js      |     100 |      100 |     100 |     100 |                     
+  orderModel.js         |     100 |      100 |     100 |     100 |                     
+  productModel.js       |     100 |      100 |     100 |     100 |                     
+  userModel.js          |     100 |      100 |     100 |     100 |                     
+------------------------|---------|----------|---------|---------|---------------------
 
 Test Suites: 28 passed, 28 total
 Tests:       312 passed, 312 total
 Snapshots:   0 total
-Time:        4.629 s, estimated 5 s
+Time:        4.865 s, estimated 5 s
 Ran all test suites.
 
 > ecom@1.0.0 test:frontend
 > node --experimental-vm-modules node_modules/jest/bin/jest.js --config jest.frontend.config.js
 
-FAIL frontend client/src/hooks/useCategory.test.js
+PASS frontend client/src/hooks/useCategory.test.js
+FAIL frontend client/src/hooks/failTest.test.js
   ● useCategory Hook › should fail
 
     expect(received).toBe(expected) // Object.is equality
@@ -730,8 +754,117 @@ FAIL frontend client/src/hooks/useCategory.test.js
      [90m 65 |[39m })[33m;[39m
      [90m 66 |[39m[0m
 
-      at Object.toBe (client/src/hooks/useCategory.test.js:63:18)
+      at Object.toBe (client/src/hooks/failTest.test.js:63:18)
 
+PASS frontend client/src/pages/CategoryProduct.test.js
+PASS frontend client/src/components/Header.test.js
+PASS frontend client/src/pages/user/Profile.test.js
+  ● Console
+
+    console.log
+      Error: Network error
+          at Object.<anonymous> (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\client\src\pages\user\Profile.test.js:157:37)
+          at Promise.then.completed (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\utils.js:298:28)
+          at new Promise (<anonymous>)
+          at callAsyncCircusFn (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\utils.js:231:10)
+          at _callCircusTest (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:316:40)
+          at _runTest (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:252:3)
+          at _runTestsForDescribeBlock (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:126:9)
+          at _runTestsForDescribeBlock (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:121:9)
+          at run (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:71:3)
+          at runAndTransformResultsToJestFormat (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\legacy-code-todo-rewrite\jestAdapterInit.js:122:21)
+          at jestAdapter (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\legacy-code-todo-rewrite\jestAdapter.js:79:19)
+          at runTestInternal (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-runner\build\runTest.js:367:16)
+          at runTest (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-runner\build\runTest.js:444:34)
+          at Object.worker (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-runner\build\testWorker.js:106:12)
+
+      at log (client/src/pages/user/Profile.js:48:15)
+
+PASS frontend client/src/pages/ProductDetails.test.js
+PASS frontend client/src/pages/admin/Users.test.js
+  ● Console
+
+    console.log
+      STATUS: 500
+
+      at log (client/src/pages/admin/Users.js:15:15)
+
+    console.log
+      DATA: {}
+
+      at log (client/src/pages/admin/Users.js:16:15)
+
+    console.log
+      MSG: Request failed
+
+      at log (client/src/pages/admin/Users.js:17:15)
+
+PASS frontend client/src/pages/user/Orders.test.js
+  ● Console
+
+    console.error
+      Warning: An update to Orders inside a test was not wrapped in act(...).
+      
+      When testing, code that causes React state updates should be wrapped into act(...):
+      
+      act(() => {
+        /* fire events that update state */
+      });
+      /* assert on the output */
+      
+      This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+          at Orders (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\client\src\pages\user\Orders.js:9:39)
+          at basenameProp (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\client\node_modules\react-router\lib\components.tsx:413:13)
+          at basename (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\client\node_modules\react-router\lib\components.tsx:219:3)
+
+    [0m [90m 12 |[39m     [36mtry[39m {
+     [90m 13 |[39m       [36mconst[39m { data } [33m=[39m [36mawait[39m axios[33m.[39m[36mget[39m([32m"/api/v1/auth/orders"[39m)[33m;[39m
+    [31m[1m>[22m[39m[90m 14 |[39m       setOrders(data)[33m;[39m
+     [90m    |[39m       [31m[1m^[22m[39m
+     [90m 15 |[39m     } [36mcatch[39m (error) {
+     [90m 16 |[39m       console[33m.[39mlog(error)[33m;[39m
+     [90m 17 |[39m     }[0m
+
+      at printWarning (client/node_modules/react-dom/cjs/react-dom.development.js:86:30)
+      at error (client/node_modules/react-dom/cjs/react-dom.development.js:60:7)
+      at warnIfUpdatesNotWrappedWithActDEV (client/node_modules/react-dom/cjs/react-dom.development.js:27589:9)
+      at scheduleUpdateOnFiber (client/node_modules/react-dom/cjs/react-dom.development.js:25508:5)
+      at dispatchSetState (client/node_modules/react-dom/cjs/react-dom.development.js:17527:7)
+      at setOrders (client/src/pages/user/Orders.js:14:7)
+
+PASS frontend client/src/pages/Auth/ForgotPassword.test.js
+PASS frontend client/src/pages/Auth/Login.test.js
+PASS frontend client/src/pages/Auth/Register.test.js
+PASS frontend client/src/components/Form/SearchInput.test.js
+PASS frontend client/src/pages/admin/Products.test.js
+  ● Console
+
+    console.log
+      Error: Network Error
+          at Object.<anonymous> (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\client\src\pages\admin\Products.test.js:69:33)
+          at Promise.then.completed (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\utils.js:298:28)
+          at new Promise (<anonymous>)
+          at callAsyncCircusFn (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\utils.js:231:10)
+          at _callCircusTest (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:316:40)
+          at _runTest (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:252:3)
+          at _runTestsForDescribeBlock (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:126:9)
+          at _runTestsForDescribeBlock (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:121:9)
+          at run (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:71:3)
+          at runAndTransformResultsToJestFormat (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\legacy-code-todo-rewrite\jestAdapterInit.js:122:21)
+          at jestAdapter (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\legacy-code-todo-rewrite\jestAdapter.js:79:19)
+          at runTestInternal (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-runner\build\runTest.js:367:16)
+          at runTest (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-runner\build\runTest.js:444:34)
+          at Object.worker (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-runner\build\testWorker.js:106:12)
+
+      at log (client/src/pages/admin/Products.js:16:15)
+
+PASS frontend client/src/pages/Search.test.js
+PASS frontend client/src/components/Routes/Private.test.js
+PASS frontend client/src/components/AdminMenu.test.js
+PASS frontend client/src/context/cart.test.js
+PASS frontend client/src/pages/user/Dashboard.test.js
+PASS frontend client/src/components/Layout.test.js
+PASS frontend client/src/components/Footer.test.js
 PASS frontend client/src/pages/admin/CreateProduct.test.js
   ● Console
 
@@ -745,7 +878,48 @@ PASS frontend client/src/pages/admin/CreateProduct.test.js
 
       at log (client/src/pages/admin/CreateProduct.js:67:15)
 
+PASS frontend client/src/pages/MissingCoverage.test.js
+PASS frontend client/src/pages/Pagenotfound.test.js
+PASS frontend client/src/components/UserMenu.test.js
+PASS frontend client/src/context/auth.test.js
 PASS frontend client/src/pages/Categories.test.js
+PASS frontend client/src/pages/admin/AdminDashboard.test.js
+PASS frontend client/src/pages/admin/AdminOrders.test.js
+  ● Console
+
+    console.error
+      Warning: An update to AdminOrders inside a test was not wrapped in act(...).
+      
+      When testing, code that causes React state updates should be wrapped into act(...):
+      
+      act(() => {
+        /* fire events that update state */
+      });
+      /* assert on the output */
+      
+      This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+          at AdminOrders (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\client\src\pages\admin\AdminOrders.js:11:39)
+          at routeContext (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\client\node_modules\react-router\lib\hooks.tsx:640:26)
+          at children (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\client\node_modules\react-router\lib\components.tsx:504:3)
+          at basenameProp (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\client\node_modules\react-router\lib\components.tsx:413:13)
+          at basename (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\client\node_modules\react-router\lib\components.tsx:219:3)
+
+    [0m [90m 21 |[39m     [36mtry[39m {
+     [90m 22 |[39m       [36mconst[39m { data } [33m=[39m [36mawait[39m axios[33m.[39m[36mget[39m([32m"/api/v1/auth/all-orders"[39m)[33m;[39m
+    [31m[1m>[22m[39m[90m 23 |[39m       setOrders(data)[33m;[39m
+     [90m    |[39m       [31m[1m^[22m[39m
+     [90m 24 |[39m     } [36mcatch[39m (error) {
+     [90m 25 |[39m       console[33m.[39mlog(error)[33m;[39m
+     [90m 26 |[39m     }[0m
+
+      at printWarning (client/node_modules/react-dom/cjs/react-dom.development.js:86:30)
+      at error (client/node_modules/react-dom/cjs/react-dom.development.js:60:7)
+      at warnIfUpdatesNotWrappedWithActDEV (client/node_modules/react-dom/cjs/react-dom.development.js:27589:9)
+      at scheduleUpdateOnFiber (client/node_modules/react-dom/cjs/react-dom.development.js:25508:5)
+      at dispatchSetState (client/node_modules/react-dom/cjs/react-dom.development.js:17527:7)
+      at setOrders (client/src/pages/admin/AdminOrders.js:23:7)
+
+PASS frontend client/src/context/search.test.js
 PASS frontend client/src/pages/admin/UpdateProduct.test.js
   ● Console
 
@@ -867,166 +1041,19 @@ PASS frontend client/src/pages/admin/CreateCategory.test.js
 
       at log (client/src/pages/admin/CreateCategory.js:90:15)
 
-PASS frontend client/src/pages/admin/AdminOrders.test.js
-  ● Console
-
-    console.error
-      Warning: An update to AdminOrders inside a test was not wrapped in act(...).
-      
-      When testing, code that causes React state updates should be wrapped into act(...):
-      
-      act(() => {
-        /* fire events that update state */
-      });
-      /* assert on the output */
-      
-      This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
-          at AdminOrders (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\client\src\pages\admin\AdminOrders.js:11:39)
-          at routeContext (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\client\node_modules\react-router\lib\hooks.tsx:640:26)
-          at children (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\client\node_modules\react-router\lib\components.tsx:504:3)
-          at basenameProp (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\client\node_modules\react-router\lib\components.tsx:413:13)
-          at basename (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\client\node_modules\react-router\lib\components.tsx:219:3)
-
-    [0m [90m 21 |[39m     [36mtry[39m {
-     [90m 22 |[39m       [36mconst[39m { data } [33m=[39m [36mawait[39m axios[33m.[39m[36mget[39m([32m"/api/v1/auth/all-orders"[39m)[33m;[39m
-    [31m[1m>[22m[39m[90m 23 |[39m       setOrders(data)[33m;[39m
-     [90m    |[39m       [31m[1m^[22m[39m
-     [90m 24 |[39m     } [36mcatch[39m (error) {
-     [90m 25 |[39m       console[33m.[39mlog(error)[33m;[39m
-     [90m 26 |[39m     }[0m
-
-      at printWarning (client/node_modules/react-dom/cjs/react-dom.development.js:86:30)
-      at error (client/node_modules/react-dom/cjs/react-dom.development.js:60:7)
-      at warnIfUpdatesNotWrappedWithActDEV (client/node_modules/react-dom/cjs/react-dom.development.js:27589:9)
-      at scheduleUpdateOnFiber (client/node_modules/react-dom/cjs/react-dom.development.js:25508:5)
-      at dispatchSetState (client/node_modules/react-dom/cjs/react-dom.development.js:17527:7)
-      at setOrders (client/src/pages/admin/AdminOrders.js:23:7)
-
-PASS frontend client/src/pages/CategoryProduct.test.js
-PASS frontend client/src/pages/CartPage.test.js
-PASS frontend client/src/pages/user/Profile.test.js
-  ● Console
-
-    console.log
-      Error: Network error
-          at Object.<anonymous> (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\client\src\pages\user\Profile.test.js:157:37)
-          at Promise.then.completed (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\utils.js:298:28)
-          at new Promise (<anonymous>)
-          at callAsyncCircusFn (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\utils.js:231:10)
-          at _callCircusTest (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:316:40)
-          at _runTest (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:252:3)
-          at _runTestsForDescribeBlock (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:126:9)
-          at _runTestsForDescribeBlock (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:121:9)
-          at run (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:71:3)
-          at runAndTransformResultsToJestFormat (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\legacy-code-todo-rewrite\jestAdapterInit.js:122:21)
-          at jestAdapter (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\legacy-code-todo-rewrite\jestAdapter.js:79:19)
-          at runTestInternal (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-runner\build\runTest.js:367:16)
-          at runTest (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-runner\build\runTest.js:444:34)
-          at Object.worker (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-runner\build\testWorker.js:106:12)
-
-      at log (client/src/pages/user/Profile.js:48:15)
-
-PASS frontend client/src/pages/HomePage.test.js
-PASS frontend client/src/pages/ProductDetails.test.js
-PASS frontend client/src/pages/admin/Users.test.js
-  ● Console
-
-    console.log
-      STATUS: 500
-
-      at log (client/src/pages/admin/Users.js:15:15)
-
-    console.log
-      DATA: {}
-
-      at log (client/src/pages/admin/Users.js:16:15)
-
-    console.log
-      MSG: Request failed
-
-      at log (client/src/pages/admin/Users.js:17:15)
-
-PASS frontend client/src/components/Header.test.js
-PASS frontend client/src/pages/Auth/ForgotPassword.test.js
-PASS frontend client/src/pages/user/Orders.test.js
-  ● Console
-
-    console.error
-      Warning: An update to Orders inside a test was not wrapped in act(...).
-      
-      When testing, code that causes React state updates should be wrapped into act(...):
-      
-      act(() => {
-        /* fire events that update state */
-      });
-      /* assert on the output */
-      
-      This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
-          at Orders (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\client\src\pages\user\Orders.js:9:39)
-          at basenameProp (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\client\node_modules\react-router\lib\components.tsx:413:13)
-          at basename (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\client\node_modules\react-router\lib\components.tsx:219:3)
-
-    [0m [90m 12 |[39m     [36mtry[39m {
-     [90m 13 |[39m       [36mconst[39m { data } [33m=[39m [36mawait[39m axios[33m.[39m[36mget[39m([32m"/api/v1/auth/orders"[39m)[33m;[39m
-    [31m[1m>[22m[39m[90m 14 |[39m       setOrders(data)[33m;[39m
-     [90m    |[39m       [31m[1m^[22m[39m
-     [90m 15 |[39m     } [36mcatch[39m (error) {
-     [90m 16 |[39m       console[33m.[39mlog(error)[33m;[39m
-     [90m 17 |[39m     }[0m
-
-      at printWarning (client/node_modules/react-dom/cjs/react-dom.development.js:86:30)
-      at error (client/node_modules/react-dom/cjs/react-dom.development.js:60:7)
-      at warnIfUpdatesNotWrappedWithActDEV (client/node_modules/react-dom/cjs/react-dom.development.js:27589:9)
-      at scheduleUpdateOnFiber (client/node_modules/react-dom/cjs/react-dom.development.js:25508:5)
-      at dispatchSetState (client/node_modules/react-dom/cjs/react-dom.development.js:17527:7)
-      at setOrders (client/src/pages/user/Orders.js:14:7)
-
-PASS frontend client/src/pages/admin/Products.test.js
-  ● Console
-
-    console.log
-      Error: Network Error
-          at Object.<anonymous> (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\client\src\pages\admin\Products.test.js:69:33)
-          at Promise.then.completed (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\utils.js:298:28)
-          at new Promise (<anonymous>)
-          at callAsyncCircusFn (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\utils.js:231:10)
-          at _callCircusTest (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:316:40)
-          at _runTest (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:252:3)
-          at _runTestsForDescribeBlock (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:126:9)
-          at _runTestsForDescribeBlock (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:121:9)
-          at run (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\run.js:71:3)
-          at runAndTransformResultsToJestFormat (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\legacy-code-todo-rewrite\jestAdapterInit.js:122:21)
-          at jestAdapter (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-circus\build\legacy-code-todo-rewrite\jestAdapter.js:79:19)
-          at runTestInternal (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-runner\build\runTest.js:367:16)
-          at runTest (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-runner\build\runTest.js:444:34)
-          at Object.worker (C:\Users\bobot\Downloads\CS4218\cs4218-2520-ecom-project-cs4218-2520-team14\node_modules\jest-runner\build\testWorker.js:106:12)
-
-      at log (client/src/pages/admin/Products.js:16:15)
-
-PASS frontend client/src/pages/Auth/Login.test.js
-PASS frontend client/src/pages/Auth/Register.test.js
-PASS frontend client/src/components/Layout.test.js
-PASS frontend client/src/components/Form/SearchInput.test.js
-PASS frontend client/src/pages/Search.test.js
-PASS frontend client/src/components/Footer.test.js
-PASS frontend client/src/pages/Pagenotfound.test.js
-PASS frontend client/src/components/UserMenu.test.js
-PASS frontend client/src/components/Form/CategoryForm.test.js
-PASS frontend client/src/components/Routes/Private.test.js
-PASS frontend client/src/pages/Policy.test.js
-PASS frontend client/src/pages/user/Dashboard.test.js
-PASS frontend client/src/context/cart.test.js
-PASS frontend client/src/context/auth.test.js
-PASS frontend client/src/components/Spinner.test.js
-PASS frontend client/src/context/search.test.js
-PASS frontend client/src/components/AdminMenu.test.js
-PASS frontend client/src/pages/admin/AdminDashboard.test.js
-PASS frontend client/src/pages/Contact.test.js
 PASS frontend client/src/pages/About.test.js
+PASS frontend client/src/pages/FixTest.2.test.js
+PASS frontend client/src/pages/Policy.test.js
+PASS frontend client/src/components/Form/CategoryForm.test.js
+PASS frontend client/src/components/Spinner.test.js
+PASS frontend client/src/pages/Contact.test.js
+PASS frontend client/src/pages/CartPage.test.js
+PASS frontend client/src/pages/FixTest.1.test.js
+PASS frontend client/src/pages/HomePage.test.js
 --------------------------|---------|----------|---------|---------|-------------------
 File                      | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
 --------------------------|---------|----------|---------|---------|-------------------
-All files                 |   94.95 |    89.49 |   92.51 |   94.92 |                   
+All files                 |   95.49 |    90.33 |   93.42 |   95.46 |                   
  src                      |       0 |        0 |       0 |       0 |                   
   App.js                  |       0 |      100 |       0 |       0 | 28                
   index.js                |       0 |      100 |     100 |       0 | 12-28             
@@ -1050,14 +1077,17 @@ All files                 |   94.95 |    89.49 |   92.51 |   94.92 |
   cart.js                 |     100 |      100 |     100 |     100 |                   
   search.js               |     100 |      100 |     100 |     100 |                   
  src/hooks                |     100 |      100 |     100 |     100 |                   
+  failTest.js             |     100 |      100 |     100 |     100 |                   
   useCategory.js          |     100 |      100 |     100 |     100 |                   
- src/pages                |   99.53 |    91.46 |     100 |   99.52 |                   
+ src/pages                |   99.66 |    93.06 |     100 |   99.64 |                   
   About.js                |     100 |      100 |     100 |     100 |                   
   CartPage.js             |   98.03 |       96 |     100 |      98 | 67                
   Categories.js           |     100 |      100 |     100 |     100 |                   
   CategoryProduct.js      |     100 |    66.66 |     100 |     100 | 35-85,115         
   Contact.js              |     100 |      100 |     100 |     100 |                   
+  FixTest.js              |     100 |      100 |     100 |     100 |                   
   HomePage.js             |     100 |      100 |     100 |     100 |                   
+  MissingCoverage.js      |     100 |      100 |     100 |     100 |                   
   Pagenotfound.js         |     100 |      100 |     100 |     100 |                   
   Policy.js               |     100 |      100 |     100 |     100 |                   
   ProductDetails.js       |     100 |     87.5 |     100 |     100 | 104-111           
@@ -1085,7 +1115,7 @@ All files                 |   94.95 |    89.49 |   92.51 |   94.92 |
 --------------------------|---------|----------|---------|---------|-------------------
 
 Summary of all failing tests
-FAIL client/src/hooks/useCategory.test.js
+FAIL client/src/hooks/failTest.test.js
   ● useCategory Hook › should fail
 
     expect(received).toBe(expected) // Object.is equality
@@ -1101,11 +1131,11 @@ FAIL client/src/hooks/useCategory.test.js
      [90m 65 |[39m })[33m;[39m
      [90m 66 |[39m[0m
 
-      at Object.toBe (client/src/hooks/useCategory.test.js:63:18)
+      at Object.toBe (client/src/hooks/failTest.test.js:63:18)
 
 
-Test Suites: 1 failed, 35 passed, 36 total
-Tests:       1 failed, 221 passed, 222 total
+Test Suites: 1 failed, 39 passed, 40 total
+Tests:       1 failed, 239 passed, 240 total
 Snapshots:   0 total
-Time:        5.393 s
+Time:        6.544 s
 Ran all test suites.
