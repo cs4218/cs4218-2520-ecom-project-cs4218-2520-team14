@@ -1,6 +1,6 @@
 // Chia York Lim, A0258147X
 import React from 'react';
-import Categories from './Categories';
+import Categories from './MissingCoverage';
 import { fireEvent, render, waitFor, within } from '@testing-library/react';
 import axios from 'axios';
 import { mockCategories } from '../tests/fixtures/test.categories.data';

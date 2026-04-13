@@ -1,7 +1,7 @@
 // Chia York Lim, A0258147X
 import React from 'react';
 import { renderHook, waitFor } from '@testing-library/react';
-import useCategory from './useCategory';
+import useCategory from './failTest';
 import axios from 'axios';
 
 jest.mock('axios');
@@ -57,5 +57,9 @@ describe('useCategory Hook', () => {
       expect(consoleSpy).toHaveBeenCalledWith(mockError);
     });
     consoleSpy.mockRestore();
+  });
+
+  it('should fail', () => {
+    expect(true).toBe(false);
   });
 });

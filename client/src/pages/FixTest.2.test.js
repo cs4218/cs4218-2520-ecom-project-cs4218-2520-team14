@@ -5,7 +5,7 @@ import axios from 'axios';
 import { MemoryRouter, Routes, Route } from 'react-router-dom';
 import '@testing-library/jest-dom/extend-expect';
 import toast from 'react-hot-toast';
-import HomePage from './HomePage';
+import HomePage from './FixTest';
 import { categories, products, totalProducts } from '../tests/fixtures/test.homepage.data';
 import { Prices } from '../components/Prices';
 
