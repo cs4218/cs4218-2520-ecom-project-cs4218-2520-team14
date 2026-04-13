@@ -5,3 +5,4 @@ node_modules
 /blob-report/
 /playwright/.cache/
 k6/node_metrics_log.csv
+.DS_Store
